@@ -1,6 +1,3 @@
-import Head from "next/head";
-import Avatar from "@/components/Avatar";
-import Card from "@/components/Card";
 import HomeLayout from "@/components/HomeLayout";
 import CreatePost from "@/components/post/CreatePost";
 import PostDispaly from "@/components/post/PostDisplay";
@@ -32,7 +29,7 @@ export default function Home() {
         setAllPost(response.data)
       }
     })
-  },[])
+  },[supabase])
 
   if(!loginUser){
     return <LoginPage/>
