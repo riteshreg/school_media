@@ -21,7 +21,7 @@ export default function Home() {
   },[])
 
   useEffect(()=>{
-    supabase.from('posts').select("id,author,content, images, created_at, profiles(avatar,name)").limit(20).then((response)=>{
+    supabase.from('posts').select("id,author,content, images, created_at, profiles(avatar,name)").order("created_at",{ascending:false}).limit(20).then((response)=>{
       if(response.error){
         throw response.error
       } 

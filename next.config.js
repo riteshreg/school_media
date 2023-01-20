@@ -4,6 +4,8 @@ const nextConfig = {
   images:{
     domains:["cdn.pixabay.com","ypticbcztdwpynckjwag.supabase.co"]
   }
+  
 }
+
 
 module.exports = nextConfig

@@ -23,7 +23,7 @@ export default function PostDispaly({content,images,created_at,profile}) {
            {content}
           </p>
         </div>
-      {images.length>0 && <div> 
+      {images.length>0 && <div className={`${images.length===2 && " md:flex"} ${images.length>2 && "block md:grid md:grid-cols-2"}`}> 
         {
             images.map((image)=>
                 <Image
