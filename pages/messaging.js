@@ -79,7 +79,7 @@ function MessagingPage() {
        
 <div className="container mx-auto">
       
-        <div className="hidden lg:col-span-2 lg:block">
+        <div className="lg:col-span-2 lg:block">
           <div className="w-full">
             <div className="relative flex items-center p-3 border-b border-gray-300">
               <Image width={480} height={480} className="object-cover w-10 h-10 rounded-full"
