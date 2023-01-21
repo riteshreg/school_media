@@ -7,7 +7,7 @@ import { MutatingDots } from "react-loader-spinner";
 import Avatar from "../Avatar";
 import Card from "../Card";
 
-export default function CreatePost() {
+export default function CreatePost({FetchAllPost}) {
   const supabase = useSupabaseClient();
 
   const [userPostText, setUserPostText] = useState();
@@ -24,8 +24,12 @@ export default function CreatePost() {
         images: images,
       })
       .then((response) => {
-        setImage(false)
-        setUserPostText(false)
+        if(response.status == 201){
+          setImage(false)
+          setUserPostText(false)
+          FetchAllPost();
+
+        }
       });
   };
 

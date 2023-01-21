@@ -35,7 +35,7 @@ function MessagingPage() {
         setLoginUserData(response.session?.user);
       }
     });
-  }, []);
+  }, [supabase]);
 
   useEffect(()=>{
     scrollToBottom()
@@ -55,7 +55,7 @@ function MessagingPage() {
       .subscribe();
 
       
-  },[]);
+  },[supabase]);
 
   const handleSendMessage = () => {
     supabase

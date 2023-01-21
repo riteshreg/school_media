@@ -25,6 +25,10 @@ export default function Home() {
   },[])
 
   useEffect(()=>{
+      FetchAllPost();
+  },[supabase])
+
+  function FetchAllPost(){
     supabase.from('posts').select("id,author,content, images, created_at, profiles(avatar,name)").order("created_at",{ascending:false}).limit(20).then((response)=>{
       if(response.error){
         throw response.error
@@ -33,7 +37,7 @@ export default function Home() {
         setAllPost(response.data)
       }
     })
-  },[supabase])
+  }
 
   if(!loginUser){
     return <LoginPage/>
@@ -42,7 +46,7 @@ export default function Home() {
   return (
     <HomeLayout>
       <div className="space-y-4">
-        <CreatePost />
+        <CreatePost  FetchAllPost={FetchAllPost}/>
         {AllPost.length>0 && AllPost?.map((item)=>
           <PostDispaly key={item.id} {...item}/>
         )            
