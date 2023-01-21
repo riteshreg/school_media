@@ -6,7 +6,7 @@ import React, { useEffect, useRef, useState } from "react";
 
 
 function MessagingPage() {
-  const [content, setContent] = useState();
+  const [content, setContent] = useState("");
   const [loginUserData, setLoginUserData] = useState();
   const [messages, setMessages] = useState([]);
 
@@ -63,7 +63,7 @@ function MessagingPage() {
         author: loginUserData?.id,
       })
       .then((response) => {
-         
+          setContent("")
       });
   };
 
@@ -117,11 +117,15 @@ function MessagingPage() {
                 </svg>
               </button>
 
-              <input type="text" onChange={(event)=>setContent(event.target.value)} placeholder="Message"
+              <input onKeyDown={(e)=>{
+                if(e.key==="Enter" && content){
+                    handleSendMessage()
+                    }
+              }} type="text" value={content} onChange={(event)=>setContent(event.target.value)} placeholder="Message"
                 className="block w-full py-2 pl-4 mx-3 bg-gray-100 rounded-full outline-none focus:text-gray-700"
-                name="message" required />
+                 />
               
-              <button onClick={handleSendMessage}>
+              <button disabled={!content} onClick={handleSendMessage}>
                 <svg className="w-5 h-5 text-gray-500 origin-center transform rotate-90" xmlns="http://www.w3.org/2000/svg"
                   viewBox="0 0 20 20" fill="currentColor">
                   <path
