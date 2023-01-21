@@ -11,7 +11,7 @@ export default function CreatePost() {
   const supabase = useSupabaseClient();
 
   const [userPostText, setUserPostText] = useState();
-  const { id } = useContext(UserContext);
+  const { loginUserData } = useContext(UserContext);
   const [images, setImage] = useState([]);
   const [showLoader, setShowLoader] = useState(false);
 
@@ -20,7 +20,7 @@ export default function CreatePost() {
       .from("posts")
       .insert({
         content: userPostText,
-        author: id,
+        author: loginUserData?.id,
         images: images,
       })
       .then((response) => {

@@ -2,6 +2,7 @@ import { HomeIcon, BuildingLibraryIcon, UserGroupIcon, BellIcon, ArrowLeftCircle
 import Card from "@/components/Card";
 import { supabase } from '@/supabase';
 import { useRouter } from 'next/router';
+import Link from 'next/link';
 
 export default function HomeLayout({ children }) {
 
@@ -32,10 +33,10 @@ export default function HomeLayout({ children }) {
                 {" "}
                 <BuildingLibraryIcon className="h-8" />  <span className='hidden md:block'>School</span>
               </div>
-              <div className="flex items-center gap-2">
+              <Link href={"/messaging"} className="flex items-center gap-2">
                 {" "}
                 <UserGroupIcon className="h-8" />  <span className='hidden md:block'>Group</span>
-              </div>
+              </Link>
               <div className="flex items-center gap-2">
                 {" "}
                 <BellIcon className="h-8" />  <span className='hidden md:block'>Notice</span>

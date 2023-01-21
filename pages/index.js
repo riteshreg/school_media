@@ -2,7 +2,7 @@ import HomeLayout from "@/components/HomeLayout";
 import CreatePost from "@/components/post/CreatePost";
 import PostDispaly from "@/components/post/PostDisplay";
 import {GetLoginUserData} from "@/helper/GetLoginUserData";
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import LoginPage from "./login";
 import { UserContext } from "@/UserContext";
 import { useSupabaseClient } from "@supabase/auth-helpers-react/dist";
@@ -12,10 +12,14 @@ export default function Home() {
   const [loginUser, setLoginUser] = useState()
   const [AllPost, setAllPost] = useState([])
 
+  const {setLoginUserData} = useContext(UserContext)
+
+
   const supabase = useSupabaseClient();
 
   useEffect(()=>{
     GetLoginUserData().then((response)=>{
+      setLoginUserData(response.session?.user)
       setLoginUser(response.session?.user)
     })
   },[])
@@ -37,7 +41,6 @@ export default function Home() {
 
   return (
     <HomeLayout>
-      <UserContext.Provider value={loginUser}>
       <div className="space-y-4">
         <CreatePost />
         {AllPost.length>0 && AllPost?.map((item)=>
@@ -45,7 +48,6 @@ export default function Home() {
         )            
         }
       </div>
-      </UserContext.Provider>
     </HomeLayout>
   );
 }
