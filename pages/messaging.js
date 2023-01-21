@@ -15,6 +15,7 @@ function MessagingPage() {
   const supabase = useSupabaseClient();
 
 
+
   const scrollToBottom = () => {
     messagesEndRef.current?.scrollIntoView({ behavior: "smooth" })
   }
@@ -23,14 +24,15 @@ function MessagingPage() {
     supabase
       .from("messages")
       .select("*")
-      .order("created_at", {ascending:false})
+      .limit(50)
+      .order("created_at", {ascending:true})
       .then((response) => {
         setMessages(response.data);
       });
 
     GetLoginUserData().then((response) => {
       if (response.session?.user) {
-        setLoginUserData(response.session.user);
+        setLoginUserData(response.session?.user);
       }
     });
   }, []);
@@ -61,6 +63,7 @@ function MessagingPage() {
       .insert({
         content,
         author: loginUserData?.id,
+        author_name:loginUserData?.user_metadata?.name
       })
       .then((response) => {
           setContent("")
@@ -93,7 +96,10 @@ function MessagingPage() {
               <ul className="space-y-2 my-5 " key={message.id}>
                {message.author!== loginUserData?.id &&  <li className="flex justify-start">
                   <div className="relative max-w-xl px-4 py-2 text-gray-700 bg-slate-200 rounded shadow">
-                    <span className="block">{message.content}</span>
+                    <div>
+                      <span className="text-xs  text- text-gray-600">@{message.author_name}</span>
+                      <span className="block">{message.content}</span>
+                      </div>
                   </div>
                 </li>}
                 {message.author == loginUserData?.id && <li className="flex justify-end">

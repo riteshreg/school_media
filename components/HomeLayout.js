@@ -8,6 +8,15 @@ export default function HomeLayout({ children }) {
 
   const router = useRouter()
 
+  const {asPath} = router
+
+  const HomeSelected = asPath == "/"
+  const GroupSelected  =  asPath == "/messaging"
+
+
+  const onSelectedStyle = "bg-blue-400 rounded-md text-white -mx-6 px-6 py-2"
+  const onHover = " hover:-mx-6 hover:px-6 hover:bg-blue-200 hover:rounded-md hover:overflow-hidden   md:py-2"
+
   const handleLogout = async() =>{
     const { error } = await supabase.auth.signOut()
     if(error){
@@ -22,26 +31,26 @@ export default function HomeLayout({ children }) {
     <div className="mt-4 flex mx-auto gap-5 max-w-4xl">
       <div className=" fixed bottom-0 w-screen md:w-3/12 md:static ">
         <Card>
-          <div className="px-3 py-5 min-w-[18vw] md:min-h-[60vh]">
+          <div className="px-3 py-2 md:py-2 min-w-[18vw] md:min-h-[60vh]">
             <h1 className="font-bold p-2 text-gray-700 hidden md:block">Navigation</h1>
-            <div className="flex content-center justify-evenly md:block ml-2 md:space-y-8 mt-2">
-              <div className="flex items-center gap-2">
+            <div className="flex  content-center justify-evenly md:block ml-2 md:space-y-8 mt-2">
+              <Link href={'/'} className={`${HomeSelected && onSelectedStyle} ${onHover} flex  items-center gap-2`}>
                 
                 <HomeIcon className="h-8" /> <span className='hidden md:block'>Home</span>
-              </div>
-              <div className="flex items-center gap-2">
+              </Link>
+              <div className={`flex cursor-pointer items-center gap-2 ${onHover}`}>
                 {" "}
                 <BuildingLibraryIcon className="h-8" />  <span className='hidden md:block'>School</span>
               </div>
-              <Link href={"/messaging"} className="flex items-center gap-2">
+              <Link href={"/messaging"} className={` ${GroupSelected && onSelectedStyle} ${onHover} flex items-center gap-2`}>
                 {" "}
                 <UserGroupIcon className="h-8" />  <span className='hidden md:block'>Group</span>
               </Link>
-              <div className="flex items-center gap-2">
+              <div className={`flex cursor-pointer items-center gap-2 ${onHover}`}>
                 {" "}
                 <BellIcon className="h-8" />  <span className='hidden md:block'>Notice</span>
               </div>
-              <div onClick={handleLogout} className="flex items-center gap-2 cursor-pointer">
+              <div onClick={handleLogout} className={`${onHover} flex items-center gap-2 cursor-pointer`}>
                 {" "}
                 <ArrowLeftCircleIcon   className="h-8 " />  <span className='hidden md:block'>Logout</span>
               </div>
