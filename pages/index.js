@@ -48,7 +48,7 @@ export default function Home() {
       <div className="space-y-4">
         <CreatePost  FetchAllPost={FetchAllPost}/>
         {AllPost.length>0 && AllPost?.map((item)=>
-          <PostDispaly key={item.id} {...item}/>
+          <PostDispaly key={item.id} {...item} loginUser={loginUser}/>
         )            
         }
       </div>

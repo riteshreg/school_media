@@ -1,14 +1,42 @@
-import { HandThumbUpIcon } from "@heroicons/react/24/outline";
+import { HeartIcon } from "@heroicons/react/24/outline";
+import { useSupabaseClient } from "@supabase/auth-helpers-react";
 import Image from "next/image";
+import { useEffect, useState } from "react";
 import Avatar from "../Avatar";
 import Card from "../Card";
 
+export default function PostDispaly({id, content, images, created_at, profile,loginUser }) {
 
-export default function PostDispaly({content,images,created_at,profile}) {
+  const supabase = useSupabaseClient()
+
+  const[likes, setLikes] = useState([])
+
+
+
+  const handleLike  = () =>{
+    supabase.from("likes").insert({
+        user_id:loginUser?.id,
+        post_id:id
+    }).then((resposne)=>{
+        if(resposne.status == 201){
+          GetAllLikes()
+        }
+    })
+  }
+
+  useEffect(()=>{
+    GetAllLikes()
+  },[])
+
+  function GetAllLikes(){
+    supabase.from('likes').select().eq("post_id", id).then((res)=>setLikes(res.data))
+  }
+
+ const IAlreadyLiked =  !!likes.find(like=>like.user_id == loginUser.id)
 
   return (
-    <div className="pb-3">
-      <Card>
+    <div className="py-1">
+      <Card className="py-10">
         <div className="px-4 flex items-center gap-3">
           <Avatar />
           <label className="mb-5 ">
@@ -19,29 +47,30 @@ export default function PostDispaly({content,images,created_at,profile}) {
           </label>
         </div>
         <div className="mx-2 my-1 p-1 text-md">
-          <p>
-           {content}
-          </p>
+          <p>{content}</p>
         </div>
-      {images.length>0 && <div className={`${images.length===2 && " md:flex"} ${images.length>2 && "block md:grid md:grid-cols-2"}`}> 
-        {
-            images.map((image)=>
-                <Image
-                  key={image}
-                  alt="photo"
-                  height={720}
-                  className="p-2 rounded-sm overflow-hidden"
-                  width={720}
-                  src={image}
-                />
-            )
-
-        }
-        </div>}
-        <div className="pl-2 py-1">
+        {images.length > 0 && (
+          <div
+            className={`${images.length === 2 && " md:flex"} ${
+              images.length > 2 && "block md:grid md:grid-cols-2"
+            }`}
+          >
+            {images.map((image) => (
+              <Image
+                key={image}
+                alt="photo"
+                height={720}
+                className="p-2 rounded-sm overflow-hidden"
+                width={720}
+                src={image}
+              />
+            ))}
+          </div>
+        )}
+        <div className="pl-2 py-4">
           <div className="ml-4 flex gap-2 items-center">
-            <HandThumbUpIcon className="h-8 text-gray-800" />
-            {500}
+           <HeartIcon onClick={handleLike} className={`h-8 ${IAlreadyLiked && "fill-red-600"}`}/> 
+            {likes.length}
           </div>
         </div>
       </Card>
