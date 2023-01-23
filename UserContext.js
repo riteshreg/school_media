@@ -32,7 +32,7 @@ export const UserContextProvider = ({children}) =>{
     supabase
     .from("messages")
     .select("*")
-    .range(0, 4)
+    .range(0, 10)
     .order("id", { ascending: false })
     .then((response) => {
       setMessages(response.data);
