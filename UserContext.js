@@ -13,7 +13,6 @@ export const UserContextProvider = ({children}) =>{
   const [messages, setMessages] = useState([])
   const [isOnBottom, setIsOnBottom] = useState(false);
 
-  const [unviewedMessageCount, setUnviewedMessageCount] = useState(0);
 
   const [newIncomingMessageTrigger, setNewIncomingMessageTrigger] =   useState(null);
 
@@ -33,11 +32,13 @@ export const UserContextProvider = ({children}) =>{
     supabase
     .from("messages")
     .select("*")
-    .range(0, 5)
+    .range(0, 4)
     .order("id", { ascending: false })
     .then((response) => {
       setMessages(response.data);
-      scrollToBottom()
+      if(messages){
+        scrollToBottom()
+      }
     });
   },[])
 
@@ -59,7 +60,6 @@ export const UserContextProvider = ({children}) =>{
 
   const onScroll = async ({ target }) => {
     if (target.scrollHeight - target.scrollTop <= target.clientHeight + 1) {
-      setUnviewedMessageCount(0);
       setIsOnBottom(true);
     } else {
       setIsOnBottom(false);
