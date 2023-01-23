@@ -14,14 +14,16 @@ export default function PostDispaly({id, content, images, created_at, profile,lo
 
 
   const handleLike  = () =>{
-    supabase.from("likes").insert({
-        user_id:loginUser?.id,
-        post_id:id
-    }).then((resposne)=>{
-        if(resposne.status == 201){
-          GetAllLikes()
-        }
-    })
+    if(!IAlreadyLiked){
+      supabase.from("likes").insert({
+          user_id:loginUser?.id,
+          post_id:id
+      }).then((resposne)=>{
+          if(resposne.status == 201){
+            GetAllLikes()
+          }
+      })
+    }
   }
 
   useEffect(()=>{
@@ -68,8 +70,8 @@ export default function PostDispaly({id, content, images, created_at, profile,lo
           </div>
         )}
         <div className="pl-2 py-4">
-          <div className="ml-4 flex gap-2 items-center">
-           <HeartIcon onClick={handleLike} className={`h-8 ${IAlreadyLiked && "fill-red-600"}`}/> 
+          <div  className="ml-4 flex gap-2 items-center">
+           <HeartIcon onClick={handleLike}  className={`h-8 ${IAlreadyLiked && "fill-red-600"}`}/> 
             {likes.length}
           </div>
         </div>

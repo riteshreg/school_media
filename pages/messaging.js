@@ -1,31 +1,34 @@
+import ChatDisplay from "@/components/ChatDisplay";
 import HomeLayout from "@/components/HomeLayout";
 import { GetLoginUserData } from "@/helper/GetLoginUserData";
+import { UserContext } from "@/UserContext";
 import { useSupabaseClient } from "@supabase/auth-helpers-react";
 import Image from "next/image";
-import React, { useEffect, useRef, useState } from "react";
+import React, { useContext, useEffect, useRef, useState } from "react";
 
 function MessagingPage() {
   const [content, setContent] = useState("");
   const [loginUserData, setLoginUserData] = useState();
-  const [messages, setMessages] = useState([]);
   const [UploadedFiles, setUploadedFiles] = useState([]);
 
-  const messagesEndRef = useRef(null);
+
+  const { scrollPosition,messages, setMessages,scrollToBottom } = useContext(UserContext);
+  const reversed = [...messages].reverse();
 
   const supabase = useSupabaseClient();
 
-  const scrollToBottom = () => {
-    messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
-  };
+
+
 
   useEffect(() => {
     supabase
       .from("messages")
       .select("*")
-      .limit(50)
-      .order("created_at", { ascending: true })
+      .range(0, 5)
+      .order("id", { ascending: false })
       .then((response) => {
         setMessages(response.data);
+        scrollToBottom()
       });
 
     GetLoginUserData().then((response) => {
@@ -35,22 +38,9 @@ function MessagingPage() {
     });
   }, [supabase]);
 
-  useEffect(() => {
-    scrollToBottom();
-  }, [messages]);
 
-  useEffect(() => {
-    supabase
-      .channel("public:currently_searching")
-      .on(
-        "postgres_changes",
-        { event: "*", schema: "public", table: "messages" },
-        (payload) => {
-          setMessages((prev) => [...prev, payload.new]);
-        }
-      )
-      .subscribe();
-  }, [supabase]);
+
+  
 
   const handleSendMessage = () => {
     supabase
@@ -85,7 +75,7 @@ function MessagingPage() {
 
   return (
     <HomeLayout>
-      <div>
+      <div className="bg-gray-100">
         <div>
           <h1 className="text-xl text-center font-semibold text-gray-600">
             School Messaging Group
@@ -108,69 +98,25 @@ function MessagingPage() {
                 </span>
                 <span className="absolute w-3 h-3 bg-green-600 rounded-full left-10 top-3"></span>
               </div>
-              <div className="relative w-full p-6 overflow-y-auto h-[25rem] ">
-                {messages.length > 0 &&
-                  messages.map((message) => (
-                    <ul className="space-y-2 my-5 " key={message.id}>
-                      {message.author !== loginUserData?.id && (
-                        <li className="flex justify-start">
-                          <div>                             
-                            {message.images?.length > 0 && (<div className={`${message.images.length>1 && "grid gap-2 grid-cols-2"} `}>{ message.images?.map((imag)=>
-                              <Image
-                                key={imag}
-                                alt="image"
-                                height={180}
-                                className={`mb-2 rounded-md overflow-hidden`}
-                                width={150}
-                                src={imag}
-                              />
-                        )}</div>
-                          
-                           ) }
-                           <div>
-                            <div className="relative max-w-xl px-4 w-fit py-2 text-gray-700 bg-slate-200 rounded shadow">
-                            <div>
-                              <span className="text-xs  text- text-gray-600">
-                                @{message.author_name}
-                              </span>
-                              <span className="block">{message.content}</span>
-                            </div>
-                          </div>
-                          </div>
-                          </div>
-                        </li>
-                      )}
-                      {message.author == loginUserData?.id && (
-                        <li className="flex justify-end">
-                          
-                          <div> {message.images?.length > 0 && (<div className={`${message.images.length>1 && "grid gap-2 grid-cols-2"} `}>{ message.images?.map((imag)=>
-                              <Image
-                              key={imag}
-                                alt="image"
-                                height={180}
-                                className={`mb-2 rounded-md overflow-hidden`}
-                                width={150}
-                                src={imag}
-                              />
-                        )}</div>
-                          
-                           ) }
-                           <div className="flex justify-end">
-                          <div className=" w-fit max-w-xl px-4 py-2   text-gray-700 bg-blue-300 rounded shadow">
-                           <span className="block">{message.content}</span>
-                           </div>
-                          </div>
-                          </div>
-                        </li>
-                      )}
-                    </ul>
-                  ))}
-                <div ref={messagesEndRef} />
-              </div>
+              <ChatDisplay
+               
+                loginUserData={loginUserData}
+                messages={reversed}
+              />
               {UploadedFiles.length > 0 && (
-                <div className={`w-fit ${UploadedFiles.length==2 && "grid gap-2 grid-cols-2"} ${UploadedFiles.length>2 && "grid grid-col-4"}`}>
+                <div
+                  className={`w-fit ${
+                    UploadedFiles.length == 2 && "grid gap-2 grid-cols-2"
+                  } ${UploadedFiles.length > 2 && "grid grid-col-4"}`}
+                >
                   {UploadedFiles.map((file) => (
-                    <Image key={file} src={file} height={90} width={100} alt="photo" />
+                    <Image
+                      key={file}
+                      src={file}
+                      height={90}
+                      width={100}
+                      alt="photo"
+                    />
                   ))}
                 </div>
               )}
