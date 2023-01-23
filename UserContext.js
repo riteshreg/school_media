@@ -29,6 +29,17 @@ export const UserContextProvider = ({children}) =>{
     scrollToBottom()
   },[newIncomingMessageTrigger])
 
+  useEffect(()=>{
+    supabase
+    .from("messages")
+    .select("*")
+    .range(0, 5)
+    .order("id", { ascending: false })
+    .then((response) => {
+      setMessages(response.data);
+      scrollToBottom()
+    });
+  },[])
 
   useEffect(() => {
     supabase

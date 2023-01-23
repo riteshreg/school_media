@@ -21,15 +21,7 @@ function MessagingPage() {
 
 
   useEffect(() => {
-    supabase
-      .from("messages")
-      .select("*")
-      .range(0, 5)
-      .order("id", { ascending: false })
-      .then((response) => {
-        setMessages(response.data);
-        scrollToBottom()
-      });
+   
 
     GetLoginUserData().then((response) => {
       if (response.session?.user) {
