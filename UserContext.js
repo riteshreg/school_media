@@ -12,6 +12,7 @@ export const UserContextProvider = ({children}) =>{
   const [scrollPosition, setScrollPosition] = useState(0);
   const [messages, setMessages] = useState([])
   const [isOnBottom, setIsOnBottom] = useState(false);
+  const [firstScroll, setFirstScroll] = useState(false)
 
 
   const [newIncomingMessageTrigger, setNewIncomingMessageTrigger] =   useState(null);
@@ -29,6 +30,10 @@ export const UserContextProvider = ({children}) =>{
   },[newIncomingMessageTrigger])
 
   useEffect(()=>{
+    scrollToBottom()
+  },[firstScroll])
+
+  useEffect(()=>{
     supabase
     .from("messages")
     .select("*")
@@ -36,9 +41,7 @@ export const UserContextProvider = ({children}) =>{
     .order("id", { ascending: false })
     .then((response) => {
       setMessages(response.data);
-      if(messages){
-        scrollToBottom()
-      }
+      setFirstScroll(true)
     });
   },[])
 
