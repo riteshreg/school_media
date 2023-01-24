@@ -4,6 +4,7 @@ import { GetLoginUserData } from "@/helper/GetLoginUserData";
 import { UserContext } from "@/UserContext";
 import { useSupabaseClient } from "@supabase/auth-helpers-react";
 import Image from "next/image";
+import { useRouter } from "next/router";
 import React, { useContext, useEffect, useRef, useState } from "react";
 
 function MessagingPage() {
@@ -15,9 +16,17 @@ function MessagingPage() {
   const { scrollPosition,messages, setMessages,scrollToBottom } = useContext(UserContext);
   const reversed = [...messages].reverse();
 
+
+  const router = useRouter();
+  const {asPath} = router;
+
   const supabase = useSupabaseClient();
 
-
+  useEffect(()=>{
+    if(asPath=="/messaging"){
+      scrollToBottom();
+    }
+  },[])
 
 
   useEffect(() => {

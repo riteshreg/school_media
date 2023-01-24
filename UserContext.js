@@ -1,4 +1,5 @@
 import { useSupabaseClient } from "@supabase/auth-helpers-react";
+import { useRouter } from "next/router";
 import { createContext, useEffect, useRef, useState } from "react";
 
 export const UserContext = createContext({})
@@ -12,15 +13,11 @@ export const UserContextProvider = ({children}) =>{
   const [scrollPosition, setScrollPosition] = useState(0);
   const [messages, setMessages] = useState([])
   const [isOnBottom, setIsOnBottom] = useState(false);
-  const [firstScroll, setFirstScroll] = useState(false)
+  const [firstScrollBottom, setFirstScrollBottom] = useState(false)
 
+  
 
   const [newIncomingMessageTrigger, setNewIncomingMessageTrigger] =   useState(null);
-
-
-
-
-
 
 
   const scrollRef = useRef();
@@ -31,7 +28,7 @@ export const UserContextProvider = ({children}) =>{
 
   useEffect(()=>{
     scrollToBottom()
-  },[firstScroll])
+  },[firstScrollBottom])
 
   useEffect(()=>{
     supabase
@@ -41,7 +38,7 @@ export const UserContextProvider = ({children}) =>{
     .order("id", { ascending: false })
     .then((response) => {
       setMessages(response.data);
-      setFirstScroll(true)
+      setFirstScrollBottom(true)
     });
   },[])
 
@@ -102,7 +99,8 @@ export const UserContextProvider = ({children}) =>{
                      messages, setMessages, 
                      onScroll,
                      scrollToBottom,
-                     scrollRef
+                     scrollRef,
+                     
                      }}>
             {children}
         </UserContext.Provider>
