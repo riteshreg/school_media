@@ -8,7 +8,6 @@ function AccountCreated({ name, email, phone, password, class:grade}) {
         <h1 className='text-center text-red-600 font-bold text-xl'>NOTE ALL THE REQUIRED CREDENTIALS</h1>
           <Card>
            <div className='p-4 space-y-3'>
-            <h2>{`id: ${id}`}</h2>
             <h2>{`Name: ${name}`}</h2>
             <h2>{`email :${email}`}</h2>
             <h2>{`phone ${phone}`}</h2>
