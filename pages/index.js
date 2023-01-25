@@ -13,18 +13,16 @@ export default function Home() {
   const [AllPost, setAllPost] = useState([])
 
   const session = useSession()
-  const {setLoginUserData} = useContext(UserContext)
+  const {setLoginUserId} = useContext(UserContext)
 
 
   const supabase = useSupabaseClient();
-
-  console.log(session?.user)
 
  
 
   useEffect(()=>{
     if(session?.user){
-      setLoginUserData(session.user)
+      setLoginUserId(session.user)
       setLoginUser(session.user)
     }
   },[session])

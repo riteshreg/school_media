@@ -1,6 +1,7 @@
 import ChatDisplay from "@/components/ChatDisplay";
 import HomeLayout from "@/components/HomeLayout";
 import { GetLoginUserData } from "@/helper/GetLoginUserData";
+import GetProfile from "@/helper/GetProfile";
 import { UserContext } from "@/UserContext";
 import { useSession, useSupabaseClient } from "@supabase/auth-helpers-react";
 import Image from "next/image";
@@ -13,24 +14,47 @@ function MessagingPage() {
   const [UploadedFiles, setUploadedFiles] = useState([]);
 
 
-  const { scrollPosition,messages, setMessages,scrollToBottom } = useContext(UserContext);
-  const reversed = [...messages].reverse();
+  const { scrollPosition,messages, setMessages,scrollToBottom,setStatus, loginUserProfile,setLoginUserProfile } = useContext(UserContext);
+  const reversed = messages && [...messages].reverse();
 
 
 
   const router = useRouter();
-  const {asPath} = router;
-
+  const {pathname} = router;
+  const {status,id} = router.query
   const supabase = useSupabaseClient();
   const session = useSession()
 
+
+
+  
   useEffect(()=>{
-    if(asPath=="/messaging"){
+    if(status){
+      setStatus(status)
+    }
+  })
+
+  useEffect(()=>{
+      if(!loginUserProfile && id){
+          GetProfile(id,setLoginUserProfile)
+        }
+  },[id])
+
+  useEffect(()=>{
+    if(loginUserProfile?.status && loginUserProfile.status !== status ){
+      router.push("/")
+    }
+  },[loginUserProfile, status])
+
+
+
+  useEffect(()=>{
+     
+    if(pathname=="/messages/[id]/[status]"){
       scrollToBottom();
     }
   },[])
 
-  // console.log("messaging", loginUserData)
 
   useEffect(() => {
     setLoginUserData(session?.user)    
@@ -39,7 +63,7 @@ function MessagingPage() {
 
   const handleSendMessage = () => {
     supabase
-      .from("messages")
+      .from(`${status==12 && "messages" || status==11 && "class_11_messages" || status==10 && "class_10_messages" || status == 9 && "class_9_messages"}`)
       .insert({
         content,
         author: loginUserData?.id,
@@ -73,7 +97,7 @@ function MessagingPage() {
       <div className="bg-gray-100">
         <div>
           <h1 className="text-xl text-center font-semibold text-gray-600">
-            School Messaging Group
+            {`Janata Mavi Class ${status} Messaging Group`}
           </h1>
         </div>
 

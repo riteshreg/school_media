@@ -9,11 +9,13 @@ export const UserContextProvider = ({children}) =>{
 
   const supabase = useSupabaseClient();
       
-  const [loginUserData, setLoginUserData] = useState("riteshreg")
+  const [loginUserId, setLoginUserId] = useState()
   const [scrollPosition, setScrollPosition] = useState(0);
   const [messages, setMessages] = useState([])
+  const [loginUserProfile, setLoginUserProfile] = useState()
   const [isOnBottom, setIsOnBottom] = useState(false);
   const [firstScrollBottom, setFirstScrollBottom] = useState(false)
+  const [status, setStatus] = useState(null)
 
   
 
@@ -22,7 +24,6 @@ export const UserContextProvider = ({children}) =>{
 
   const scrollRef = useRef();
 
-  console.log(messages)
 
   useEffect(()=>{
     scrollToBottom()
@@ -31,10 +32,12 @@ export const UserContextProvider = ({children}) =>{
   useEffect(()=>{
     scrollToBottom()
   },[firstScrollBottom])
-
+  
+  // sdf??
   useEffect(()=>{
-    supabase
-    .from("messages")
+      if(status){
+       supabase
+       .from(`${status==12 && "messages" || status==11 && "class_11_messages" || status==10 && "class_10_messages" || status == 9 && "class_9_messages"}`)
     .select("*")
     .range(0, 10)
     .order("id", { ascending: false })
@@ -42,7 +45,8 @@ export const UserContextProvider = ({children}) =>{
       setMessages(response.data);
       setFirstScrollBottom(true)
     });
-  },[])
+  }   
+  },[status])
 
   useEffect(() => {
    
@@ -52,7 +56,7 @@ export const UserContextProvider = ({children}) =>{
       {
         event:"*",
         schema:"public",
-        table:"messages"
+        table: "messages"
       },
       (payload) => { 
         setMessages(prev=>[payload.new, ...prev])
@@ -73,8 +77,8 @@ export const UserContextProvider = ({children}) =>{
     if (target.scrollTop === 0) {
       // console.log("messages.length :>> ", messages.length);
       const { data, error } = await supabase
-        .from("messages")
-        .select()
+      .from(`${status==12 && "messages" || status==11 && "class_11_messages" || status==10 && "class_10_messages" || status == 9 && "class_9_messages"}`)
+      .select()
         .range(messages.length, messages.length + 20)
         .order("id", { ascending: false });
       if (error) {
@@ -98,13 +102,15 @@ export const UserContextProvider = ({children}) =>{
 
     return(
         <UserContext.Provider value={{
-                     loginUserData, setLoginUserData, 
+                     loginUserId, setLoginUserId, 
                      scrollPosition, setScrollPosition,
                      messages, setMessages, 
                      onScroll,
                      scrollToBottom,
                      scrollRef,
-                     
+                     loginUserProfile,
+                     setLoginUserProfile,
+                     setStatus,
                      }}>
             {children}
         </UserContext.Provider>

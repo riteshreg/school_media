@@ -13,7 +13,7 @@ const {onScroll,scrollRef} = useContext(UserContext)
 return(
 <div onScroll={onScroll} ref={scrollRef} className="relative w-full p-6 overflow-y-auto h-[25rem] ">
     <div >    
-{messages.length > 0 &&
+{messages?.length > 0 &&
   messages.map((message) => (
     <ul className="space-y-2 my-5 " key={message.id}>
       {message.author !== loginUserData?.id && (

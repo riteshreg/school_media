@@ -11,18 +11,17 @@ export default function CreatePost({FetchAllPost}) {
   const supabase = useSupabaseClient();
 
   const [userPostText, setUserPostText] = useState();
-  const { loginUserData } = useContext(UserContext);
+  const { loginUserId } = useContext(UserContext);
   const [images, setImage] = useState([]);
   const [showLoader, setShowLoader] = useState(false);
 
-  console.log("loginUserData",loginUserData)
   
   const handleCreatePost = () => {
     supabase
       .from("posts")
       .insert({
         content: userPostText,
-        author: loginUserData?.id,
+        author: loginUserId?.id,
         images: images,
       })
       .then((response) => {

@@ -3,6 +3,8 @@ import Card from "@/components/Card";
 import { useRouter } from 'next/router';
 import Link from 'next/link';
 import { useSession, useSupabaseClient } from '@supabase/auth-helpers-react';
+import { useContext } from 'react';
+import { UserContext } from '@/UserContext';
 
 export default function HomeLayout({ children }) {
 
@@ -10,9 +12,12 @@ export default function HomeLayout({ children }) {
 
   const {asPath} = router
 
+  const {status,pathname} = router.query
+  
   const HomeSelected = asPath == "/"
   const GroupSelected  =  asPath == "/messaging"
 
+  const {loginUserId} = useContext(UserContext)
 
   const onSelectedStyle = "bg-blue-400 rounded-md text-white -mx-4 px-4 py-1"
   const onHover = " hover:-mx-6 hover:px-6 hover:bg-blue-200 hover:rounded-md hover:overflow-hidden   md:py-2"
@@ -46,7 +51,7 @@ export default function HomeLayout({ children }) {
                 {" "}
                 <BuildingLibraryIcon className="h-8" />  <span className='hidden md:block'>School</span>
               </div>
-              <Link href={"/messaging"} className={` ${GroupSelected && onSelectedStyle} ${onHover} flex items-center gap-2`}>
+              <Link href={`/messages/${loginUserId?.id}`} className={` ${GroupSelected && onSelectedStyle} ${onHover} flex items-center gap-2`}>
                 {" "}
                 <UserGroupIcon className="h-8" />  <span className='hidden md:block'>Group</span>
               </Link>

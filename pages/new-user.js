@@ -24,7 +24,7 @@ function NewUser() {
     name: "",
     email: "",
     phone: "",
-    class:"",
+    status:"",
     password:""
   });
 
@@ -33,6 +33,8 @@ function NewUser() {
     { value: "10", label: "Class 10" },
     { value: "11", label: "Class 11" },
     { value: "12", label: "Class 12" },
+    { value: "developer", label: "Developer" },
+    { value: "teacher", label: "Teacher" },
   ];
 
  
@@ -61,7 +63,7 @@ function NewUser() {
           name:userData.name,
           email:userData.email,
           phone:userData.phone,
-          class:userData.class,
+          status:userData.status,
           password:userData.password
         }).then((response)=>{
             setToShow(true)
@@ -86,7 +88,7 @@ function NewUser() {
         <input className={style} type="text" name="name" placeholder="full name" onChange={handleChage} />
         <input type="email" className={style} name="email" placeholder="email" onChange={handleChage} />
         <input type="tel" className={style} name="phone" placeholder="phone no" onChange={handleChage} />
-        <Select id="selectbox" onChange={(e)=>setUserData({...userData,class:e.value})} instanceId="selectbox" options={options} />
+        <Select id="selectbox" onChange={(e)=>setUserData({...userData,status:e.value})} instanceId="selectbox" options={options} />
       </div>
       <button onClick={handleNewUser} className="bg-blue-300 rounded-lg px-4 py-2">
         Create User
