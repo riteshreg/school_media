@@ -15,6 +15,8 @@ export default function CreatePost({FetchAllPost}) {
   const [images, setImage] = useState([]);
   const [showLoader, setShowLoader] = useState(false);
 
+  console.log("loginUserData",loginUserData)
+  
   const handleCreatePost = () => {
     supabase
       .from("posts")

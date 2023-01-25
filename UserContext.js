@@ -18,9 +18,11 @@ export const UserContextProvider = ({children}) =>{
   
 
   const [newIncomingMessageTrigger, setNewIncomingMessageTrigger] =   useState(null);
-
+  
 
   const scrollRef = useRef();
+
+  console.log(messages)
 
   useEffect(()=>{
     scrollToBottom()
@@ -43,19 +45,21 @@ export const UserContextProvider = ({children}) =>{
   },[])
 
   useEffect(() => {
-    supabase
-      .channel("public:currently_searching")
-      .on(
-        "postgres_changes",
-        { event: "*", schema: "public", table: "messages" },
-        (payload) => {
-          setMessages((prev) => [payload.new, ...prev]);
-          scrollToBottom()
-          setNewIncomingMessageTrigger(payload.new)
-        }
-      )
-      .subscribe();
-  }, [supabase]);
+   
+    supabase.channel("schema-db-changes")
+    .on(
+      'postgres_changes',
+      {
+        event:"*",
+        schema:"public",
+        table:"messages"
+      },
+      (payload) => { 
+        setMessages(prev=>[payload.new, ...prev])
+        setNewIncomingMessageTrigger(payload.new)
+      }
+    ).subscribe()
+  },);
 
 
   const onScroll = async ({ target }) => {

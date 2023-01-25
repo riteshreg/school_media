@@ -5,24 +5,31 @@ import {GetLoginUserData} from "@/helper/GetLoginUserData";
 import { useContext, useEffect, useState } from "react";
 import LoginPage from "./login";
 import { UserContext } from "@/UserContext";
-import { useSupabaseClient } from "@supabase/auth-helpers-react/dist";
+import { useSession, useSupabaseClient } from "@supabase/auth-helpers-react/dist";
 
 export default function Home() {
 
   const [loginUser, setLoginUser] = useState()
   const [AllPost, setAllPost] = useState([])
 
+  const session = useSession()
   const {setLoginUserData} = useContext(UserContext)
 
 
   const supabase = useSupabaseClient();
 
+  console.log(session?.user)
+
+ 
+
   useEffect(()=>{
-    GetLoginUserData().then((response)=>{
-      setLoginUserData(response.session?.user)
-      setLoginUser(response.session?.user)
-    })
-  },[])
+    if(session?.user){
+      setLoginUserData(session.user)
+      setLoginUser(session.user)
+    }
+  },[session])
+
+
 
   useEffect(()=>{
       FetchAllPost();

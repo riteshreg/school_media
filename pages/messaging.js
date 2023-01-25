@@ -2,7 +2,7 @@ import ChatDisplay from "@/components/ChatDisplay";
 import HomeLayout from "@/components/HomeLayout";
 import { GetLoginUserData } from "@/helper/GetLoginUserData";
 import { UserContext } from "@/UserContext";
-import { useSupabaseClient } from "@supabase/auth-helpers-react";
+import { useSession, useSupabaseClient } from "@supabase/auth-helpers-react";
 import Image from "next/image";
 import { useRouter } from "next/router";
 import React, { useContext, useEffect, useRef, useState } from "react";
@@ -17,10 +17,12 @@ function MessagingPage() {
   const reversed = [...messages].reverse();
 
 
+
   const router = useRouter();
   const {asPath} = router;
 
   const supabase = useSupabaseClient();
+  const session = useSession()
 
   useEffect(()=>{
     if(asPath=="/messaging"){
@@ -28,20 +30,12 @@ function MessagingPage() {
     }
   },[])
 
+  // console.log("messaging", loginUserData)
 
   useEffect(() => {
-   
+    setLoginUserData(session?.user)    
+  });
 
-    GetLoginUserData().then((response) => {
-      if (response.session?.user) {
-        setLoginUserData(response.session?.user);
-      }
-    });
-  }, [supabase]);
-
-
-
-  
 
   const handleSendMessage = () => {
     supabase
@@ -49,7 +43,7 @@ function MessagingPage() {
       .insert({
         content,
         author: loginUserData?.id,
-        author_name: loginUserData?.user_metadata?.name,
+        author_name: loginUserData?.email.split("@")[0],
         images: UploadedFiles,
       })
       .then((response) => {
@@ -99,8 +93,7 @@ function MessagingPage() {
                 </span>
                 <span className="absolute w-3 h-3 bg-green-600 rounded-full left-10 top-3"></span>
               </div>
-              <ChatDisplay
-               
+              <ChatDisplay               
                 loginUserData={loginUserData}
                 messages={reversed}
               />

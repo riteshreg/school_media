@@ -1,8 +1,8 @@
-import { HomeIcon, BuildingLibraryIcon, UserGroupIcon, BellIcon, ArrowLeftCircleIcon } from '@heroicons/react/24/outline'
+import { HomeIcon, BuildingLibraryIcon, UserGroupIcon, BellIcon, ArrowLeftCircleIcon, UserPlusIcon } from '@heroicons/react/24/outline'
 import Card from "@/components/Card";
-import { supabase } from '@/supabase';
 import { useRouter } from 'next/router';
 import Link from 'next/link';
+import { useSession, useSupabaseClient } from '@supabase/auth-helpers-react';
 
 export default function HomeLayout({ children }) {
 
@@ -17,11 +17,15 @@ export default function HomeLayout({ children }) {
   const onSelectedStyle = "bg-blue-400 rounded-md text-white -mx-6 px-6 py-2"
   const onHover = " hover:-mx-6 hover:px-6 hover:bg-blue-200 hover:rounded-md hover:overflow-hidden   md:py-2"
 
+  const supabase = useSupabaseClient();
+
   const handleLogout = async() =>{
+
     const { error } = await supabase.auth.signOut()
     if(error){
       throw error;
     }
+    console.log(error)
     
     router.push('/login')
 
@@ -46,10 +50,10 @@ export default function HomeLayout({ children }) {
                 {" "}
                 <UserGroupIcon className="h-8" />  <span className='hidden md:block'>Group</span>
               </Link>
-              <div className={`flex cursor-pointer items-center gap-2 ${onHover}`}>
+              <Link href={"/new-user"} className={`flex cursor-pointer items-center gap-2 ${onHover}`}>
                 {" "}
-                <BellIcon className="h-8" />  <span className='hidden md:block'>Notice</span>
-              </div>
+                <UserPlusIcon className="h-8" />  <span className='hidden md:block'>New User</span>
+              </Link>
               <div onClick={handleLogout} className={`${onHover} flex items-center gap-2 cursor-pointer`}>
                 {" "}
                 <ArrowLeftCircleIcon   className="h-8 " />  <span className='hidden md:block'>Logout</span>
