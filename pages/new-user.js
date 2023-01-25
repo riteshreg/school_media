@@ -21,7 +21,6 @@ function NewUser() {
   const [toShow, setToShow] = useState(false)
 
   const [userData, setUserData] = useState({
-    id:"",
     name: "",
     email: "",
     phone: "",
