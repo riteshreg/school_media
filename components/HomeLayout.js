@@ -14,7 +14,7 @@ export default function HomeLayout({ children }) {
   const GroupSelected  =  asPath == "/messaging"
 
 
-  const onSelectedStyle = "bg-blue-400 rounded-md text-white -mx-6 px-6 py-2"
+  const onSelectedStyle = "bg-blue-400 rounded-md text-white -mx-4 px-4 py-1"
   const onHover = " hover:-mx-6 hover:px-6 hover:bg-blue-200 hover:rounded-md hover:overflow-hidden   md:py-2"
 
   const supabase = useSupabaseClient();
