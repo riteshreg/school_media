@@ -14,7 +14,7 @@ function MessagingPage() {
   const [UploadedFiles, setUploadedFiles] = useState([]);
 
 
-  const { scrollPosition,messages, setMessages,scrollToBottom,setStatus, loginUserProfile,setLoginUserProfile } = useContext(UserContext);
+  const { messages, setMessages,scrollToBottom,setStatus, loginUserProfile,setLoginUserProfile } = useContext(UserContext);
   const reversed = messages && [...messages].reverse();
 
 
@@ -41,10 +41,10 @@ function MessagingPage() {
   },[id])
 
   useEffect(()=>{
-    if(loginUserProfile?.status && loginUserProfile.status !== status ){
+    if(!loginUserProfile?.status == "teacher" && loginUserProfile?.status && loginUserProfile?.status !== status ){
       router.push("/")
     }
-  },[loginUserProfile, status])
+  })
 
 
 

@@ -1,5 +1,5 @@
 import Image from "next/image";
-const  link="https://cdn.pixabay.com/photo/2016/08/20/05/38/avatar-1606916_960_720.png"
+const  link="https://ypticbcztdwpynckjwag.supabase.co/storage/v1/object/public/images/305480223_576509657594875_840635747841878545_n.jpg"
 export default function Avatar(){
     return(
             <Image 

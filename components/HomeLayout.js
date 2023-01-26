@@ -3,8 +3,13 @@ import Card from "@/components/Card";
 import { useRouter } from 'next/router';
 import Link from 'next/link';
 import { useSession, useSupabaseClient } from '@supabase/auth-helpers-react';
-import { useContext } from 'react';
+import { useContext, useEffect } from 'react';
 import { UserContext } from '@/UserContext';
+
+  
+const onSelectedStyle = "bg-blue-400 rounded-md text-white -mx-4 px-4 py-1"
+const onHover = " hover:-mx-6 hover:px-6 hover:bg-blue-200 hover:rounded-md hover:overflow-hidden   md:py-2"
+
 
 export default function HomeLayout({ children }) {
 
@@ -17,12 +22,16 @@ export default function HomeLayout({ children }) {
   const HomeSelected = asPath == "/"
   const GroupSelected  =  asPath == "/messaging"
 
-  const {loginUserId} = useContext(UserContext)
-
-  const onSelectedStyle = "bg-blue-400 rounded-md text-white -mx-4 px-4 py-1"
-  const onHover = " hover:-mx-6 hover:px-6 hover:bg-blue-200 hover:rounded-md hover:overflow-hidden   md:py-2"
+  const {loginUserId,setLoginUserId} = useContext(UserContext)
 
   const supabase = useSupabaseClient();
+  const session = useSession()
+
+  useEffect(()=>{
+    if(!loginUserId){
+      setLoginUserId(session?.user)
+    }
+  })
 
   const handleLogout = async() =>{
 
@@ -38,7 +47,7 @@ export default function HomeLayout({ children }) {
 
   return (
     <div className="mt-4 flex mx-auto gap-5 max-w-4xl">
-      <div className=" fixed bottom-0 w-screen md:w-3/12 md:static ">
+      <div className=" fixed bottom-0 w-screen md:w-3/12 md:static">
         <Card>
           <div className="px-3 py-2 md:py-2 min-w-[18vw] md:min-h-[60vh]">
             <h1 className="font-bold p-2 text-gray-700 hidden md:block">Navigation</h1>

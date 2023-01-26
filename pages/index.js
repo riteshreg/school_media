@@ -25,13 +25,13 @@ export default function Home() {
       setLoginUserId(session.user)
       setLoginUser(session.user)
     }
-  },[session])
+  },[session,setLoginUserId])
 
 
 
   useEffect(()=>{
       FetchAllPost();
-  },[supabase])
+  },[supabase, FetchAllPost])
 
   function FetchAllPost(){
     supabase.from('posts').select("id,author,content, images, created_at, profiles(avatar,name)").order("created_at",{ascending:false}).limit(20).then((response)=>{

@@ -57,7 +57,7 @@ export default function CreatePost({FetchAllPost}) {
         <div className="relative w-[70%]">
           <div className="">
             <textarea
-              className="w-full pl-2 "
+              className="w-full pl-2 border outline-gray-200"
               onChange={(event) => setUserPostText(event.target.value)}
               placeholder="send message to student"
             />

@@ -49,7 +49,7 @@ export default function PostDispaly({id, content, images, created_at, profile,lo
           </label>
         </div>
         <div className="mx-2 my-1 p-1 text-md">
-          <p>{content}</p>
+          <p className="text-left">{content}</p>
         </div>
         {images.length > 0 && (
           <div

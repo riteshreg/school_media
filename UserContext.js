@@ -1,4 +1,4 @@
-import { useSupabaseClient } from "@supabase/auth-helpers-react";
+import { useSession, useSupabaseClient } from "@supabase/auth-helpers-react";
 import { useRouter } from "next/router";
 import { createContext, useEffect, useRef, useState } from "react";
 
@@ -8,6 +8,8 @@ export const UserContextProvider = ({children}) =>{
 
 
   const supabase = useSupabaseClient();
+  const session = useSession()
+
       
   const [loginUserId, setLoginUserId] = useState()
   const [scrollPosition, setScrollPosition] = useState(0);
@@ -23,6 +25,12 @@ export const UserContextProvider = ({children}) =>{
   
 
   const scrollRef = useRef();
+
+
+  // useEffect(()=>{
+  //   setLoginUserId(session?.user)
+  //   console.log("running")
+  // },[loginUserId==null])
 
 
   useEffect(()=>{
@@ -48,22 +56,24 @@ export const UserContextProvider = ({children}) =>{
   }   
   },[status])
 
+
   useEffect(() => {
-   
-    supabase.channel("schema-db-changes")
-    .on(
-      'postgres_changes',
-      {
-        event:"*",
-        schema:"public",
-        table: "messages"
-      },
-      (payload) => { 
-        setMessages(prev=>[payload.new, ...prev])
-        setNewIncomingMessageTrigger(payload.new)
-      }
-    ).subscribe()
-  },);
+   if(loginUserProfile?.status){
+     supabase.channel("schema-db-changes")
+     .on(
+       'postgres_changes',
+       {
+         event:"*",
+         schema:"public",
+         table: `${status == "12" && "messages" || status == "11" && "class_11_messages" || status == "10" && "class_10_messages" || status == "9" && "class_9_messages"}`
+       },
+       (payload) => { 
+         setMessages(prev=>[payload.new, ...prev])
+         setNewIncomingMessageTrigger(payload.new)
+       }
+     ).subscribe()
+   }
+  });
 
 
   const onScroll = async ({ target }) => {
