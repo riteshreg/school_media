@@ -1,15 +1,21 @@
 import { HeartIcon } from "@heroicons/react/24/outline";
 import { useSupabaseClient } from "@supabase/auth-helpers-react";
 import Image from "next/image";
+import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import Avatar from "../Avatar";
 import Card from "../Card";
+import { PhotoProvider, PhotoView } from 'react-photo-view';
+import 'react-photo-view/dist/react-photo-view.css';
+
 
 export default function PostDispaly({id, content, images, created_at, profile,loginUser }) {
 
   const supabase = useSupabaseClient()
 
   const[likes, setLikes] = useState([])
+  
+  const router = useRouter()
 
 
 
@@ -57,16 +63,21 @@ export default function PostDispaly({id, content, images, created_at, profile,lo
               images.length > 2 && "block md:grid md:grid-cols-2"
             }`}
           >
+                <PhotoProvider>
+
             {images.map((image) => (
+               <PhotoView key={image} src={image}>
               <Image
-                key={image}
                 alt="photo"
                 height={720}
                 className="p-2 rounded-sm overflow-hidden"
                 width={720}
                 src={image}
               />
+              </PhotoView>
             ))}
+                </PhotoProvider>
+
           </div>
         )}
         <div className="pl-2 py-4">
