@@ -70,7 +70,7 @@ export default function PostDispaly({id, content, images, created_at, profile,lo
               <Image
                 alt="photo"
                 height={720}
-                className="p-2 rounded-sm overflow-hidden"
+                className="p-2 cursor-pointer rounded-sm overflow-hidden"
                 width={720}
                 src={image}
               />

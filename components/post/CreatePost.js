@@ -3,19 +3,21 @@ import { PhotoIcon } from "@heroicons/react/24/outline";
 import { useSupabaseClient } from "@supabase/auth-helpers-react/dist";
 import Image from "next/image";
 import { useContext, useState } from "react";
-import { MutatingDots } from "react-loader-spinner";
+import { Rings } from "react-loader-spinner";
 import Avatar from "../Avatar";
 import Card from "../Card";
+import { PhotoProvider, PhotoView } from "react-photo-view";
+import "react-photo-view/dist/react-photo-view.css";
 
-export default function CreatePost({FetchAllPost}) {
+export default function CreatePost({ FetchAllPost }) {
   const supabase = useSupabaseClient();
 
   const [userPostText, setUserPostText] = useState();
   const { loginUserId } = useContext(UserContext);
+  const [preUploadedFiles, setPreUploadedFiles] = useState([]);
   const [images, setImage] = useState([]);
   const [showLoader, setShowLoader] = useState(false);
 
-  
   const handleCreatePost = () => {
     supabase
       .from("posts")
@@ -25,11 +27,12 @@ export default function CreatePost({FetchAllPost}) {
         images: images,
       })
       .then((response) => {
-        if(response.status == 201){
-          setImage(false)
-          setUserPostText(false)
+        if (response.status == 201) {
+          setImage(false);
+          setUserPostText(false);
           FetchAllPost();
-
+          setUserPostText('')
+          setPreUploadedFiles([])
         }
       });
   };
@@ -37,6 +40,9 @@ export default function CreatePost({FetchAllPost}) {
   const handleFileChange = async (event) => {
     setShowLoader(true);
     const files = event.target.files;
+    for (const file of files) {
+      setPreUploadedFiles((prev) => [...prev, URL.createObjectURL(file)]);
+    }
     for (const file of files) {
       const filename = new Date().getTime() + file.name;
       const response = await supabase.storage
@@ -52,12 +58,13 @@ export default function CreatePost({FetchAllPost}) {
 
   return (
     <Card>
-      <div className="flex px-4 mt-2 ml-0 py-1 gap-4 items-center ">
+      <div className="flex  px-4 mt-2 ml-0 py-1 gap-4 items-center ">
         <Avatar />
         <div className="relative w-[70%]">
           <div className="">
             <textarea
-              className="w-full pl-2 border outline-gray-200"
+              value={userPostText}
+              className="w-full overflow-y-hidden pl-2 border outline-gray-200"
               onChange={(event) => setUserPostText(event.target.value)}
               placeholder="send message to student"
             />
@@ -79,39 +86,41 @@ export default function CreatePost({FetchAllPost}) {
           Post
         </button>
       </div>
-      { 
-        showLoader&&
-        <div className="flex  justify-center">
-        <MutatingDots
-        height="100"
-        width="100"
-        color="#635f75"
-        secondaryColor= '#4fa94d'
-        radius='12.5'
-        ariaLabel="mutating-dots-loading"
-        wrapperStyle={{}}
-        wrapperClass=""
-        visible={true}
-       />
-       </div>
-      }
-      {images.length > 0 && (
-        <div
-          className={`  ${images.length >= 3 && "grid grid-cols-3"} ${
-            images.length < 3 && "flex justify-evenly"
-          }`}
-        >
-          {images.map((image) => (
-            <Image
-              key={image}
-              src={image}
-              alt="image"
-              className="h-44 w-auto rounded-md p-1"
-              height={720}
-              width={720}
-            />
-          ))}
+     
+      {preUploadedFiles.length > 0 && (
+        <PhotoProvider>
+          <div className={`p-2 relative flex flex-wrap space-x-1`}>
+            {preUploadedFiles.map((image) => (
+              <PhotoView key={image} src={image}>
+                <Image
+                  src={image}
+                  alt="image"
+                  className={`h-24 cursor-pointer ${
+                    preUploadedFiles.length !== images.length
+                      ? `grayscale`
+                      : "grayscale-0"
+                  } w-auto overflow-hidden  rounded- p-1`}
+                  height={480}
+                  width={480}
+                />
+              </PhotoView>
+            ))}
+             {showLoader && (
+           <div className=" absolute left-0  flex  right-0 z-50 justify-center">
+          <Rings
+            height="80"
+            width="80"
+            color="#4fa94d"
+            radius="6"
+            wrapperStyle={{}}
+            wrapperClass=""
+            visible={true}
+            ariaLabel="rings-loading"
+          />
         </div>
+      )}
+          </div>
+        </PhotoProvider>
       )}
     </Card>
   );
