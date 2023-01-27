@@ -1,48 +1,126 @@
-import { useSupabaseClient } from "@supabase/auth-helpers-react"
+import { useSupabaseClient } from "@supabase/auth-helpers-react";
 import { useRouter } from "next/router";
 import { useState } from "react";
+import { MutatingDots } from "react-loader-spinner";
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 
-const style = "px-5 py-2 border border-gray-300 rounded-md outline-green-300"
+const notify = () => toast.error('something went wrong', {
+    position: "bottom-center",
+    autoClose: 5000,
+    hideProgressBar: false,
+    closeOnClick: true,
+    pauseOnHover: true,
+    draggable: true,
+    progress: undefined,
+    theme: "light",
+    });
 
-export default function LoginPage(){
 
-    const supabase = useSupabaseClient();
-    const router = useRouter()
-    const [loginUser, setLoginUser] = useState({
-        email:"",
-        password:""
-    })
-    
-    const handleChange = (event) =>{
-            setLoginUser(prev=>({
-                ...prev,
-                [event.target.name] : event.target.value
-            }))
+export default function LoginPage() {
+  const supabase = useSupabaseClient();
+  const router = useRouter();
+
+  const [loginUser, setLoginUser] = useState({
+    email: "",
+    password: "",
+  });
+
+  const [progress, setProgress] = useState(false);
+  const [error, setError] = useState(false);
+
+  const handleChange = (event) => {
+    setError(false)
+    setProgress(false)
+    setLoginUser((prev) => ({
+      ...prev,
+      [event.target.name]: event.target.value,
+    }));
+  };
+
+  const handleLogin = async () => {
+    if(loginUser.email && loginUser.password){
+    setProgress(true)
+    const { data, error } = await supabase.auth.signInWithPassword(loginUser);
+    if(error){
+        setError(true)
+        setProgress(false)
+        notify()
     }
-//    async function handleGoogleLogin(){
-//     await supabase.auth.signInWithOAuth({
-//         provider: 'google',
-//       })
-//     }
-
-const handleLogin  = async() =>{
-    const { data, error } = await supabase.auth.signInWithPassword(loginUser)
-    console.log(data)
-    if(data.session.access_token){
-        router.push('/')
+    if (data.session?.access_token) {
+        setProgress(false)
+      router.push("/");
     }
-
 }
+  };
 
-    return(
-        <div className="h-screen w-screen flex items-center justify-center">
-            <div className="flex flex-col space-y-4">
-                <input type="email" placeholder="email" className={style} name="email" onChange={handleChange} />
-                <input type="email"  placeholder="password" className={style} name="password" onChange={handleChange} />
-                <button className="bg-blue-300 px-2 py-2 rounded-md" onClick={handleLogin}>Login</button>
-            </div>
-            {/* <button onClick={handleGoogleLogin} className="bg-[#DB4437] px-5 py-2 rounded-md text-white">Sign In With Google</button> */}
-        </div>
-    )
+  const style = `px-1 w-56 py-2 border ${!error &&"border-gray-300" || error && 'border-red-500 border-2'} rounded-md outline-green-300`;
+
+  return (
+    <div className="h-screen w-screen flex flex-col items-center justify-center">
+      <div className="flex flex-col space-y-4">
+        <input
+        onKeyDown={(e)=>{
+          if(e.key==="Enter"){
+            handleLogin()
+          }
+        }}
+          type="email"
+          placeholder="email"
+          className={style}
+          name="email"
+          onChange={handleChange}
+        />
+        <input
+        onKeyDown={(e)=>{
+          if(e.key==="Enter"){
+            handleLogin()
+          }
+        }}
+          type="password"
+          placeholder="password"
+          className={style}
+          name="password"
+          onChange={handleChange}
+        />
+        <button
+          className="bg-blue-300 px-2 py-2 rounded-md"
+          onClick={handleLogin}
+        >
+          Login
+        </button>
+      </div>
+      <button
+        onClick={() => router.push("/change_password")}
+        className="text-blue-900 mt-3"
+      >
+        Change Password
+      </button>
+      {progress && (
+        <MutatingDots
+          height="100"
+          width="100"
+          color="#635f75"
+          secondaryColor="#4fa94d"
+          radius="12.5"
+          ariaLabel="mutating-dots-loading"
+          wrapperStyle={{}}
+          wrapperClass=""
+          visible={true}
+        />
+      )}
+        <ToastContainer
+        position="bottom-center"
+        autoClose={5000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+        theme="light" />
+    </div>
+  );
 }

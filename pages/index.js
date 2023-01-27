@@ -34,7 +34,7 @@ export default function Home() {
   },[supabase, FetchAllPost])
 
   function FetchAllPost(){
-    supabase.from('posts').select("id,author,content, images, created_at, profiles(avatar,name)").order("created_at",{ascending:false}).limit(20).then((response)=>{
+    supabase.from('posts').select("id,author,content, images, created_at, profiles(avatar,name)").order("created_at",{ascending:false}).limit(8).then((response)=>{
       if(response.error){
         throw response.error
       } 

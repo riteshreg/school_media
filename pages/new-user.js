@@ -9,7 +9,7 @@ import HomeLayout from "@/components/HomeLayout";
 
 const style = "px-2 py-3 border rounded-md outline-blue-300"
 
-var password = generator.generate({
+var generatedPassword = generator.generate({
     length:8,
     numbers:true
  })
@@ -43,7 +43,7 @@ function NewUser() {
 
     setUserData(prev=> ({
         ...prev,
-        password:password,
+        password:generatedPassword,
         [event.target.name] : event.target.value
     }))
 
@@ -64,7 +64,6 @@ function NewUser() {
           email:userData.email,
           phone:userData.phone,
           status:userData.status,
-          password:userData.password
         }).then((response)=>{
             setToShow(true)
           

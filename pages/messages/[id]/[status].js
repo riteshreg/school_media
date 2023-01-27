@@ -41,7 +41,7 @@ function MessagingPage() {
   },[id])
 
   useEffect(()=>{
-    if(!loginUserProfile?.status == "teacher" && loginUserProfile?.status && loginUserProfile?.status !== status ){
+    if(loginUserProfile?.status !== "teacher" && loginUserProfile?.status && loginUserProfile?.status !== status ){
       router.push("/")
     }
   })
