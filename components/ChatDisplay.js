@@ -113,4 +113,3 @@ export default function ChatDisplay({ messages, loginUserData }) {
     </div>
   )
 }
-// 

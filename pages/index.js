@@ -10,7 +10,6 @@ import { supabase } from "@/supabase";
 
 export default function Home({data}) {
 
-  console.log(data)
 
   const [loginUser, setLoginUser] = useState()
   const [AllPost, setAllPost] = useState([])
@@ -24,6 +23,10 @@ export default function Home({data}) {
  
 
   useEffect(()=>{
+      setAllPost(data.data)
+  },[])
+
+  useEffect(()=>{
     if(session?.user){
       setLoginUserId(session.user)
       setLoginUser(session.user)
@@ -32,17 +35,15 @@ export default function Home({data}) {
 
 
 
-  useEffect(()=>{
-      FetchAllPost();
-  },[supabase, FetchAllPost])
-
   function FetchAllPost(){
-    if(data.error){
-        throw response.error
-      } 
-      if(data.data){
-        setAllPost(data.data)
-      }
+    supabase.from('posts').select("id,author,content, images, created_at, profiles(avatar,name)").order("created_at",{ascending:false}).limit(8).then((response)=>{
+      if(response.error){
+          throw response.error
+        } 
+        if(response.data){
+          setAllPost(response.data)
+        }
+    })
     }
   
   if(!loginUser){

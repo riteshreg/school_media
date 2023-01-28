@@ -10,8 +10,9 @@ import { PhotoProvider, PhotoView } from "react-photo-view";
 import "react-photo-view/dist/react-photo-view.css";
 
 export default function CreatePost({ FetchAllPost }) {
-  const supabase = useSupabaseClient();
 
+  const supabase = useSupabaseClient();
+  
   const [userPostText, setUserPostText] = useState();
   const { loginUserId } = useContext(UserContext);
   const [preUploadedFiles, setPreUploadedFiles] = useState([]);
