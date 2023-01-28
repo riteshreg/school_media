@@ -9,14 +9,23 @@ import { useRouter } from "next/router";
 import React, { useContext, useEffect, useRef, useState } from "react";
 
 function MessagingPage() {
+
   const [content, setContent] = useState("");
   const [loginUserData, setLoginUserData] = useState();
-  const [UploadedFiles, setUploadedFiles] = useState([]);
 
 
-  const { messages, setMessages,scrollToBottom,setStatus, loginUserProfile,setLoginUserProfile } = useContext(UserContext);
+  const { messages,
+         scrollToBottom,
+         setStatus, 
+         loginUserProfile,
+         setLoginUserProfile,
+         prevMessagesUploadedFiles,
+        setMessagesUploadedFiles,
+        setPrevMessagesUploadedFiles,
+        messagesUploadedFiles
+        } = useContext(UserContext);
+
   const reversed = messages && [...messages].reverse();
-
 
 
   const router = useRouter();
@@ -47,7 +56,6 @@ function MessagingPage() {
   })
 
 
-
   useEffect(()=>{
      
     if(pathname=="/messages/[id]/[status]"){
@@ -60,6 +68,7 @@ function MessagingPage() {
     setLoginUserData(session?.user)    
   });
 
+   
 
   const handleSendMessage = () => {
     supabase
@@ -68,16 +77,19 @@ function MessagingPage() {
         content,
         author: loginUserData?.id,
         author_name: loginUserData?.email.split("@")[0],
-        images: UploadedFiles,
+        images: messagesUploadedFiles,
       })
       .then((response) => {
         setContent("");
-        setUploadedFiles([]);
+            
       });
   };
 
   const handleUploadFiles = (event) => {
     const files = event.target.files;
+    for (const file of files){
+      setPrevMessagesUploadedFiles(prev=>[...prev,URL.createObjectURL(file)])
+    }
     for (const file of files) {
       const newName = new Date().getTime() + file.name;
       supabase.storage
@@ -87,10 +99,13 @@ function MessagingPage() {
           const url =
             "https://ypticbcztdwpynckjwag.supabase.co/storage/v1/object/public/images/" +
             resp.data.path;
-          setUploadedFiles((prev) => [...prev, url]);
+          setMessagesUploadedFiles((prev) => [...prev, url]);
         });
     }
+  
   };
+
+
 
   return (
     <HomeLayout>
@@ -121,7 +136,7 @@ function MessagingPage() {
                 loginUserData={loginUserData}
                 messages={reversed}
               />
-              {UploadedFiles.length > 0 && (
+              {/* {UploadedFiles.length > 0 && (
                 <div
                   className={`w-fit ${
                     UploadedFiles.length == 2 && "grid gap-2 grid-cols-2"
@@ -137,7 +152,7 @@ function MessagingPage() {
                     />
                   ))}
                 </div>
-              )}
+              )} */}
               <div className="flex items-center justify-between w-full p-3 border-t border-gray-300">
                 <label className="py-1">
                   <input

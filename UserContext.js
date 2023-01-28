@@ -19,7 +19,8 @@ export const UserContextProvider = ({children}) =>{
   const [firstScrollBottom, setFirstScrollBottom] = useState(false)
   const [status, setStatus] = useState(null)
 
-  
+  const [prevMessagesUploadedFiles, setPrevMessagesUploadedFiles] = useState([])
+  const [messagesUploadedFiles, setMessagesUploadedFiles] = useState([])
 
   const [newIncomingMessageTrigger, setNewIncomingMessageTrigger] =   useState(null);
   
@@ -121,6 +122,8 @@ export const UserContextProvider = ({children}) =>{
                      loginUserProfile,
                      setLoginUserProfile,
                      setStatus,
+                     messagesUploadedFiles,setMessagesUploadedFiles,
+                     prevMessagesUploadedFiles,setPrevMessagesUploadedFiles
                      }}>
             {children}
         </UserContext.Provider>

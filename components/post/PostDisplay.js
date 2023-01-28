@@ -14,12 +14,14 @@ export default function PostDispaly({id, content, images, created_at, profile,lo
   const supabase = useSupabaseClient()
 
   const[likes, setLikes] = useState([])
+  const [disabledLike, setDisabledLike] = useState(false)
   
   const router = useRouter()
 
 
 
   const handleLike  = () =>{
+      setDisabledLike(true)
     if(!IAlreadyLiked){
       supabase.from("likes").insert({
           user_id:loginUser?.id,
@@ -82,8 +84,8 @@ export default function PostDispaly({id, content, images, created_at, profile,lo
         )}
         <div className="pl-2 py-4">
           <div  className="ml-4 flex gap-2 items-center">
-           <HeartIcon onClick={handleLike}  className={`h-8 ${IAlreadyLiked && "fill-red-600"}`}/> 
-            {likes.length}
+           <HeartIcon  onClick={handleLike}  className={`${disabledLike && 'pointer-events-none'} h-8  ${IAlreadyLiked && "fill-red-600"}`}/> 
+           {likes.length}
           </div>
         </div>
       </Card>

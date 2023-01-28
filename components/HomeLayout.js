@@ -64,7 +64,7 @@ export default function HomeLayout({ children }) {
                 {" "}
                 <UserGroupIcon className="h-8" />  <span className='hidden md:block'>Group</span>
               </Link>
-              <Link href={"/new-user"} className={`flex cursor-pointer items-center gap-2 ${onHover}`}>
+              <Link href={"https://school-media-lwy4.vercel.app/"} target="_blank" className={`flex cursor-pointer items-center gap-2 ${onHover}`}>
                 {" "}
                 <UserPlusIcon className="h-8" />  <span className='hidden md:block'>New User</span>
               </Link>

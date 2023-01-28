@@ -6,8 +6,11 @@ import { useContext, useEffect, useState } from "react";
 import LoginPage from "./login";
 import { UserContext } from "@/UserContext";
 import { useSession, useSupabaseClient } from "@supabase/auth-helpers-react/dist";
+import { supabase } from "@/supabase";
 
-export default function Home() {
+export default function Home({data}) {
+
+  console.log(data)
 
   const [loginUser, setLoginUser] = useState()
   const [AllPost, setAllPost] = useState([])
@@ -34,16 +37,14 @@ export default function Home() {
   },[supabase, FetchAllPost])
 
   function FetchAllPost(){
-    supabase.from('posts').select("id,author,content, images, created_at, profiles(avatar,name)").order("created_at",{ascending:false}).limit(8).then((response)=>{
-      if(response.error){
+    if(data.error){
         throw response.error
       } 
-      if(response.data){
-        setAllPost(response.data)
+      if(data.data){
+        setAllPost(data.data)
       }
-    })
-  }
-
+    }
+  
   if(!loginUser){
     return <LoginPage/>
   }
@@ -59,4 +60,14 @@ export default function Home() {
       </div>
     </HomeLayout>
   );
+}
+
+
+export async function getServerSideProps(context){
+  const data = await supabase.from('posts').select("id,author,content, images, created_at, profiles(avatar,name)").order("created_at",{ascending:false}).limit(8)
+  return{
+    props:{
+        data
+    }
+  }
 }
