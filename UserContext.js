@@ -90,7 +90,7 @@ export const UserContextProvider = ({children}) =>{
       const { data, error } = await supabase
       .from(`${status==12 && "messages" || status==11 && "class_11_messages" || status==10 && "class_10_messages" || status == 9 && "class_9_messages"}`)
       .select()
-        .range(messages.length, messages.length + 20)
+        .range(messages?.length, messages?.length + 20)
         .order("id", { ascending: false });
       if (error) {
         setError(error.message);

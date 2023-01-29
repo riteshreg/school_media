@@ -29,7 +29,7 @@ export default function ChatDisplay({ messages, loginUserData }) {
                     <PhotoProvider>
                       {message.images?.length > 0 && (
                         <div
-                          className={` ${
+                          className={`relative ${
                             message.images.length == 1 && "flex  justify-end"
                           }  ${
                             message.images.length > 1 &&
@@ -48,7 +48,11 @@ export default function ChatDisplay({ messages, loginUserData }) {
                               />
                             </PhotoView>
                           ))}
-                        </div>
+                          {/* author name on photo */}
+                       <div>
+                       <p className="text-gray-600 absolute left-0 p-0 top-0">{`@${message?.author_name}`}</p>
+                       </div>  
+                     </div>
                       )}
                     </PhotoProvider>
                     <div>
@@ -91,25 +95,26 @@ export default function ChatDisplay({ messages, loginUserData }) {
                         </div>
                       )}
                     </PhotoProvider>
-                    <div className="flex justify-end">
+                   {message?.content?.length>0 && <div className="flex justify-end">
                       <div className=" w-fit max-w-xl px-4 py-2   text-gray-700 bg-blue-300 rounded shadow">
                         <span className="block">{message.content}</span>
                       </div>
                     </div>
+                    }
                   </div>
                 </li>
               )}
             </ul>
           ))}
       </div>
-      <div className="flex flex-wrap justify-end space-x-3">
+      {/* <div className="flex flex-wrap justify-end space-x-3">
         <div className="flex flex-wrap space-x-3">
         {prevMessagesUploadedFiles.length > 0 &&
           prevMessagesUploadedFiles?.map((uploadedFile) => (
             <Image key={uploadedFile} className={`${prevMessagesUploadedFiles.length !== messagesUploadedFiles.length? "grayscale" : "grayscale-0"} h-32 w-32 rounded-md`} width={480} height={480} alt="images" src={uploadedFile} />
           ))}
         </div>
-      </div>
+      </div> */}
     </div>
   )
 }

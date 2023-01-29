@@ -42,7 +42,7 @@ export default function PostDispaly({id, content, images, created_at, profile,lo
     supabase.from('likes').select().eq("post_id", id).then((res)=>setLikes(res.data))
   }
 
- const IAlreadyLiked =  !!likes.find(like=>like.user_id == loginUser.id)
+ const IAlreadyLiked =  !!likes?.find(like=>like.user_id == loginUser.id)
 
   return (
     <div className="py-1">

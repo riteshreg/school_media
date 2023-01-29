@@ -81,11 +81,13 @@ function MessagingPage() {
       })
       .then((response) => {
         setContent("");
+        setPrevMessagesUploadedFiles([])
+        setMessagesUploadedFiles([])
             
       });
   };
 
-  const handleUploadFiles = (event) => {
+  const handleUploadFiles = (event) => { //handleChangeFunction
     const files = event.target.files;
     for (const file of files){
       setPrevMessagesUploadedFiles(prev=>[...prev,URL.createObjectURL(file)])
@@ -153,7 +155,14 @@ function MessagingPage() {
                   ))}
                 </div>
               )} */}
-              <div className="flex items-center justify-between w-full p-3 border-t border-gray-300">
+              <div className="p-3 border-t border-gray-300">
+                {prevMessagesUploadedFiles.length>0 && <div className="md:ml-5 flex space-x-1">{
+                  prevMessagesUploadedFiles.map((image)=>
+                    <Image key={image} className={`rounded-md ${prevMessagesUploadedFiles.length == messagesUploadedFiles.length ? 'grayscale-0' : 'grayscale'}`} alt="img" height={55} width={55} src={image}/>
+                  )
+                }
+                </div>}
+              <div className="flex items-center justify-between w-full ">
                 <label className="py-1">
                   <input
                     multiple
@@ -190,7 +199,7 @@ function MessagingPage() {
                   className="block w-full py-2 pl-4 mx-3 bg-gray-100 rounded-full outline-none focus:text-gray-700"
                 />
 
-                <button disabled={!content} onClick={handleSendMessage}>
+                <button  onClick={handleSendMessage}>
                   <svg
                     className="w-5 h-5 text-gray-500 origin-center transform rotate-90"
                     xmlns="http://www.w3.org/2000/svg"
@@ -200,6 +209,7 @@ function MessagingPage() {
                     <path d="M10.894 2.553a1 1 0 00-1.788 0l-7 14a1 1 0 001.169 1.409l5-1.429A1 1 0 009 15.571V11a1 1 0 112 0v4.571a1 1 0 00.725.962l5 1.428a1 1 0 001.17-1.408l-7-14z" />
                   </svg>
                 </button>
+              </div>
               </div>
             </div>
           </div>

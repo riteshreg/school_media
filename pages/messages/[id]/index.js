@@ -2,6 +2,7 @@ import Card from "@/components/Card";
 import HomeLayout from "@/components/HomeLayout";
 import ShowAllGroup from "@/components/ShowAllGroup";
 import GetProfile from "@/helper/GetProfile";
+import { supabase } from "@/supabase";
 import { UserContext } from "@/UserContext";
 import { useSupabaseClient } from "@supabase/auth-helpers-react";
 import Image from "next/image";
@@ -10,19 +11,18 @@ import React, { useContext, useEffect, useState } from "react";
 import { MagnifyingGlass } from "react-loader-spinner";
 
 
-function Messages() {
+function Messages({userProfile}) {
   const [hold, setHold] = useState(false);
   const router = useRouter();
   const { loginUserProfile, setLoginUserProfile } = useContext(UserContext);
 
-  const { id } = router.query;
   const supabase = useSupabaseClient();
 
+  const {id} = router.query
+
   useEffect(() => {
-    if (id) {
-      GetProfile(id, setLoginUserProfile);
-    }
-  }, [id]);
+   setLoginUserProfile(userProfile)
+  }, []);
 
   useEffect(() => {
     if (
@@ -121,3 +121,15 @@ function Messages() {
 }
 
 export default Messages;
+
+
+export async function getServerSideProps(context){
+
+  const data = await supabase.from("profiles").select().eq("id",context.query.id)
+
+  return{
+    props:{
+        userProfile:data?.data?.[0]
+    }
+  }
+}
