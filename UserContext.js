@@ -19,6 +19,8 @@ export const UserContextProvider = ({children}) =>{
   const [firstScrollBottom, setFirstScrollBottom] = useState(false)
   const [status, setStatus] = useState(null)
 
+  const [loginAsAdmin, setLoginAsAdmin]  = useState(false)
+
   const [prevMessagesUploadedFiles, setPrevMessagesUploadedFiles] = useState([])
   const [messagesUploadedFiles, setMessagesUploadedFiles] = useState([])
 
@@ -28,12 +30,6 @@ export const UserContextProvider = ({children}) =>{
   const scrollRef = useRef();
 
 
-  // useEffect(()=>{
-  //   setLoginUserId(session?.user)
-  //   console.log("running")
-  // },[loginUserId==null])
-
-
   useEffect(()=>{
     scrollToBottom()
   },[newIncomingMessageTrigger])
@@ -41,22 +37,14 @@ export const UserContextProvider = ({children}) =>{
   useEffect(()=>{
     scrollToBottom()
   },[firstScrollBottom])
-  
-  // sdf??
-  useEffect(()=>{
-      if(status){
-       supabase
-       .from(`${status==12 && "messages" || status==11 && "class_11_messages" || status==10 && "class_10_messages" || status == 9 && "class_9_messages"}`)
-    .select("*")
-    .range(0, 10)
-    .order("id", { ascending: false })
-    .then((response) => {
-      setMessages(response.data);
-      setFirstScrollBottom(true)
-    });
-  }   
-  },[status])
 
+  useEffect(()=>{
+      if(loginUserId?.id == "470505ee-5319-441e-9185-34a0eaa2027e"){
+        setLoginAsAdmin(true)
+      }
+  },[loginUserId])
+  
+  
 
   useEffect(() => {
    if(loginUserProfile?.status){
@@ -118,12 +106,14 @@ export const UserContextProvider = ({children}) =>{
                      messages, setMessages, 
                      onScroll,
                      scrollToBottom,
+                    setFirstScrollBottom,
                      scrollRef,
                      loginUserProfile,
                      setLoginUserProfile,
                      setStatus,
                      messagesUploadedFiles,setMessagesUploadedFiles,
-                     prevMessagesUploadedFiles,setPrevMessagesUploadedFiles
+                     prevMessagesUploadedFiles,setPrevMessagesUploadedFiles,
+                     loginAsAdmin,
                      }}>
             {children}
         </UserContext.Provider>

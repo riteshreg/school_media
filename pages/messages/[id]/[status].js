@@ -2,20 +2,24 @@ import ChatDisplay from "@/components/ChatDisplay";
 import HomeLayout from "@/components/HomeLayout";
 import { GetLoginUserData } from "@/helper/GetLoginUserData";
 import GetProfile from "@/helper/GetProfile";
+import { supabase } from "@/supabase";
 import { UserContext } from "@/UserContext";
 import { useSession, useSupabaseClient } from "@supabase/auth-helpers-react";
 import Image from "next/image";
 import { useRouter } from "next/router";
 import React, { useContext, useEffect, useRef, useState } from "react";
 
-function MessagingPage() {
+function MessagingPage({fetch_messages}) {
+
 
   const [content, setContent] = useState("");
   const [loginUserData, setLoginUserData] = useState();
 
 
   const { messages,
+          setMessages,
          scrollToBottom,
+        setFirstScrollBottom,
          setStatus, 
          loginUserProfile,
          setLoginUserProfile,
@@ -57,7 +61,11 @@ function MessagingPage() {
 
 
   useEffect(()=>{
-     
+    
+    setMessages(fetch_messages)
+          setFirstScrollBottom(true)
+
+    
     if(pathname=="/messages/[id]/[status]"){
       scrollToBottom();
     }
@@ -111,7 +119,7 @@ function MessagingPage() {
 
   return (
     <HomeLayout>
-      <div className="bg-gray-100">
+      <div className="bg-gray-100 min-h-max">
         <div>
           <h1 className="text-xl text-center font-semibold text-gray-600">
             {`Janata Mavi Class ${status} Messaging Group`}
@@ -121,20 +129,8 @@ function MessagingPage() {
         <div className="container mx-auto">
           <div className="lg:col-span-2 lg:block">
             <div className="w-full">
-              <div className="relative flex items-center p-3 border-b border-gray-300">
-                <Image
-                  width={480}
-                  height={480}
-                  className="object-cover w-10 h-10 rounded-full"
-                  src="https://cdn.pixabay.com/photo/2017/04/19/17/26/people-2243021_960_720.jpg"
-                  alt="username"
-                />
-                <span className="block ml-2 font-bold text-gray-600">
-                  School
-                </span>
-                <span className="absolute w-3 h-3 bg-green-600 rounded-full left-10 top-3"></span>
-              </div>
-              <ChatDisplay               
+              <div className="relative flex items-center p-1 border-b border-gray-300"/>
+                <ChatDisplay               
                 loginUserData={loginUserData}
                 messages={reversed}
               />
@@ -217,6 +213,24 @@ function MessagingPage() {
       </div>
     </HomeLayout>
   );
+}
+
+
+export async function getServerSideProps(context){
+
+  const {status} = context.query
+
+  const data = await supabase
+  .from(`${status==12 && "messages" || status==11 && "class_11_messages" || status==10 && "class_10_messages" || status == 9 && "class_9_messages"}`)
+.select("*")
+.range(0, 10)
+.order("id", { ascending: false })
+
+  return{
+    props:{
+        fetch_messages: data.data
+    }
+  }
 }
 
 export default MessagingPage;

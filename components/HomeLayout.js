@@ -27,6 +27,7 @@ export default function HomeLayout({ children }) {
   const supabase = useSupabaseClient();
   const session = useSession()
 
+
   useEffect(()=>{
     if(!loginUserId){
       setLoginUserId(session?.user)
@@ -47,38 +48,38 @@ export default function HomeLayout({ children }) {
 
   return (
     <div className="mt-4 flex mx-auto gap-5 max-w-4xl">
-      <div className=" fixed bottom-0 w-screen md:w-3/12 md:static">
-        <Card>
-          <div className="px-3 py-2 md:py-2 min-w-[18vw] md:min-h-[60vh]">
-            <h1 className="font-bold p-2 text-gray-700 hidden md:block">Navigation</h1>
-            <div className="flex  content-center justify-evenly md:block ml-2 md:space-y-8 mt-2">
-              <Link href={'/'} className={`${HomeSelected && onSelectedStyle} ${onHover} flex  items-center gap-2`}>
-                
-                <HomeIcon className="h-8" /> <span className='hidden md:block'>Home</span>
-              </Link>
-              <div className={`flex cursor-pointer items-center gap-2 ${onHover}`}>
-                {" "}
-                <BuildingLibraryIcon className="h-8" />  <span className='hidden md:block'>School</span>
-              </div>
-              <Link href={`/messages/${loginUserId?.id}`} className={` ${GroupSelected && onSelectedStyle} ${onHover} flex items-center gap-2`}>
-                {" "}
-                <UserGroupIcon className="h-8" />  <span className='hidden md:block'>Group</span>
-              </Link>
-              <Link href={"https://school-media-lwy4.vercel.app/"} target="_blank" className={`flex cursor-pointer items-center gap-2 ${onHover}`}>
-                {" "}
-                <UserPlusIcon className="h-8" />  <span className='hidden md:block'>New User</span>
-              </Link>
-              <div onClick={handleLogout} className={`${onHover} flex items-center gap-2 cursor-pointer`}>
-                {" "}
-                <ArrowLeftCircleIcon   className="h-8 " />  <span className='hidden md:block'>Logout</span>
-              </div>
+    <div className=" fixed bottom-0 w-screen md:w-3/12 md:static">
+      <Card>
+        <div className="px-3 py-2 md:py-2 min-w-[18vw] md:min-h-[60vh]">
+          <h1 className="font-bold p-2 text-gray-700 hidden md:block">Navigation</h1>
+          <div className="flex  content-center justify-evenly md:block ml-2 md:space-y-8 mt-2">
+            <Link href={'/'} className={`${HomeSelected && onSelectedStyle} ${onHover} flex  items-center gap-2`}>
+              
+              <HomeIcon className="h-8" /> <span className='hidden md:block'>Home</span>
+            </Link>
+            <div className={`flex cursor-pointer items-center gap-2 ${onHover}`}>
+              {" "}
+              <BuildingLibraryIcon className="h-8" />  <span className='hidden md:block'>School</span>
+            </div>
+            <Link href={`/messages/${loginUserId?.id}`} className={` ${GroupSelected && onSelectedStyle} ${onHover} flex items-center gap-2`}>
+              {" "}
+              <UserGroupIcon className="h-8" />  <span className='hidden md:block'>Group</span>
+            </Link>
+           {loginUserId?.id == "470505ee-5319-441e-9185-34a0eaa2027e" &&  <Link href={"https://school-media-lwy4.vercel.app/"} target="_blank" className={`flex cursor-pointer items-center gap-2 ${onHover}`}>
+              {" "}
+              <UserPlusIcon className="h-8" />  <span className='hidden md:block'>New User</span>
+            </Link>}
+            <div onClick={handleLogout} className={`${onHover} flex items-center gap-2 cursor-pointer`}>
+              {" "}
+              <ArrowLeftCircleIcon   className="h-8 " />  <span className='hidden md:block'>Logout</span>
             </div>
           </div>
-        </Card>
-      </div>
-      <div className=" md:9/12 grow">
-        {children}
-      </div>
+        </div>
+      </Card>
     </div>
+    <div className=" md:9/12 grow">
+      {children}
+    </div>
+  </div>
   );
 }

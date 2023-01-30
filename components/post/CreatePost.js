@@ -64,11 +64,6 @@ export default function CreatePost({ FetchAllPost }) {
         <div className="relative w-[70%]">
           <div className="">
             <textarea
-              onKeyDown={(e)=>{
-                if(e.key === "Enter"){
-                  handleCreatePost()
-                }
-              }}
               value={userPostText}
               className="w-full overflow-y-hidden pl-2 border outline-gray-200"
               onChange={(event) => setUserPostText(event.target.value)}

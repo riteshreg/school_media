@@ -46,9 +46,11 @@ export default function PostDispaly({id, content, images, created_at, profile,lo
 
   return (
     <div className="py-1">
-      <Card className="py-10">
+      <Card className="py-1">
         <div className="px-4 flex items-center gap-3">
+          <div className="p-1">
           <Avatar />
+          </div>
           <label className="mb-5 ">
             <span className="mr-2 font-semibold text-gray-700">
               {"Janata Mavi Gauradaha"}
@@ -59,7 +61,7 @@ export default function PostDispaly({id, content, images, created_at, profile,lo
         <div className="mx-2 my-1 p-1 text-md">
           <p className="text-left">{content}</p>
         </div>
-        {images.length > 0 && (
+        {images?.length > 0 && (
           <div
             className={`${images.length === 2 && " md:flex"} ${
               images.length > 2 && "block md:grid md:grid-cols-2"
@@ -82,10 +84,10 @@ export default function PostDispaly({id, content, images, created_at, profile,lo
 
           </div>
         )}
-        <div className="pl-2 py-4">
+        <div className="pl-2 py-3">
           <div  className="ml-4 flex gap-2 items-center">
            <HeartIcon  onClick={handleLike}  className={`${disabledLike && 'pointer-events-none'} h-8  ${IAlreadyLiked && "fill-red-600"}`}/> 
-           {likes.length}
+           {likes?.length}
           </div>
         </div>
       </Card>

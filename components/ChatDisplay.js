@@ -17,12 +17,12 @@ export default function ChatDisplay({ messages, loginUserData }) {
     <div
       onScroll={onScroll}
       ref={scrollRef}
-      className="relative w-full p-6 overflow-y-auto h-[25rem] "
+      className="relative w-full p-6 overflow-y-auto h-[79vh] "
     >
       <div>
         {messages?.length > 0 &&
           messages.map((message) => (
-            <ul className="space-y-2 my-5 " key={message.id}>
+            <ul key={message.id} className="space-y-2 my-5 " >
               {message.author !== loginUserData?.id && (
                 <li className="flex justify-start">
                   <div>
@@ -50,12 +50,12 @@ export default function ChatDisplay({ messages, loginUserData }) {
                           ))}
                           {/* author name on photo */}
                        <div>
-                       <p className="text-gray-600 absolute left-0 p-0 top-0">{`@${message?.author_name}`}</p>
+                       <p className=" opacity-40 px-2 rounded-md text-gray-600 absolute left-0 p-0 -top-1">{`@${message?.author_name}`}</p>
                        </div>  
                      </div>
                       )}
                     </PhotoProvider>
-                    <div>
+                    {message?.content?.length>0 && <div>
                       <div className="relative max-w-xl px-4 w-fit py-2 text-gray-700 bg-slate-200 rounded shadow">
                         <div>
                           <span className="text-xs  text- text-gray-600">
@@ -64,7 +64,7 @@ export default function ChatDisplay({ messages, loginUserData }) {
                           <span className="block">{message.content}</span>
                         </div>
                       </div>
-                    </div>
+                    </div>}
                   </div>
                 </li>
               )}
@@ -104,17 +104,9 @@ export default function ChatDisplay({ messages, loginUserData }) {
                   </div>
                 </li>
               )}
-            </ul>
-          ))}
+        </ul>
+              ))}
       </div>
-      {/* <div className="flex flex-wrap justify-end space-x-3">
-        <div className="flex flex-wrap space-x-3">
-        {prevMessagesUploadedFiles.length > 0 &&
-          prevMessagesUploadedFiles?.map((uploadedFile) => (
-            <Image key={uploadedFile} className={`${prevMessagesUploadedFiles.length !== messagesUploadedFiles.length? "grayscale" : "grayscale-0"} h-32 w-32 rounded-md`} width={480} height={480} alt="images" src={uploadedFile} />
-          ))}
-        </div>
-      </div> */}
-    </div>
+      </div>
   )
 }

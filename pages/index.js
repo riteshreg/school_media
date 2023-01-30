@@ -15,7 +15,7 @@ export default function Home({data}) {
   const [AllPost, setAllPost] = useState([])
 
   const session = useSession()
-  const {setLoginUserId} = useContext(UserContext)
+  const {setLoginUserId, loginAsAdmin} = useContext(UserContext)
 
 
   const supabase = useSupabaseClient();
@@ -36,7 +36,7 @@ export default function Home({data}) {
 
 
   function FetchAllPost(){
-    supabase.from('posts').select("id,author,content, images, created_at, profiles(avatar,name)").order("created_at",{ascending:false}).limit(8).then((response)=>{
+    supabase.from('posts').select("id,author,content, images, created_at").order("created_at",{ascending:false}).limit(8).then((response)=>{
       if(response.error){
           throw response.error
         } 
@@ -53,7 +53,7 @@ export default function Home({data}) {
   return (
     <HomeLayout>
       <div className="space-y-4">
-        <CreatePost  FetchAllPost={FetchAllPost}/>
+       { loginAsAdmin && <CreatePost  FetchAllPost={FetchAllPost}/>}
         {AllPost?.length>0 && AllPost?.map((item)=>
           <PostDispaly key={item.id} {...item} loginUser={loginUser}/>
         )            
@@ -65,7 +65,7 @@ export default function Home({data}) {
 
 
 export async function getServerSideProps(context){
-  const data = await supabase.from('posts').select("id,author,content, images, created_at, profiles(avatar,name)").order("created_at",{ascending:false}).limit(8)
+  const data = await supabase.from('posts').select("id,author,content, images, created_at").order("created_at",{ascending:false}).limit(8)
   return{
     props:{
         data
