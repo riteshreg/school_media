@@ -17,7 +17,7 @@ export default function ChatDisplay({ messages, loginUserData }) {
     <div
       onScroll={onScroll}
       ref={scrollRef}
-      className="relative w-full p-6 overflow-y-auto h-[79vh] "
+      className="relative w-full p-6 overflow-y-auto h-[69vh] md:h-[80vh] "
     >
       <div>
         {messages?.length > 0 &&
@@ -41,9 +41,9 @@ export default function ChatDisplay({ messages, loginUserData }) {
                               <Image
                                 key={imag}
                                 alt="image"
-                                height={180}
+                                height={120}
                                 className={`mb-2 rounded-md overflow-hidden`}
-                                width={150}
+                                width={100}
                                 src={imag}
                               />
                             </PhotoView>
@@ -85,9 +85,9 @@ export default function ChatDisplay({ messages, loginUserData }) {
                             <PhotoView key={imag} src={imag}>
                               <Image
                                 alt="image"
-                                height={180}
+                                height={120}
                                 className={`mb-2 rounded-md overflow-hidden`}
-                                width={150}
+                                width={100}
                                 src={imag}
                               />
                             </PhotoView>

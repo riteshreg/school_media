@@ -8,9 +8,9 @@ import Avatar from "../Avatar";
 import Card from "../Card";
 import { PhotoProvider, PhotoView } from "react-photo-view";
 import "react-photo-view/dist/react-photo-view.css";
+import TextareaAutosize from "react-autosize-textarea";
 
 export default function CreatePost({ FetchAllPost }) {
-
   const supabase = useSupabaseClient();
 
   const [userPostText, setUserPostText] = useState();
@@ -32,8 +32,8 @@ export default function CreatePost({ FetchAllPost }) {
           setImage(false);
           setUserPostText(false);
           FetchAllPost();
-          setUserPostText('')
-          setPreUploadedFiles([])
+          setUserPostText("");
+          setPreUploadedFiles([]);
         }
       });
   };
@@ -59,15 +59,16 @@ export default function CreatePost({ FetchAllPost }) {
 
   return (
     <Card>
-      <div className="flex  px-4 mt-2 ml-0 py-1 gap-4 items-center ">
+      <div className="flex p-1  md:px-4 mt-2 ml-0 md:py-1 gap-1 md:gap-4 items-center ">
         <Avatar />
-        <div className="relative w-[70%]">
+        <div className="relative selection:hidden group w-[70%]">
           <div className="">
-            <textarea
+            <TextareaAutosize
+             rows={2}
+              className="rounded-md w-full overflow-y-hidden pl-2 border outline-gray-200"
+              placeholder="write something..."
               value={userPostText}
-              className="w-full overflow-y-hidden pl-2 border outline-gray-200"
-              onChange={(event) => setUserPostText(event.target.value)}
-              placeholder="send message to student"
+              onChange={(event) => { setUserPostText(event.target.value)}}
             />
           </div>
           <label className="absolute right-0 flex mb-2 items-center top-0 bottom-0 ">
@@ -77,7 +78,7 @@ export default function CreatePost({ FetchAllPost }) {
               multiple
               className="hidden"
             />
-            <PhotoIcon className="h-8 text-gray-400 ml-2" />
+            <PhotoIcon className={`h-7 pr-1 md:h-8  text-gray-400 ml-2`} />
           </label>
         </div>
         <button
@@ -87,7 +88,7 @@ export default function CreatePost({ FetchAllPost }) {
           Post
         </button>
       </div>
-     
+
       {preUploadedFiles.length > 0 && (
         <PhotoProvider>
           <div className={`p-2 relative flex flex-wrap space-x-1`}>
@@ -106,20 +107,20 @@ export default function CreatePost({ FetchAllPost }) {
                 />
               </PhotoView>
             ))}
-             {showLoader && (
-           <div className=" absolute left-0  flex  right-0 z-50 justify-center">
-          <Rings
-            height="80"
-            width="80"
-            color="#4fa94d"
-            radius="6"
-            wrapperStyle={{}}
-            wrapperClass=""
-            visible={true}
-            ariaLabel="rings-loading"
-          />
-        </div>
-      )}
+            {showLoader && (
+              <div className=" absolute left-0  flex  right-0 z-50 justify-center">
+                <Rings
+                  height="80"
+                  width="80"
+                  color="#4fa94d"
+                  radius="6"
+                  wrapperStyle={{}}
+                  wrapperClass=""
+                  visible={true}
+                  ariaLabel="rings-loading"
+                />
+              </div>
+            )}
           </div>
         </PhotoProvider>
       )}

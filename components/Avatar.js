@@ -3,10 +3,10 @@ const  link="https://ypticbcztdwpynckjwag.supabase.co/storage/v1/object/public/i
 export default function Avatar(){
     return(
             <Image 
-            className="h-20 p-1 border w-20 rounded-full"
+            className="p-1 border  rounded-full"
             src={link}
-            height={720}
-            width={720}
+            height={65}
+            width={65}
             alt="profile"
             />
         

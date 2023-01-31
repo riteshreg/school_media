@@ -17,8 +17,15 @@ export default function HomeLayout({ children }) {
 
   const {asPath} = router
 
-  const {status,pathname} = router.query
-  
+  const {status,pathname} = router
+
+  // console.log(router);
+  // console.log("pathname",pathname)
+
+  // messaging style
+  // const isOnMessaging =  pathname == "/messages/[id]/[status]"
+  // messaging style
+
   const HomeSelected = asPath == "/"
   const GroupSelected  =  asPath == "/messaging"
 
@@ -47,8 +54,8 @@ export default function HomeLayout({ children }) {
   }
 
   return (
-    <div className="mt-4 flex mx-auto gap-5 max-w-4xl">
-    <div className=" fixed bottom-0 w-screen md:w-3/12 md:static">
+    <div className={`mt-4 flex mx-auto gap-5 max-w-4xl`}>
+    <div className={` fixed bottom-0 w-screen md:w-3/12 md:static`}>
       <Card>
         <div className="px-3 py-2 md:py-2 min-w-[18vw] md:min-h-[60vh]">
           <h1 className="font-bold p-2 text-gray-700 hidden md:block">Navigation</h1>
