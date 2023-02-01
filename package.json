@@ -25,7 +25,8 @@
     "react-photo-view": "^1.2.3",
     "react-select": "^5.7.0",
     "react-toastify": "^9.1.1",
-    "react-uuid": "^2.0.0"
+    "react-uuid": "^2.0.0",
+    "revo-calendar": "^3.2.3"
   },
   "devDependencies": {
     "autoprefixer": "^10.4.13",

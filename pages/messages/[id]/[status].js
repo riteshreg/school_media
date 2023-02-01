@@ -59,8 +59,10 @@ function MessagingPage({ fetch_messages }) {
 
   useEffect(() => {
     setMessages(fetch_messages);
-    setFirstScrollBottom(true);
-
+    if(fetch_messages){
+      setFirstScrollBottom(true);
+    }
+    
     if (pathname == "/messages/[id]/[status]") {
       scrollToBottom();
     }

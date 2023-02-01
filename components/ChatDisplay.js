@@ -8,9 +8,7 @@ import "react-photo-view/dist/react-photo-view.css";
 export default function ChatDisplay({ messages, loginUserData }) {
   const {
     onScroll,
-    scrollRef,
-    prevMessagesUploadedFiles,
-    messagesUploadedFiles,
+    scrollRef
   } = useContext(UserContext);
 
   return (
