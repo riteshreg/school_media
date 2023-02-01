@@ -4,54 +4,64 @@ import { useSupabaseClient } from "@supabase/auth-helpers-react";
 import React, { useEffect, useState } from "react";
 import RevoCalendar from "revo-calendar";
 
-import {  toast } from "react-toastify";
+import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { supabase } from "@/supabase";
 
-const notify = () =>  toast.success('Event has been successfully created', {
-  position: "bottom-center",
-  autoClose: 5000,
-  hideProgressBar: false,
-  closeOnClick: true,
-  pauseOnHover: true,
-  draggable: true,
-  progress: undefined,
-  theme: "light",
+const notify = () =>
+  toast.success("Event has been successfully created", {
+    position: "bottom-center",
+    autoClose: 5000,
+    hideProgressBar: false,
+    closeOnClick: true,
+    pauseOnHover: true,
+    draggable: true,
+    progress: undefined,
+    theme: "light",
   });
 
-function Calender() {
+function Calender({ calenderEvents }) {
   const [events, setEvents] = useState([]);
   const [showModal, setShowModal] = useState(false);
   const [formInput, setFormInput] = useState({
     name: "",
     text: "",
-    date:null
+    date: null,
   });
 
   const supabase = useSupabaseClient();
 
   useEffect(() => {
-   fetchEvents()
+    setEvents(calenderEvents);
   }, []);
 
-  function fetchEvents(){
+  function fetchEvents() {
     supabase
-    .from("calender")
-    .select("name, date, extra")
-    .then((response) => [setEvents(response.data)]);
+      .from("calender")
+      .select("name, date, extra")
+      .then((response) => [setEvents(response.data)]);
   }
 
-  function handleCreateFunction(){
-      supabase.from("calender").insert({name:formInput.name,date:formInput.date,extra:{text:formInput.text}}).then((response)=>{
-        if(!response.error){
-          fetchEvents()
-          notify()
-          setFormInput({ 
-          name: "",
-          text: "",
-          date:null})
-        }
-        setShowModal(false)
+  function handleCreateFunction() {
+    supabase
+      .from("calender")
+      .insert({
+        name: formInput.name,
+        date: formInput.date,
+        extra: { text: formInput.text },
       })
+      .then((response) => {
+        if (!response.error) {
+          fetchEvents();
+          notify();
+          setFormInput({
+            name: "",
+            text: "",
+            date: null,
+          });
+        }
+        setShowModal(false);
+      });
   }
 
   const deleteEvent = (event) => {
@@ -59,7 +69,7 @@ function Calender() {
   };
 
   const addEvent = (event) => {
-    setFormInput({date: new Date(event).getTime() })
+    setFormInput({ date: new Date(event).getTime() });
     setShowModal(true);
     // supabase.from("calender").insert({name:"fucking",date:new Date(event).getTime(),extra:{text:"10 fucker"}}).then((response)=>{
     //   console.log(response)
@@ -97,16 +107,24 @@ function Calender() {
           addEvent={addEvent}
         />
         <Modal
-        handleCreateFunction={handleCreateFunction}
+          handleCreateFunction={handleCreateFunction}
           showModal={showModal}
           setShowModal={setShowModal}
           formInput={formInput}
           setFormInput={setFormInput}
         />
       </HomeLayout>
-
     </div>
   );
+}
+
+export async function getServerSideProps(context) {
+  const data = await supabase.from("calender").select("name, date, extra");
+  return {
+    props: {
+      calenderEvents: data.data,
+    },
+  };
 }
 
 export default Calender;
