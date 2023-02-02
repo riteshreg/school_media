@@ -80,7 +80,7 @@ function Calender({ calenderEvents }) {
       <HomeLayout>
         <RevoCalendar
           events={events}
-          style={{ height: "88vh" }}
+          // style={{ height: "88vh" }}
           timeFormat24={false}
           // highlightToday={true}
           lang="en"
