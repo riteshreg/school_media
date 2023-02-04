@@ -1,11 +1,11 @@
 import {
   HomeIcon,
-  BuildingLibraryIcon,
   UserGroupIcon,
   BellIcon,
   ArrowLeftCircleIcon,
   UserPlusIcon,
   CalendarIcon,
+  FolderMinusIcon,
 } from "@heroicons/react/24/outline";
 import Card from "@/components/Card";
 import { useRouter } from "next/router";
@@ -71,13 +71,14 @@ export default function HomeLayout({ children }) {
                 <HomeIcon className="h-8" />{" "}
                 <span className="hidden md:block">Home</span>
               </Link>
-              <div
+              <Link
+                href={'/file_sharing'}
                 className={`flex cursor-pointer items-center gap-2 ${onHover}`}
               >
                 {" "}
-                <BuildingLibraryIcon className="h-8" />{" "}
-                <span className="hidden md:block">School</span>
-              </div>
+                <FolderMinusIcon className="h-8" />{" "}
+                <span className="hidden md:block">Project</span>
+              </Link>
               <Link
                 href={`/messages/${loginUserId?.id}`}
                 className={` ${

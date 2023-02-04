@@ -78,7 +78,7 @@ export default function CreatePost({ FetchAllPost }) {
               multiple
               className="hidden"
             />
-            <PhotoIcon className={`h-7 pr-1 md:h-8  text-gray-400 ml-2`} />
+            <PhotoIcon className={`h-7 cursor-pointer pr-1 md:h-8  text-gray-400 ml-2`} />
           </label>
         </div>
         <button
