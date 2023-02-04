@@ -120,7 +120,7 @@ function MessagingPage({ fetch_messages }) {
 
   return (
     <HomeLayout>
-      <div className="bg-gray-100 ">
+      <div className="bg-gray-50 ">
         <div>
           <h1 className="text-xl text-center font-semibold text-gray-600">
             {`Janata Mavi Class ${status} Messaging Group`}

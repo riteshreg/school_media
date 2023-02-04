@@ -38,10 +38,9 @@ function Messages({userProfile}) {
   });
 
   return (
-    <div>
-      <div>
+    <div className="">
         <HomeLayout>
-          <>
+          <div className="w-max">
             {!hold && 
               <div className="">
                 <MagnifyingGlass
@@ -113,10 +112,9 @@ function Messages({userProfile}) {
                 </div>
               </div>
             )}
-          </>
+          </div>
         </HomeLayout>
       </div>
-    </div>
   );
 }
 

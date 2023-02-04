@@ -71,12 +71,9 @@ function Calender({ calenderEvents }) {
   const addEvent = (event) => {
     setFormInput({ date: new Date(event).getTime() });
     setShowModal(true);
-    // supabase.from("calender").insert({name:"fucking",date:new Date(event).getTime(),extra:{text:"10 fucker"}}).then((response)=>{
-    //   console.log(response)
-    // })
   };
   return (
-    <div className="" style={{ font: "bold" }}>
+  
       <HomeLayout>
         <RevoCalendar
           events={events}
@@ -114,7 +111,7 @@ function Calender({ calenderEvents }) {
           setFormInput={setFormInput}
         />
       </HomeLayout>
-    </div>
+  
   );
 }
 

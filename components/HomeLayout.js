@@ -28,7 +28,7 @@ export default function HomeLayout({ children }) {
   const HomeSelected = asPath == "/";
   const GroupSelected = asPath == "/messaging";
 
-  const { loginUserId, setLoginUserId } = useContext(UserContext);
+  const { loginUserId, setLoginUserId,postScroll } = useContext(UserContext);
 
   const supabase = useSupabaseClient();
   const session = useSession();
@@ -53,13 +53,13 @@ export default function HomeLayout({ children }) {
 
   return (
     <div
-      className={`mt-4 flex mx-auto gap-5 max-w-4xl ${pathname=="/calender/[id]" && "max-w-6xl"}`}
+      className={`mt-1 flex  gap-5 max-w-full`}  onScroll={postScroll}
     >
-      <div className={` fixed bottom-0 w-screen md:w-3/12 md:static ${pathname=="/calender/[id]" && "md:w-52"}`}>
+      <div className={` fixed  opacity-100 bottom-0 w-screen md:w-2/12 md:fixed md:top-1 md:left-0 `}>
         <Card>
-          <div className="px-3 py-2 md:py-2 min-w-[18vw] md:min-h-[60vh]">
-            <h1 className="font-bold p-2 text-gray-700 hidden md:block">
-              Navigation
+          <div className="md:px-4 py-2 md:py-8 min-w-[18vw] md:min-h-[60vh]">
+            <h1 className="font-bold text-xl p-2 text-gray-700 hidden md:block">
+              Janata Mavi
             </h1>
             <div className="flex  content-center justify-evenly md:block ml-2 md:space-y-8 mt-2">
               <Link
@@ -122,7 +122,9 @@ export default function HomeLayout({ children }) {
           </div>
         </Card>
       </div>
-      <div className=" md:9/12 grow">{children}</div>
+      <div className={` md:ml-32 grow flex justify-center md:w-12/12 `}  >
+      <div className="md:w-6/12 ">{children}</div>
+      </div>
     </div>
   );
 }

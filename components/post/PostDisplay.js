@@ -6,7 +6,6 @@ import { useEffect, useState } from "react";
 import Avatar from "../Avatar";
 import Card from "../Card";
 import { PhotoProvider, PhotoView } from 'react-photo-view';
-import 'react-photo-view/dist/react-photo-view.css';
 
 
 export default function PostDispaly({id, content, images, created_at, profile,loginUser }) {
@@ -17,7 +16,7 @@ export default function PostDispaly({id, content, images, created_at, profile,lo
   const [disabledLike, setDisabledLike] = useState(false)
   
   const router = useRouter()
-
+  
 
 
   const handleLike  = () =>{
@@ -67,20 +66,21 @@ export default function PostDispaly({id, content, images, created_at, profile,lo
               images.length > 2 && "block md:grid md:grid-cols-2"
             }`}
           >
-                <PhotoProvider>
+               { <PhotoProvider>
 
             {images.map((image) => (
                <PhotoView key={image} src={image}>
               <Image
                 alt="photo"
-                height={720}
+                height={700}
                 className="p-2 cursor-pointer rounded-sm overflow-hidden"
-                width={720}
+                width={650}
                 src={image}
               />
               </PhotoView>
             ))}
                 </PhotoProvider>
+          }
 
           </div>
         )}

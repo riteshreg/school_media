@@ -30,6 +30,7 @@ export const UserContextProvider = ({children}) =>{
   const scrollRef = useRef();
 
 
+
   useEffect(()=>{
     scrollToBottom()
   },[newIncomingMessageTrigger])
@@ -84,11 +85,13 @@ export const UserContextProvider = ({children}) =>{
         setError(error.message);
         return;
       }
-      target.scrollTop = 1;
       setMessages((prevMessages) => [...prevMessages, ...data]);
+      target.scrollTop = 1;
     }
   };
 
+  
+  
 
   const scrollToBottom = () => {
     if (!scrollRef.current) return;
