@@ -25,6 +25,8 @@ export default function HomeLayout({ children }) {
 
   const { status, pathname } = router;
 
+  console.log(pathname)
+
   const HomeSelected = asPath == "/";
   const GroupSelected = asPath == "/messaging";
 
@@ -124,7 +126,7 @@ export default function HomeLayout({ children }) {
         </Card>
       </div>
       <div className={` md:ml-32 grow flex justify-center md:w-12/12 `}  >
-      <div className="md:w-6/12 ">{children}</div>
+      <div className={`${pathname == '/file_sharing' ? 'md:w-8/12' : 'md:w-6/12'} `}>{children}</div>
       </div>
     </div>
   );
