@@ -130,7 +130,7 @@ function FileSharing({AllFiles}) {
           </div>}
         </div>
         <hr />
-        <div className=" grid grid-cols-5 gap-2 justify-between mt-5">
+        <div className=" grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 xl:grid-cols-5 gap-2 justify-between mt-5">
           {
             AllFetchFiles.map((file)=>
                 <ShowSharingList {...file} key={file.id}/>
