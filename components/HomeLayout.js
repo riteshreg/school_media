@@ -55,7 +55,7 @@ export default function HomeLayout({ children }) {
 
   return (
     <div
-      className={`mt-1 flex  gap-5 max-w-full`}  onScroll={postScroll}
+      className={`mt-1 flex  gap-5 max-w-full`} 
     >
       <div className={` fixed  opacity-100 bottom-0 w-screen md:w-2/12 md:fixed md:top-1 md:left-0 `}>
         <Card>
