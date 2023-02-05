@@ -29,9 +29,8 @@ export default function CreatePost({ FetchAllPost }) {
       })
       .then((response) => {
         if (response.status == 201) {
-          setImage(false);
+          setImage([]);
           setUserPostText(false);
-          FetchAllPost();
           setUserPostText("");
           setPreUploadedFiles([]);
         }

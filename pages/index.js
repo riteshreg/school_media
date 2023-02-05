@@ -24,6 +24,21 @@ export default function Home({ data }) {
     setAllPost(data);
   }, []);
 
+  useEffect(()=>{
+    supabase.channel("schema-db-changes")
+    .on(
+      'postgres_changes',
+      {
+        event:"*",
+        schema:"public",
+        table:'posts'
+      },
+      (payload) => { 
+        setAllPost(prev=>[payload.new, ...prev])
+      }
+    ).subscribe()
+  })
+
 
   useEffect(() => {
     if (session?.user) {
