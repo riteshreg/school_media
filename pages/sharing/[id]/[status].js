@@ -10,7 +10,7 @@ import { Rings } from "react-loader-spinner";
 import { supabase } from "@/supabase";
 
  
-  const ShowSharingList  = dynamic(()=> import('../components/filesharing/ShowSharingList'))
+  const ShowSharingList  = dynamic(()=> import('../../../components/filesharing/ShowSharingList'))
 
 
 function FileSharing({AllFiles}) {

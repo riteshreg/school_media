@@ -19,8 +19,6 @@ export default function PostDispaly({
 }) {
   const supabase = useSupabaseClient();
 
-  console.log(created_at)
-
   const [likes, setLikes] = useState([]);
   const [disabledLike, setDisabledLike] = useState(false);
 
@@ -68,7 +66,7 @@ export default function PostDispaly({
             <span className="mr-2 font-semibold text-gray-700">
               {"Janata Mavi Official"}
             </span>
-            <ReactTimeAgo className="font-sans text-sm" date={created_at} locale="en-US"/>
+            <ReactTimeAgo className="font-sans text-sm" date={new Date(created_at)} locale="en-US"/>
           </label>
         </div>
         <div className="mx-2 my-1 p-1 text-md">

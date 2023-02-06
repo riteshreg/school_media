@@ -25,7 +25,6 @@ export default function HomeLayout({ children }) {
 
   const { status, pathname } = router;
 
-  console.log(pathname)
 
   const HomeSelected = asPath == "/";
   const GroupSelected = asPath == "/messaging";
@@ -74,7 +73,7 @@ export default function HomeLayout({ children }) {
                 <span className="hidden md:block">Home</span>
               </Link>
               <Link
-                href={'/file_sharing'}
+                href={`/sharing/${loginUserId?.id}`}
                 className={`flex cursor-pointer items-center gap-2 ${onHover}`}
               >
                 {" "}
@@ -116,7 +115,7 @@ export default function HomeLayout({ children }) {
         </Card>
       </div>
       <div className={` md:ml-32 grow flex justify-center md:w-12/12 `}  >
-      <div className={`${pathname == '/file_sharing' ? 'md:w-8/12' : 'md:w-6/12'} `}>{children}</div>
+      <div className={`${pathname == '/sharing/[id]/[status]' ? 'md:w-8/12' : 'md:w-6/12'} `}>{children}</div>
       </div>
     </div>
   );

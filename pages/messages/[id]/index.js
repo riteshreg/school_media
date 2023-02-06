@@ -1,6 +1,6 @@
 import Card from "@/components/Card";
 import HomeLayout from "@/components/HomeLayout";
-import ShowAllGroup from "@/components/ShowAllGroup";
+import StudentNavigator from "@/components/StudentNavigator";
 import GetProfile from "@/helper/GetProfile";
 import { supabase } from "@/supabase";
 import { UserContext } from "@/UserContext";
@@ -63,10 +63,10 @@ function Messages({userProfile}) {
                     className="cursor-pointer"
                     onClick={() => router.push(`/messages/${id}/9`)}
                   >
-                    <ShowAllGroup
-                      classNumber={9}
-                      status="Nine"
-                      desc={
+                    <StudentNavigator
+                      status={9}
+                      title="Class Nine"
+                      description={
                         "Class Nine consist of 48 student with lorem ipsum as Class Teacher"
                       }
                     />
@@ -75,10 +75,10 @@ function Messages({userProfile}) {
                     className="cursor-pointer"
                     onClick={() => router.push(`/messages/${id}/10`)}
                   >
-                    <ShowAllGroup
-                      classNumber={10}
-                      status="Ten"
-                      desc={
+                   <StudentNavigator
+                      status={10}
+                      title="Class Ten"
+                      description={
                         "Class Ten consist of 48 student with lorem ipsum as Class Teacher"
                       }
                     />
@@ -87,10 +87,10 @@ function Messages({userProfile}) {
                     className="cursor-pointer"
                     onClick={() => router.push(`/messages/${id}/11`)}
                   >
-                    <ShowAllGroup
-                      classNumber={11}
-                      status="Eleven"
-                      desc={
+                   <StudentNavigator
+                      status={11}
+                      title="Class Eleven"
+                      description={
                         "Class Eleven consist of 48 student with lorem ipsum as Class Teacher"
                       }
                     />
@@ -99,10 +99,10 @@ function Messages({userProfile}) {
                     className="cursor-pointer"
                     onClick={() => router.push(`/messages/${id}/12`)}
                   >
-                    <ShowAllGroup
-                      classNumber={12}
-                      status="Twevel"
-                      desc={
+                   <StudentNavigator
+                      status={12}
+                      title="Class Twevel"
+                      description={
                         "Class Twevel consist of 48 student with lorem ipsum as Class Teacher"
                       }
                     />
