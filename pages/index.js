@@ -13,6 +13,8 @@ import { supabase } from "@/supabase";
 export default function Home({ data }) {
   const [loginUser, setLoginUser] = useState();
   const [AllPost, setAllPost] = useState([]);
+
+  const [loadMoreDisabled, setLoadMoreDisabled] = useState(false)
  
 
   const session = useSession();
@@ -51,8 +53,8 @@ export default function Home({ data }) {
     supabase
       .from("posts")
       .select("id,author,content, images, created_at")
-      .order("id", { ascending: false })
-      .limit(6)
+      .order("created_at", { ascending: false })
+      .limit(8)
       .then((response) => {
         if (response.error) {
           throw response.error;
@@ -63,18 +65,40 @@ export default function Home({ data }) {
       });
   }
 
+  const handleLoadMore = () =>{
+    setLoadMoreDisabled(true)
+    supabase
+    .from("posts")
+    .select("id,author,content, images, created_at")
+    .order("created_at", { ascending: false })
+    .range(AllPost.length, AllPost.length+5)
+    .then((response) => {
+      if (response.error) {
+        throw response.error;
+      }
+      if (response.data) {
+        setAllPost(prev=>[...prev, ...response.data]);
+        setLoadMoreDisabled(false)
+      }
+    });
+  }
+
   if (!loginUser) {
     return <LoginPage />;
   }
 
+
   return (
     <HomeLayout>
-      <div className="space-y-4 h-full"  >
+      <div className="space-y-4 mb-5 h-full"  >
         {loginAsAdmin && <CreatePost FetchAllPost={FetchAllPost} />}
         {AllPost?.length > 0 &&
           AllPost?.map((item) => (
             <PostDispaly key={item.id} {...item} loginUser={loginUser} />
           ))}
+          <div className="flex justify-center">
+            <button disabled={loadMoreDisabled}  className="text-gray-900" onClick={handleLoadMore}>Load More...</button>
+          </div>
       </div>
     </HomeLayout>
   );
@@ -85,7 +109,7 @@ export async function getServerSideProps(context) {
     .from("posts")
     .select("id,author,content, images, created_at")
     .order("created_at", { ascending: false })
-    .limit(5)
+    .limit(8)
     return {
     props: {
       data:data.data,
