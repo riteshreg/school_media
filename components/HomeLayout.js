@@ -91,17 +91,7 @@ export default function HomeLayout({ children }) {
                 <UserGroupIcon className="h-8" />{" "}
                 <span className="hidden md:block">Group</span>
               </Link>
-
-              <Link
-                href={`/calender/${loginUserId?.id}`}
-                className={` ${
-                  GroupSelected && onSelectedStyle
-                } ${onHover} flex items-center gap-2`}
-              >
-                {" "}
-                <CalendarIcon className="h-8" />{" "}
-                <span className="hidden md:block">Calender</span>
-              </Link>
+              
               {loginUserId?.id == "470505ee-5319-441e-9185-34a0eaa2027e" && (
                 <Link
                   href={"https://school-media-lwy4.vercel.app/"}

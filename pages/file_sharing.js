@@ -9,7 +9,6 @@ import { getMaterialFileIcon } from "file-extension-icon-js";
 import { Rings } from "react-loader-spinner";
 import { supabase } from "@/supabase";
 
-
  
   const ShowSharingList  = dynamic(()=> import('../components/filesharing/ShowSharingList'))
 
@@ -145,7 +144,7 @@ function FileSharing({AllFiles}) {
 export default FileSharing;
 
 
-export  async function getServerSideProps(context){
+export  async function getServerSideProps(){
  const data = await supabase
       .from("fileSharing")
       .select("id,created_at, file_url, profiles(name,status)")
