@@ -3,6 +3,7 @@ import HomeLayout from "@/components/HomeLayout";
 import GetProfile from "@/helper/GetProfile";
 import { supabase } from "@/supabase";
 import { UserContext } from "@/UserContext";
+import { ArrowSmallLeftIcon } from "@heroicons/react/24/outline";
 import { useSession, useSupabaseClient } from "@supabase/auth-helpers-react";
 import Image from "next/image";
 import { useRouter } from "next/router";
@@ -121,9 +122,10 @@ function MessagingPage({ fetch_messages }) {
   };
 
   return (
-    <HomeLayout>
+    <HomeLayout hidden={true}>
       <div className="bg-gray-50 ">
-        <div>
+        <div className="flex justify-center items-center">
+          <ArrowSmallLeftIcon onClick={()=>router.push('/')} className="h-12 md:hidden"/>
           <h1 className="text-xl text-center font-semibold text-gray-600">
             {`Janata Mavi Class ${status} Messaging Group`}
           </h1>
@@ -134,23 +136,7 @@ function MessagingPage({ fetch_messages }) {
             <div className="w-full">
               <div className="relative flex items-center p-1 border-b border-gray-300" />
               <ChatDisplay loginUserData={loginUserData} messages={reversed} />
-              {/* {UploadedFiles.length > 0 && (
-                <div
-                  className={`w-fit ${
-                    UploadedFiles.length == 2 && "grid gap-2 grid-cols-2"
-                  } ${UploadedFiles.length > 2 && "grid grid-col-4"}`}
-                >
-                  {UploadedFiles.map((file) => (
-                    <Image
-                      key={file}
-                      src={file}
-                      height={90}
-                      width={100}
-                      alt="photo"
-                    />
-                  ))}
-                </div>
-              )} */}
+
               <div className="p-3 border-t border-gray-300">
                 {prevMessagesUploadedFiles.length > 0 && (
                   <div className="md:ml-5 flex space-x-1">

@@ -15,7 +15,7 @@ export default function ChatDisplay({ messages, loginUserData }) {
     <div
       onScroll={onScroll}
       ref={scrollRef}
-      className="relative w-full p-6 overflow-y-auto h-[69vh] md:h-[80vh] "
+      className="relative w-full p-6 overflow-y-auto h-[72vh] md:h-[80vh] "
     >
       <div>
         {messages?.length > 0 &&

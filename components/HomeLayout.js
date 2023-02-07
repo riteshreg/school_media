@@ -18,7 +18,7 @@ const onSelectedStyle = "bg-blue-400 rounded-md text-white -mx-4 px-4 py-1";
 const onHover =
   " hover:-mx-6 hover:px-6 hover:bg-blue-200 hover:rounded-md hover:overflow-hidden   md:py-2";
 
-export default function HomeLayout({ children }) {
+export default function HomeLayout({ children, hidden=false }) {
   const router = useRouter();
 
   const { asPath } = router;
@@ -28,6 +28,7 @@ export default function HomeLayout({ children }) {
 
   const HomeSelected = asPath == "/";
   const GroupSelected = asPath == "/messaging";
+
 
   const { loginUserId, setLoginUserId,postScroll } = useContext(UserContext);
 
@@ -56,7 +57,7 @@ export default function HomeLayout({ children }) {
     <div
       className={`mt-1 flex  gap-5 max-w-full`} 
     >
-      <div className={` fixed  opacity-100 bottom-0 w-screen md:w-2/12 md:fixed md:top-1 md:left-0 `}>
+      <div className={` fixed ${hidden && 'hidden md:block'} opacity-100 bottom-0 w-screen md:w-2/12 md:fixed md:top-1 md:left-0 `}>
         <Card>
           <div className="md:px-4 py-2 md:py-8 min-w-[18vw] md:min-h-[60vh]">
             <h1 className="font-bold text-xl p-2 text-gray-700 hidden md:block">

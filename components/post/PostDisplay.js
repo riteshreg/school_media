@@ -56,10 +56,10 @@ export default function PostDispaly({
   const IAlreadyLiked = !!likes?.find((like) => like.user_id == loginUser.id);
 
   return (
-    <div className="py-1">
+    <div className="py-1 pl-1 md:py-2 px-1">
       <Card className="py-1">
-        <div className="px-4 flex items-center gap-3">
-          <div className="p-1">
+        <div className="flex items-center gap-3">
+          <div className="pt-1 pl-1">
             <Avatar />
           </div>
           <label className="mb-5 flex flex-col ">
@@ -69,7 +69,7 @@ export default function PostDispaly({
             <ReactTimeAgo className="font-sans text-sm" date={new Date(created_at)} locale="en-US"/>
           </label>
         </div>
-        <div className="mx-2 my-1 p-1 text-md">
+        <div className="mx-1 pl-1 my-1 md:mx-2 md:my-2 md:px-1 text-md">
           <div className="all-initial">
           <Linkify>
           <p>{content}</p>
@@ -99,8 +99,8 @@ export default function PostDispaly({
             }
           </div>
         )}
-        <div className="pl-2 py-3">
-          <div className="ml-4 flex gap-2 items-center">
+        <div className=" py-1">
+          <div className="ml-2 md:ml-4 flex gap-2 items-center">
             <HeartIcon
               onClick={handleLike}
               className={`${disabledLike && "pointer-events-none"} h-8  ${
