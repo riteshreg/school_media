@@ -32,6 +32,7 @@ export default function CreatePost({ FetchAllPost }) {
           setImage([]);
           setUserPostText(false);
           setUserPostText("");
+          FetchAllPost()
           setPreUploadedFiles([]);
         }
       });
