@@ -41,6 +41,8 @@ function MessagingPage({ fetch_messages }) {
     }
   });
 
+
+
   useEffect(() => {
     if (!loginUserProfile && id) {
       GetProfile(id, setLoginUserProfile);
@@ -201,7 +203,7 @@ function MessagingPage({ fetch_messages }) {
                   }}
                        value={content}
                        onChange={(event) => setContent(event.target.value)}
-                       className="block w-full py-2 pl-4 mx-3 bg-gray-100 rounded-full outline-none focus:text-gray-700"
+                       className="block w-full py-2 pl-4 mx-3 bg-gray-100 rounded-sm outline-none focus:text-gray-700"
                   />
             
                   <button onClick={handleSendMessage}>

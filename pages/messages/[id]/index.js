@@ -1,11 +1,7 @@
-import Card from "@/components/Card";
 import HomeLayout from "@/components/HomeLayout";
 import StudentNavigator from "@/components/StudentNavigator";
-import GetProfile from "@/helper/GetProfile";
 import { supabase } from "@/supabase";
 import { UserContext } from "@/UserContext";
-import { useSupabaseClient } from "@supabase/auth-helpers-react";
-import Image from "next/image";
 import { useRouter } from "next/router";
 import React, { useContext, useEffect, useState } from "react";
 import { MagnifyingGlass } from "react-loader-spinner";
@@ -16,13 +12,13 @@ function Messages({userProfile}) {
   const router = useRouter();
   const { loginUserProfile, setLoginUserProfile } = useContext(UserContext);
 
-  const supabase = useSupabaseClient();
-
   const {id} = router.query
 
   useEffect(() => {
    setLoginUserProfile(userProfile)
   }, []);
+
+
 
   useEffect(() => {
     if (
@@ -31,7 +27,7 @@ function Messages({userProfile}) {
       loginUserProfile?.status == 9 ||
       (loginUserProfile?.status == 10 && loginUserProfile?.status)
     ) {
-      router.push(`/messages/${id}/${loginUserProfile.status}`);
+      router.replace(`/messages/${id}/${loginUserProfile.status}`,undefined, { shallow: true });
     } else if (loginUserProfile?.status == "teacher") {
       setHold(true);
     }

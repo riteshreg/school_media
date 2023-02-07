@@ -90,15 +90,16 @@ export default function Home({ data }) {
 
   return (
     <HomeLayout>
-      <div className="space-y-4 mb-5 h-full"  >
+      <div className="space-y-4 mb-20 md:mb-8 h-full"  >
         {loginAsAdmin && <CreatePost FetchAllPost={FetchAllPost} />}
         {AllPost?.length > 0 &&
           AllPost?.map((item) => (
             <PostDispaly key={item.id} {...item} loginUser={loginUser} />
           ))}
-          <div className="flex justify-center">
+          <div className=" flex justify-center">
             <button disabled={loadMoreDisabled}  className="text-gray-900" onClick={handleLoadMore}>Load More...</button>
           </div>
+          
       </div>
     </HomeLayout>
   );

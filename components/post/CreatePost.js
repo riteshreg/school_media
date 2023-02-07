@@ -60,8 +60,7 @@ export default function CreatePost({ FetchAllPost }) {
     <Card>
       <div className="flex p-1  md:px-4 mt-2 ml-0 md:py-1 gap-1 md:gap-4 items-center ">
         <Avatar />
-        <div className="relative selection:hidden group w-[70%]">
-          <div className="">
+        <div className="relative group w-[70%]">
             <TextareaAutosize
              rows={2}
               className="rounded-md w-full overflow-y-hidden pl-2 border outline-gray-200"
@@ -69,7 +68,6 @@ export default function CreatePost({ FetchAllPost }) {
               value={userPostText}
               onChange={(event) => { setUserPostText(event.target.value)}}
             />
-          </div>
           <label className="absolute right-0 flex mb-2 items-center top-0 bottom-0 ">
             <input
               onChange={handleFileChange}
