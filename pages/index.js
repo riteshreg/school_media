@@ -1,6 +1,6 @@
-import HomeLayout from "@/components/HomeLayout";
-import CreatePost from "@/components/post/CreatePost";
-import PostDispaly from "@/components/post/PostDisplay";
+// import HomeLayout from "@/components/HomeLayout";
+// import CreatePost from "@/components/post/CreatePost";
+// import PostDispaly from "@/components/post/PostDisplay";
 import { useContext, useEffect, useState } from "react";
 import LoginPage from "./login";
 import { UserContext } from "@/UserContext";
@@ -9,6 +9,11 @@ import {
   useSupabaseClient,
 } from "@supabase/auth-helpers-react/dist";
 import { supabase } from "@/supabase";
+import dynamic from "next/dynamic";
+
+const PostDispaly = dynamic(()=>import('../components/post/PostDisplay'))
+const HomeLayout = dynamic(()=>import('../components/HomeLayout'))
+const CreatePost = dynamic(()=>import('../components/post/CreatePost'))
 
 export default function Home({ data }) {
   const [loginUser, setLoginUser] = useState();

@@ -10,25 +10,25 @@ import { MagnifyingGlass } from "react-loader-spinner";
 function Messages({userProfile}) {
   const [hold, setHold] = useState(false);
   const router = useRouter();
-  const { loginUserProfile, setLoginUserProfile } = useContext(UserContext);
+  // const { loginUserProfile, setLoginUserProfile } = useContext(UserContext);
 
   const {id} = router.query
 
-  useEffect(() => {
-   setLoginUserProfile(userProfile)
-  }, []);
+  // useEffect(() => {
+  //  setLoginUserProfile(userProfile)
+  // }, [hold]);
 
 
 
   useEffect(() => {
     if (
-      loginUserProfile?.status == 11 ||
-      loginUserProfile?.status == 12 ||
-      loginUserProfile?.status == 9 ||
-      (loginUserProfile?.status == 10 && loginUserProfile?.status)
+      userProfile?.status == 11 ||
+      userProfile?.status == 12 ||
+      userProfile?.status == 9 ||
+      (userProfile?.status == 10 && userProfile?.status)
     ) {
-      router.replace(`/messages/${id}/${loginUserProfile.status}`,undefined, { shallow: true });
-    } else if (loginUserProfile?.status == "teacher") {
+      router.replace(`/messages/${id}/${userProfile.status}`,undefined, { shallow: true });
+    } else if (userProfile?.status == "teacher") {
       setHold(true);
     }
   });
