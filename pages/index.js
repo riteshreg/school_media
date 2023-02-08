@@ -12,6 +12,7 @@ import { supabase } from "@/supabase";
 import dynamic from "next/dynamic";
 import { ArrowDownIcon } from "@heroicons/react/24/outline";
 import { Oval } from "react-loader-spinner";
+import NewsNavbar from "@/components/NewsNavbar";
 
 const PostDispaly = dynamic(() => import("../components/post/PostDisplay"));
 const HomeLayout = dynamic(() => import("../components/HomeLayout"));
@@ -94,7 +95,9 @@ export default function Home({ data }) {
   }
 
   return (
+    <div>
     <HomeLayout>
+      <NewsNavbar/> 
       <div className="space-y-4 mb-14 md:mb-8 h-full">
         {loginAsAdmin && <CreatePost FetchAllPost={FetchAllPost} />}
         {AllPost?.length > 0 &&
@@ -121,6 +124,7 @@ export default function Home({ data }) {
         </div>
       </div>
     </HomeLayout>
+    </div>
   );
 }
 
