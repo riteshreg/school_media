@@ -7,18 +7,19 @@ import { ArrowSmallLeftIcon } from "@heroicons/react/24/outline";
 import { useSession, useSupabaseClient } from "@supabase/auth-helpers-react";
 import Image from "next/image";
 import { useRouter } from "next/router";
-import React, { useContext, useEffect, useState } from "react";
+import React, { useContext, useEffect, useRef, useState } from "react";
 import TextareaAutosize from "react-autosize-textarea";
 
 function MessagingPage({ fetch_messages }) {
   const [content, setContent] = useState("");
   const [loginUserData, setLoginUserData] = useState();
+  const [messages, setMessages] = useState([])
+  const [newIncomingMessageTrigger, setNewIncomingMessageTrigger] =   useState(null);
+  const [firstScrollBottom, setFirstScrollBottom] = useState(false)
+
+
 
   const {
-    messages,
-    setMessages,
-    scrollToBottom,
-    setFirstScrollBottom,
     setStatus,
     loginUserProfile,
     setLoginUserProfile,
@@ -30,17 +31,35 @@ function MessagingPage({ fetch_messages }) {
 
   const reversed = messages && [...messages].reverse();
 
+
   const router = useRouter();
   const { pathname } = router;
   const { status, id } = router.query;
   const supabase = useSupabaseClient();
   const session = useSession();
 
+  const scrollRef = useRef();
+
+  function scrollToBottom() {
+    if (!scrollRef.current) return;
+    scrollRef.current.scrollTop = scrollRef.current.scrollHeight;
+  };
+
+// console.log(loginUserData)
+
   useEffect(() => {
     if (status) {
       setStatus(status);
     }
   });
+
+  useEffect(()=>{
+    scrollToBottom()
+  },[newIncomingMessageTrigger])
+
+   useEffect(()=>{
+    scrollToBottom()
+  },[firstScrollBottom])
 
 
 
@@ -120,6 +139,47 @@ function MessagingPage({ fetch_messages }) {
         });
     }
   };
+  
+  // realtime messaging
+  useEffect(() => {
+    if(status){
+      supabase.channel("schema-db-changes")
+      .on(
+        'postgres_changes',
+        {
+          event:"*",
+          schema:"public",
+          table: `${status == "12" && "messages" || status == "11" && "class_11_messages" || status == "10" && "class_10_messages" || status == "9" && "class_9_messages"}`
+        },
+        (payload) => { 
+          console.log(payload)
+            setMessages(prev=>[payload.new, ...prev])
+            setNewIncomingMessageTrigger(payload.new)
+          
+        }
+      ).subscribe()
+    }
+   },[]);
+
+  // end realtime messaing
+
+  const onScroll = async ({ target }) => {
+       //* Load more messages when reaching top
+    if (target.scrollTop === 0) {
+      // console.log("messages.length :>> ", messages.length);
+      const { data, error } = await supabase
+      .from(`${status==12 && "messages" || status==11 && "class_11_messages" || status==10 && "class_10_messages" || status == 9 && "class_9_messages"}`)
+      .select()
+        .range(messages?.length, messages?.length + 20)
+        .order("id", { ascending: false });
+      if (error) {
+        setError(error.message);
+        return;
+      }
+      setMessages((prevMessages) => [...prevMessages, ...data]);
+      target.scrollTop = 1;
+    }
+  };
 
   return (
     <HomeLayout hidden={true}>
@@ -135,7 +195,11 @@ function MessagingPage({ fetch_messages }) {
           <div className="lg:col-span-2 lg:block">
             <div className="w-full">
               <div className="relative flex items-center p-1 border-b border-gray-300" />
-              <ChatDisplay loginUserData={loginUserData} messages={reversed} />
+              <ChatDisplay 
+              scrollRef={scrollRef}
+              loginUserData={loginUserData}
+               messages={reversed}
+               onScroll={onScroll} />
 
               <div className="p-3 border-t border-gray-300">
                 {prevMessagesUploadedFiles.length > 0 && (
@@ -182,7 +246,7 @@ function MessagingPage({ fetch_messages }) {
                   </label>
 
                   <TextareaAutosize placeholder="send messages..." 
-                   onKeyDown={(e) => {
+                    onKeyDown={(e) => {
                     if (e.key === "Enter" && content) {
                       handleSendMessage();
                     }

@@ -5,11 +5,8 @@ import { MutatingDots } from "react-loader-spinner";
 import { PhotoProvider, PhotoView } from "react-photo-view";
 import "react-photo-view/dist/react-photo-view.css";
 
-export default function ChatDisplay({ messages, loginUserData }) {
-  const {
-    onScroll,
-    scrollRef
-  } = useContext(UserContext);
+export default function ChatDisplay({ messages, loginUserData, onScroll, scrollRef }) {
+ 
 
   return (
     <div
@@ -20,7 +17,7 @@ export default function ChatDisplay({ messages, loginUserData }) {
       <div>
         {messages?.length > 0 &&
           messages.map((message) => (
-            <ul key={message.id} className="space-y-2 my-5 " >
+            <ul key={message.id} className="space-y-2 my-5 ">
               {message.author !== loginUserData?.id && (
                 <li className="flex justify-start">
                   <div>
@@ -47,22 +44,24 @@ export default function ChatDisplay({ messages, loginUserData }) {
                             </PhotoView>
                           ))}
                           {/* author name on photo */}
-                       <div>
-                       <p className=" opacity-40 px-2 rounded-md text-gray-600 absolute left-0 p-0 -top-1">{`@${message?.author_name}`}</p>
-                       </div>  
-                     </div>
+                          <div>
+                            <p className=" opacity-40 px-2 rounded-md text-gray-600 absolute left-0 p-0 -top-1">{`@${message?.author_name}`}</p>
+                          </div>
+                        </div>
                       )}
                     </PhotoProvider>
-                    {message?.content?.length>0 && <div>
-                      <div className="relative max-w-xl px-4 w-fit py-2 text-gray-700 bg-slate-200 rounded shadow">
-                        <div>
-                          <span className="text-xs  text- text-gray-600">
-                            @{message.author_name}
-                          </span>
-                          <span className="block">{message.content}</span>
+                    {message?.content?.length > 0 && (
+                      <div>
+                        <div className="relative max-w-xl px-4 w-fit py-2 text-gray-700 bg-slate-200 rounded shadow">
+                          <div>
+                            <span className="text-xs  text- text-gray-600">
+                              @{message.author_name}
+                            </span>
+                            <span className="block">{message.content}</span>
+                          </div>
                         </div>
                       </div>
-                    </div>}
+                    )}
                   </div>
                 </li>
               )}
@@ -93,18 +92,19 @@ export default function ChatDisplay({ messages, loginUserData }) {
                         </div>
                       )}
                     </PhotoProvider>
-                   {message?.content?.length>0 && <div className="flex justify-end">
-                      <div className=" w-fit max-w-xl px-4 py-2   text-gray-700 bg-blue-300 rounded shadow">
-                        <span className="block">{message.content}</span>
+                    {message?.content?.length > 0 && (
+                      <div className="flex justify-end">
+                        <div className=" w-fit max-w-xl px-4 py-2   text-gray-700 bg-blue-300 rounded shadow">
+                          <span className="block">{message.content}</span>
+                        </div>
                       </div>
-                    </div>
-                    }
+                    )}
                   </div>
                 </li>
               )}
-        </ul>
-              ))}
+            </ul>
+          ))}
       </div>
-      </div>
-  )
+    </div>
+  );
 }
