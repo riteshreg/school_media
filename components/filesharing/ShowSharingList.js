@@ -11,9 +11,10 @@ import {
   getVSIFolderIcon,
 } from "file-extension-icon-js";
 
-function ShowSharingList({ file_url,profiles }) {
+function ShowSharingList({ file_name,file_url,profiles,subject }) {
   const [showDropdown, setShowDropdown] = useState(false);
   const [fileIconClass, setFileIconClass] = useState("");
+
 
   const { size, elapsed, percentage, download, cancel, error, isInProgress } =  useDownloader();
 
@@ -36,8 +37,8 @@ function ShowSharingList({ file_url,profiles }) {
 
   return (
     <Card>
-      <div>
-        <div className={`py-2 px-3 relative `}>
+      <div className="">
+        <div className={`py-4 px-3 relative `}>
           <div className=" w-40">
             <div className={`mt-1 flex items-center `}>
               <Image
@@ -75,9 +76,10 @@ function ShowSharingList({ file_url,profiles }) {
                 )}
               </div>
             </div>
-                <p className="text-gray-700">{profiles.name}</p>
+                <p className="text-xs text-gray-400">@{profiles.name}</p>
+                <p className="text-lg">{file_name}</p>
           </div>
-
+              <div className="text-gray-500 top-0 left-0">{subject}</div>
         </div>
       </div>
     </Card>

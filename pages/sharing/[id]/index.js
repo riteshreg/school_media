@@ -36,22 +36,22 @@ export default function Sharing({data}) {
       </p>
 
     {data.status == 'teacher'&&<div className="mt-8">
-        <TeacherNavigator status={9}/>
-        <TeacherNavigator status={10}/>
-        <TeacherNavigator status={11}/>
-        <TeacherNavigator status={12}/>
+          <TeacherNavigator status={9} id={id}/>
+          <TeacherNavigator status={10} id={id}/>
+        <TeacherNavigator status={11} id={id}/>
+        <TeacherNavigator status={12} id={id}/>
     </div>
     }
 
      {studentLogin&&<div>
-      <Link href={`/sharing/${id}/${studentLogin}`}>
+      <Link href={`/sharing/${id}/${studentLogin}/notes_by_teachers/${studentLogin}`}>
           <StudentNavigator
             title={"Notes By Teachers"}
             status={studentLogin}
             description={"You will be provided all notes of all subjects"}
           />
         </Link>
-         <Link href={`/sharing/${id}/${studentLogin}`}>
+         <Link href={`/sharing/${id}/${studentLogin}/project_submission/${studentLogin}`}>
             <StudentNavigator
             title={"Project Submission"}
             status={studentLogin}

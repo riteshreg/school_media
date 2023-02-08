@@ -116,7 +116,7 @@ export default function HomeLayout({ children, hidden=false }) {
         </Card>
       </div>
       <div className={` md:ml-32 grow flex justify-center md:w-12/12 `}  >
-      <div className={`${pathname == '/sharing/[id]/[status]' ? 'md:w-8/12' : 'md:w-6/12'} `}>{children}</div>
+      <div className={`${pathname == '/sharing/[id]/[status]/notes_by_teachers/[room]' || pathname == '/sharing/[id]/[status]/project_submission/[room]' ? 'md:w-8/12' : 'md:w-6/12'} `}>{children}</div>
       </div>
     </div>
   );
