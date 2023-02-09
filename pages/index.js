@@ -12,11 +12,12 @@ import { supabase } from "@/supabase";
 import dynamic from "next/dynamic";
 import { ArrowDownIcon } from "@heroicons/react/24/outline";
 import { Oval } from "react-loader-spinner";
+
 import NewsNavbar from "@/components/NewsNavbar";
+import CreatePost from "../components/post/CreatePost";
 
 const PostDispaly = dynamic(() => import("../components/post/PostDisplay"));
 const HomeLayout = dynamic(() => import("../components/HomeLayout"));
-const CreatePost = dynamic(() => import("../components/post/CreatePost"));
 
 export default function Home({ data }) {
   const [loginUser, setLoginUser] = useState();
@@ -93,17 +94,22 @@ export default function Home({ data }) {
   if (!loginUser) {
     return <LoginPage />;
   }
+  console.log(loginUser)
 
   return (
     <div>
     <HomeLayout>
       <NewsNavbar/> 
-      <div className="space-y-4 mb-14 md:mb-8 h-full">
-        { loginUser.id == "470505ee-5319-441e-9185-34a0eaa2027e"&& <CreatePost FetchAllPost={FetchAllPost} />}
+      <div className="space-y-4 mb-14 md:mb-8 h-full">  
+     {false && 
+        <CreatePost FetchAllPost={FetchAllPost} />
+       }
+        <div>
         {AllPost?.length > 0 &&
           AllPost?.map((item) => (
             <PostDispaly key={item.id} {...item} loginUser={loginUser} />
           ))}
+        </div>
         <div className=" flex pb-4 justify-center">
           {!loadMoreDisabled &&<button
             disabled={loadMoreDisabled}

@@ -7,7 +7,7 @@ import Avatar from "../Avatar";
 import Card from "../Card";
 import { PhotoProvider, PhotoView } from "react-photo-view";
 import Linkify from "react-linkify";
-import ReactTimeAgo from 'react-time-ago'
+import ReactTimeAgo from "react-time-ago";
 
 export default function PostDispaly({
   id,
@@ -66,14 +66,18 @@ export default function PostDispaly({
             <span className="mr-2 font-semibold text-gray-700">
               {"Janata Mavi Official"}
             </span>
-            <ReactTimeAgo className="font-sans text-sm" date={new Date(created_at)} locale="en-US"/>
+            <ReactTimeAgo
+              className="font-sans text-sm"
+              date={new Date(created_at)}
+              locale="en-US"
+            />
           </label>
         </div>
         <div className="mx-1 pl-1 my-1 md:mx-2 md:my-2 md:px-1 text-md">
           <div className="all-initial">
-          <Linkify>
-          <p>{content}</p>
-          </Linkify>
+            <Linkify>
+              <p>{content}</p>
+            </Linkify>
           </div>
         </div>
         {images?.length > 0 && (
@@ -82,23 +86,7 @@ export default function PostDispaly({
               images.length > 2 && "block md:grid md:grid-cols-2"
             }`}
           >
-            <PhotoProvider>
-
             {
-              images.map((image)=>
-              <PhotoView key={image} src={image}>
-
-              <Image
-              alt="photo"
-              height={720}
-              className="p-2 cursor-pointer rounded-sm overflow-hidden"
-              width={650}
-              src={image}/>
-              </PhotoView>
-              )
-            } 
-              </PhotoProvider>
-            {/* {
               <PhotoProvider>
                 {images.map((image) => (
                   <PhotoView key={image} src={image}>
@@ -112,7 +100,7 @@ export default function PostDispaly({
                   </PhotoView>
                 ))}
               </PhotoProvider>
-            } */}
+            }
           </div>
         )}
         <div className=" py-1">
