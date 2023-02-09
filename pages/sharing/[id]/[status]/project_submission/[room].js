@@ -88,8 +88,8 @@ function FileSharing({ AllFiles }) {
           <hr />
           <h1 className="text-xl text-center p-1">
             {/* {` File Sharing And Project Submission ${status}`} */}
-            project submission
-          </h1>
+              File Submission By Students
+            </h1>
           <hr />
         </div>
         <div className="flex">

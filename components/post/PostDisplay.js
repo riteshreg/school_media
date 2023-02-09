@@ -82,7 +82,23 @@ export default function PostDispaly({
               images.length > 2 && "block md:grid md:grid-cols-2"
             }`}
           >
+            <PhotoProvider>
+
             {
+              images.map((image)=>
+              <PhotoView key={image} src={image}>
+
+              <Image
+              alt="photo"
+              height={720}
+              className="p-2 cursor-pointer rounded-sm overflow-hidden"
+              width={650}
+              src={image}/>
+              </PhotoView>
+              )
+            } 
+              </PhotoProvider>
+            {/* {
               <PhotoProvider>
                 {images.map((image) => (
                   <PhotoView key={image} src={image}>
@@ -96,7 +112,7 @@ export default function PostDispaly({
                   </PhotoView>
                 ))}
               </PhotoProvider>
-            }
+            } */}
           </div>
         )}
         <div className=" py-1">

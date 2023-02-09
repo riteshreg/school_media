@@ -45,7 +45,6 @@ function MessagingPage({ fetch_messages }) {
     scrollRef.current.scrollTop = scrollRef.current.scrollHeight;
   };
 
-// console.log(loginUserData)
 
   useEffect(() => {
     if (status) {
