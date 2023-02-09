@@ -9,7 +9,7 @@ import Card from "../Card";
 import { PhotoProvider, PhotoView } from "react-photo-view";
 import "react-photo-view/dist/react-photo-view.css";
 import TextareaAutosize from "react-autosize-textarea";
-// beta version
+
 export default function CreatePost({ FetchAllPost }) {
   const supabase = useSupabaseClient();
 
