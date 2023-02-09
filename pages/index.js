@@ -101,7 +101,7 @@ export default function Home({ data }) {
     <HomeLayout>
       <NewsNavbar/> 
       <div className="space-y-4 mb-14 md:mb-8 h-full">  
-     {false && 
+     {loginUser.id == '470505ee-5319-441e-9185-34a0eaa2027e' && 
         <CreatePost FetchAllPost={FetchAllPost} />
        }
         <div>
