@@ -17,7 +17,6 @@ export const UserContextProvider = ({children}) =>{
   const [isOnBottom, setIsOnBottom] = useState(false);
   const [status, setStatus] = useState(null)
 
-  const [loginAsAdmin, setLoginAsAdmin]  = useState(false)
 
   const [prevMessagesUploadedFiles, setPrevMessagesUploadedFiles] = useState([])
   const [messagesUploadedFiles, setMessagesUploadedFiles] = useState([])
@@ -27,12 +26,7 @@ export const UserContextProvider = ({children}) =>{
 
 
  
-  useEffect(()=>{
-      if(loginUserId?.id == "470505ee-5319-441e-9185-34a0eaa2027e"){
-        setLoginAsAdmin(true)
-      }
-  },[loginUserId])
-  
+ 
   
 
     return(
@@ -44,7 +38,6 @@ export const UserContextProvider = ({children}) =>{
                      setStatus,
                      messagesUploadedFiles,setMessagesUploadedFiles,
                      prevMessagesUploadedFiles,setPrevMessagesUploadedFiles,
-                     loginAsAdmin,
                      }}>
             {children}
         </UserContext.Provider>

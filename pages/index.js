@@ -25,7 +25,7 @@ export default function Home({ data }) {
   const [loadMoreDisabled, setLoadMoreDisabled] = useState(false);
 
   const session = useSession();
-  const { setLoginUserId, loginAsAdmin } = useContext(UserContext);
+  const { setLoginUserId } = useContext(UserContext);
 
   const supabase = useSupabaseClient();
 
@@ -99,7 +99,7 @@ export default function Home({ data }) {
     <HomeLayout>
       <NewsNavbar/> 
       <div className="space-y-4 mb-14 md:mb-8 h-full">
-        {loginAsAdmin && <CreatePost FetchAllPost={FetchAllPost} />}
+        { loginUser.id == "470505ee-5319-441e-9185-34a0eaa2027e"&& <CreatePost FetchAllPost={FetchAllPost} />}
         {AllPost?.length > 0 &&
           AllPost?.map((item) => (
             <PostDispaly key={item.id} {...item} loginUser={loginUser} />
