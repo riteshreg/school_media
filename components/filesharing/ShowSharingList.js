@@ -1,6 +1,6 @@
 import { EllipsisHorizontalIcon, PlusIcon } from "@heroicons/react/24/outline";
 import Image from "next/image";
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import ClickOutHandler from "react-clickout-handler";
 import Card from "../Card";
 import useDownloader from "react-use-downloader";
@@ -10,11 +10,14 @@ import {
   getVSIFileIcon,
   getVSIFolderIcon,
 } from "file-extension-icon-js";
+import { supabase } from "@/supabase";
+import { UserContext } from "@/UserContext";
 
-function ShowSharingList({ file_name,file_url,profiles,subject }) {
+function ShowSharingList({ file_name, id,file_url,profiles,subject }) {
   const [showDropdown, setShowDropdown] = useState(false);
   const [fileIconClass, setFileIconClass] = useState("");
 
+  const {loginUserId} = useContext(UserContext)
 
   const { size, elapsed, percentage, download, cancel, error, isInProgress } =  useDownloader();
 
@@ -30,6 +33,17 @@ function ShowSharingList({ file_name,file_url,profiles,subject }) {
       download(file_url[0], filename);
     }
   }
+
+  function handleFileDelete(){
+    supabase.from("fileSharing").delete().eq('id', id).then(response=>{
+      if(!response.error){
+        supabase.storage.from("filesharing").remove([filename]).then((response)=>{
+          console.log(response)
+        })
+      }
+    })
+  }
+
   const splitName = file_url[0]?.split("/");
   const filename = splitName?.[splitName?.length - 1];
   
@@ -42,7 +56,7 @@ function ShowSharingList({ file_name,file_url,profiles,subject }) {
           <div className=" w-40">
             <div className={`mt-1 flex items-center `}>
               <Image
-                src={`${getMaterialFileIcon(filename)}`}
+                src={`https://upload.wikimedia.org/wikipedia/commons/0/01/Google_Docs_logo_%282014-2020%29.svg`}
                 alt="js"
                 height={66}
                 width="60"
@@ -67,8 +81,13 @@ function ShowSharingList({ file_name,file_url,profiles,subject }) {
                   <ClickOutHandler onClickOut={() => setShowDropdown(false)}>
                     <div className="modal absolute right-0">
                       <Card>
-                        <div className="bg-slate-200">
+                        <div className="bg-slate-100 p-2 space-y-4">
+                          <div className="bg-white">
                           <button onClick={handleFileDownload}>Download</button>
+                          </div>
+                         {profiles.id == loginUserId.id &&   <div className="bg-white">
+                          <button onClick={handleFileDelete}>Delete</button>
+                          </div>}
                         </div>
                       </Card>
                     </div>

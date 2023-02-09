@@ -9,8 +9,7 @@ import Image from "next/image";
 import React, { useContext, useEffect, useState } from "react";
 import { UserContext } from "@/UserContext";
 import dynamic from "next/dynamic";
-import { getMaterialFileIcon } from "file-extension-icon-js";
-import { Oval, Rings } from "react-loader-spinner";
+import {  Rings } from "react-loader-spinner";
 import { supabase } from "@/supabase";
 import { useRouter } from "next/router";
 import GetTableFromStatus from "@/helper/GetTableFromStatus";
@@ -29,6 +28,7 @@ export default function NotesByTeachers({ AllFiles }) {
   const [allUploadedFilesFromLocal, setAllUploadedFilesFromLocal] = useState(
     []
   );
+
 
   const [AllFetchFiles, setAllFetchFiles] = useState([]);
   const [loader, setLoader] = useState(false);
@@ -50,6 +50,7 @@ export default function NotesByTeachers({ AllFiles }) {
       )[0]);
     }
   },[]);
+  
 
 
   useEffect(() => {
@@ -59,7 +60,7 @@ export default function NotesByTeachers({ AllFiles }) {
   }, []);
 
   useEffect(() => {
-    if (AllFiles.length > 0) {
+    if (AllFiles?.length > 0) {
       setAllFetchFiles(AllFiles);
     }
   }, []);
@@ -93,7 +94,6 @@ export default function NotesByTeachers({ AllFiles }) {
     }
   };
 
-  // console.log(GetTableFromStatus(room))
 
   const handleFileUpload = () => {
     supabase
@@ -187,14 +187,13 @@ export default function NotesByTeachers({ AllFiles }) {
                       />
                     </div>
                   </label>
-                  {/* <Select className="w-40" options={subject[room]} /> */}
                 </div>
                 {allUploadedFilesFromLocal.length > 0 && (
                   <div className="ml-10 p-1 flex space-x-4">
                     {allUploadedFilesFromLocal.map((file) => (
                       <Image
                         key={file}
-                        src={`${getMaterialFileIcon(file)}`}
+                        src={`https://upload.wikimedia.org/wikipedia/commons/0/01/Google_Docs_logo_%282014-2020%29.svg`}
                         alt="thumbnail"
                         height={66}
                         width="60"
@@ -217,7 +216,6 @@ export default function NotesByTeachers({ AllFiles }) {
                   onChange={(e) => setFileName(e.target.value)}
                   placeholder="file title"
                 />
-                {/* <Select placeholder="subject" className="w-40" options={subject[room]} /> */}
               </div>
             </div>
           )}
@@ -270,9 +268,11 @@ export async function getServerSideProps(context) {
   const table_name = GetTableFromStatus(room);
   const data = await supabase
     .from(table_name)
-    .select("id,created_at,subject, file_name, file_url, profiles(name,status)")
+    .select("id,created_at,subject, file_name, file_url, profiles(id,name,status)")
     .limit(10)
     .order("created_at",{ascending:false});
+
+    console.log(data)
 
   return {
     props: {
