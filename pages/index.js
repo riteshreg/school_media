@@ -23,15 +23,11 @@ const HomeLayout = dynamic(() => import("../components/HomeLayout"));
 
 export default function Home({ data }) {
   <Head>
-    <title>Home Page</title>
-    <meta property="og:url" content="https://janatamavi.vercel.app" />
-    <meta property="og:type" content="website" />
-    <meta property="og:title" content="School Media of Janata Mavi" />
-    <meta
-      property="og:description"
-      content="Janata Mavi Gauradaha-1, Jhapa"
-    />
-    <meta property="og:image" content={"https://ypticbcztdwpynckjwag.supabase.co/storage/v1/object/public/images/305480223_576509657594875_840635747841878545_n%20(2).jpg"} />
+    <title>My Page Title</title>
+      <meta name="description" content="My page description." />
+      <meta property="og:title" content="My Page Title" />
+      <meta property="og:description" content="My page description." />
+      <meta property="og:type" content="website" />  
   </Head>;
 
   const [loginUser, setLoginUser] = useState();
