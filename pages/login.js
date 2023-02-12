@@ -21,11 +21,6 @@ const notify = () =>
   });
 
 export default function LoginPage() {
-
-  <Head>
-    <title>Login Page</title>
-  </Head>;
-
   const supabase = useSupabaseClient();
   const router = useRouter();
 
@@ -68,6 +63,28 @@ export default function LoginPage() {
 
   return (
     <div className="h-screen w-screen flex flex-col items-center justify-center">
+      <Head>
+      <title>Janata Mavi</title>
+        <meta
+          name="description"
+          property="og:title"
+          content="Janata Mavi Gauradaha-1 Jhapa"
+          key="desc"
+        />
+        <meta property="og:type" content="website" />
+        <meta property="og:url" content="https://janatamavi.vercel.app" />
+        
+        {/* <meta
+          property="og:image"
+          content="https://ypticbcztdwpynckjwag.supabase.co/storage/v1/object/public/images/305480223_576509657594875_840635747841878545_n%20(2).jpg"
+        /> */}
+        <meta
+          property="og:image"
+          content="https://ypticbcztdwpynckjwag.supabase.co/storage/v1/object/public/images/305480223_576509657594875_840635747841878545_n.jpg"
+        />
+        
+      </Head>
+
       <div className="flex flex-col space-y-4">
         <input
           onKeyDown={(e) => {
@@ -132,18 +149,17 @@ export default function LoginPage() {
         theme="light"
       />
       <div className="mt-5">
-          <h1 className="text-lg font-mono">
-            No credentials,
-            <span className="text-blue-600 ml-2">
-              <Link
-                target={"_blank"}
-                href={"https://forms.gle/8tUKrgrWf1UMDoq86"}
-              >
-                Fill The Form
-              </Link>
-            </span>
-
-          </h1>
+        <h1 className="text-lg font-mono">
+          No credentials,
+          <span className="text-blue-600 ml-2">
+            <Link
+              target={"_blank"}
+              href={"https://forms.gle/8tUKrgrWf1UMDoq86"}
+            >
+              Fill The Form
+            </Link>
+          </span>
+        </h1>
       </div>
     </div>
   );

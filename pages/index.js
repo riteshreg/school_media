@@ -22,10 +22,6 @@ const PostDispaly = dynamic(() => import("../components/post/PostDisplay"));
 const HomeLayout = dynamic(() => import("../components/HomeLayout"));
 
 export default function Home({ data }) {
-  <Head>
-  <title>Home Page</title>
-</Head>;
-
   const [loginUser, setLoginUser] = useState();
   const [AllPost, setAllPost] = useState([]);
 
@@ -36,7 +32,6 @@ export default function Home({ data }) {
 
   const supabase = useSupabaseClient();
   const router = useRouter();
-
 
   useEffect(() => {
     setAllPost(data);
@@ -89,7 +84,7 @@ export default function Home({ data }) {
       .range(AllPost.length, AllPost.length + 5)
       .then((response) => {
         if (response.error) {
-          setLoadMoreDisabled(fasle)
+          setLoadMoreDisabled(fasle);
           throw response.error;
         }
         if (response.data) {
@@ -102,42 +97,67 @@ export default function Home({ data }) {
   // if (!loginUser) {
   //   return <LoginPage />;
   // }
-  console.log(loginUser)
+  console.log(loginUser);
 
   return (
     <div>
-    <HomeLayout>
-      <NewsNavbar/> 
-      <div className="space-y-4 mb-14 md:mb-8 h-full">  
-     {loginUser?.id == '470505ee-5319-441e-9185-34a0eaa2027e' && 
-        <CreatePost FetchAllPost={FetchAllPost} />
-       }
-        <div>
-        {AllPost?.length > 0 &&
-          AllPost?.map((item) => (
-            <PostDispaly key={item.id} {...item} loginUser={loginUser} />
-          ))}
+      <Head>
+        <title>Janata Mavi</title>
+        <meta
+          name="description"
+          property="og:title"
+          content="Janata Mavi Gauradaha-1 Jhapa"
+          key="desc"
+        />
+        <meta property="og:type" content="website" />
+        <meta property="og:url" content="https://janatamavi.vercel.app" />
+        {/* <meta
+          property="og:image"
+          content="https://ypticbcztdwpynckjwag.supabase.co/storage/v1/object/public/images/305480223_576509657594875_840635747841878545_n%20(2).jpg"
+        /> */}
+        {/*  */}
+        <meta
+          property="og:image"
+          content="https://ypticbcztdwpynckjwag.supabase.co/storage/v1/object/public/images/305480223_576509657594875_840635747841878545_n.jpg"
+        />
+      </Head>
+
+      <HomeLayout>
+        <NewsNavbar />
+        <div className="space-y-4 mb-14 md:mb-8 h-full">
+          {loginUser?.id == "470505ee-5319-441e-9185-34a0eaa2027e" && (
+            <CreatePost FetchAllPost={FetchAllPost} />
+          )}
+          <div>
+            {AllPost?.length > 0 &&
+              AllPost?.map((item) => (
+                <PostDispaly key={item.id} {...item} loginUser={loginUser} />
+              ))}
+          </div>
+          <div className=" flex pb-4 justify-center">
+            {!loadMoreDisabled && (
+              <button
+                disabled={loadMoreDisabled}
+                className="flex py-2 px-8 border-[#d6d6d6]  border-2 text-gray-700"
+                onClick={handleLoadMore}
+              >
+                <ArrowDownIcon className="h-6 text-[#5553ff]" /> Load More...
+              </button>
+            )}
+            {loadMoreDisabled && (
+              <Oval
+                ariaLabel="loading-indicator"
+                height={50}
+                width={50}
+                strokeWidth={5}
+                strokeWidthSecondary={1}
+                color="blue"
+                secondaryColor="white"
+              />
+            )}
+          </div>
         </div>
-        <div className=" flex pb-4 justify-center">
-          {!loadMoreDisabled &&<button
-            disabled={loadMoreDisabled}
-            className="flex py-2 px-8 border-[#d6d6d6]  border-2 text-gray-700"
-            onClick={handleLoadMore}
-          >
-            <ArrowDownIcon className="h-6 text-[#5553ff]" /> Load More...
-          </button>}
-          {loadMoreDisabled&&<Oval
-            ariaLabel="loading-indicator"
-            height={50}
-            width={50}
-            strokeWidth={5}
-            strokeWidthSecondary={1}
-            color="blue"
-            secondaryColor="white"
-          />}
-        </div>
-      </div>
-    </HomeLayout>
+      </HomeLayout>
     </div>
   );
 }
