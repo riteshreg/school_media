@@ -109,6 +109,10 @@ export default function Home({ data }) {
           content="Janata Mavi Gauradaha-1 Jhapa"
           key="desc"
         />
+        <meta
+          property="og:description"
+          content="Join Us Now"
+        />
         <meta property="og:type" content="website" />
         <meta property="og:url" content="https://janatamavi.vercel.app" />
         {/* <meta
