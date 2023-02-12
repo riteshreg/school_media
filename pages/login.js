@@ -67,16 +67,17 @@ export default function LoginPage() {
   return (
     <div className="h-screen w-screen flex flex-col items-center justify-center">
       <Head>
-        <title>Cool Title</title>
-        <meta name="description" content="login Checkout our cool page" key="desc" />
-        <meta property="og:title" content="login Social Title for Cool Page" />
+      <title>Cool Title</title>
+        <meta name="description" content="Checkout our cool page" key="desc" />
+        <meta property="og:title" content="Social Title for Cool Page" />
         <meta
           property="og:description"
-          content="login And a social description for our cool page"
+          content="And a social description for our cool page"
         />
         <meta
           property="og:image"
           content="https://ypticbcztdwpynckjwag.supabase.co/storage/v1/object/public/images/305480223_576509657594875_840635747841878545_n%20(2).jpg"
+          
         />
       </Head>
 
