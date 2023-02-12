@@ -102,17 +102,22 @@ export default function Home({ data }) {
   return (
     <div>
        <Head>
-        <title>Cool Title</title>
-        <meta name="description" content="index Checkout our cool page" key="desc" />
-        <meta property="og:title" content="index Social Title for Cool Page" />
+       <title>Cool Title</title>
         <meta
-          property="og:description"
-          content="index And a social description for our cool page"
+          name="description"
+          property="og:title"
+          content="Checkout our cool page"
+          key="desc"
         />
+        <meta property="og:type" content="website" />
+        <meta property="og:url" content="https://www.example.com/" />
         <meta
           property="og:image"
           content="https://ypticbcztdwpynckjwag.supabase.co/storage/v1/object/public/images/305480223_576509657594875_840635747841878545_n%20(2).jpg"
         />
+        <meta property="og:description" content="Page Description">
+          Lorem ipsum dolor sit amet consectetur adipisicing elit. Minima, rem!
+        </meta>
       </Head>
       
       <HomeLayout>

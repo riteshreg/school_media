@@ -21,9 +21,6 @@ const notify = () =>
   });
 
 export default function LoginPage() {
-
-
-
   const supabase = useSupabaseClient();
   const router = useRouter();
 
@@ -67,18 +64,22 @@ export default function LoginPage() {
   return (
     <div className="h-screen w-screen flex flex-col items-center justify-center">
       <Head>
-      <title>Cool Title</title>
-        <meta name="description" content="Checkout our cool page" key="desc" />
-        <meta property="og:title" content="Social Title for Cool Page" />
+        <title>Cool Title</title>
         <meta
-          property="og:description"
-          content="And a social description for our cool page"
+          name="description"
+          property="og:title"
+          content="Checkout our cool page"
+          key="desc"
         />
+        <meta property="og:type" content="website" />
+        <meta property="og:url" content="https://www.example.com/" />
         <meta
           property="og:image"
           content="https://ypticbcztdwpynckjwag.supabase.co/storage/v1/object/public/images/305480223_576509657594875_840635747841878545_n%20(2).jpg"
-          
         />
+        <meta property="og:description" content="Page Description">
+          Lorem ipsum dolor sit amet consectetur adipisicing elit. Minima, rem!
+        </meta>
       </Head>
 
       <div className="flex flex-col space-y-4">
