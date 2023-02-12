@@ -101,17 +101,20 @@ export default function Home({ data }) {
 
   return (
     <div>
-      <Head>
-        <title>
-          iPhone 12 XS Max For Sale in Colorado - Big Discounts | Apple
-        </title>
+       <Head>
+        <title>Cool Title</title>
+        <meta name="description" content="index Checkout our cool page" key="desc" />
+        <meta property="og:title" content="index Social Title for Cool Page" />
         <meta
-          name="description"
-          content="Check out iPhone 12 XR Pro and iPhone 12 Pro Max. Visit your local store and for expert advice."
-          key="desc"
+          property="og:description"
+          content="index And a social description for our cool page"
+        />
+        <meta
+          property="og:image"
+          content="https://ypticbcztdwpynckjwag.supabase.co/storage/v1/object/public/images/305480223_576509657594875_840635747841878545_n%20(2).jpg"
         />
       </Head>
-      ;
+      
       <HomeLayout>
         <NewsNavbar />
         <div className="space-y-4 mb-14 md:mb-8 h-full">
