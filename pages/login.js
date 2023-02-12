@@ -1,6 +1,8 @@
 import { useSupabaseClient } from "@supabase/auth-helpers-react";
+import Link from "next/link";
 import { useRouter } from "next/router";
 import { useState } from "react";
+import ReactLinkify from "react-linkify";
 import { MutatingDots } from "react-loader-spinner";
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
@@ -121,6 +123,16 @@ export default function LoginPage() {
         draggable
         pauseOnHover
         theme="light" />
+          <div className="mt-5">
+        <ReactLinkify>
+          <h1 className="text-lg font-mono">
+        No credentials,          
+         <span className="text-blue-600 ml-2">
+           <Link target={"_blank"} href={'https://forms.gle/8tUKrgrWf1UMDoq86'}>Fill The Form</Link>
+            </span>
+          </h1>
+        </ReactLinkify>
+      </div>
     </div>
   );
 }
