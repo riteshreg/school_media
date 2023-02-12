@@ -22,17 +22,6 @@ const PostDispaly = dynamic(() => import("../components/post/PostDisplay"));
 const HomeLayout = dynamic(() => import("../components/HomeLayout"));
 
 export default function Home({ data }) {
-  <Head>
-        <title>
-          iPhone 12 XS Max For Sale in Colorado - Big Discounts | Apple
-        </title>
-        <meta
-          name="description"
-          content="Check out iPhone 12 XR Pro and iPhone 12 Pro Max. Visit your local store and for expert advice."
-          key="desc"
-        />
-      </Head>
-
   const [loginUser, setLoginUser] = useState();
   const [AllPost, setAllPost] = useState([]);
 
@@ -112,6 +101,17 @@ export default function Home({ data }) {
 
   return (
     <div>
+      <Head>
+        <title>
+          iPhone 12 XS Max For Sale in Colorado - Big Discounts | Apple
+        </title>
+        <meta
+          name="description"
+          content="Check out iPhone 12 XR Pro and iPhone 12 Pro Max. Visit your local store and for expert advice."
+          key="desc"
+        />
+      </Head>
+      ;
       <HomeLayout>
         <NewsNavbar />
         <div className="space-y-4 mb-14 md:mb-8 h-full">
