@@ -132,7 +132,6 @@ export default function LoginPage() {
         theme="light"
       />
       <div className="mt-5">
-        <ReactLinkify>
           <h1 className="text-lg font-mono">
             No credentials,
             <span className="text-blue-600 ml-2">
@@ -143,8 +142,8 @@ export default function LoginPage() {
                 Fill The Form
               </Link>
             </span>
+
           </h1>
-        </ReactLinkify>
       </div>
     </div>
   );
