@@ -101,24 +101,26 @@ export default function Home({ data }) {
 
   return (
     <div>
-       <Head>
-       <title>Cool Title</title>
+      <Head>
+        <title>Janata Mavi</title>
         <meta
           name="description"
           property="og:title"
-          content="Checkout our cool page"
+          content="Janata Mavi Gauradaha-7 Jhapa"
           key="desc"
         />
         <meta property="og:type" content="website" />
         <meta property="og:url" content="https://janatamavi.vercel.app" />
+        {/* <meta
+          property="og:image"
+          content="https://ypticbcztdwpynckjwag.supabase.co/storage/v1/object/public/images/305480223_576509657594875_840635747841878545_n%20(2).jpg"
+        /> */}
         <meta
           property="og:image"
           content="https://ypticbcztdwpynckjwag.supabase.co/storage/v1/object/public/images/305480223_576509657594875_840635747841878545_n%20(2).jpg"
         />
-                  <meta property="og:image" content="https://ypticbcztdwpynckjwag.supabase.co/storage/v1/object/public/images/305480223_576509657594875_840635747841878545_n%20(2).jpg"/>
-       
       </Head>
-      
+
       <HomeLayout>
         <NewsNavbar />
         <div className="space-y-4 mb-14 md:mb-8 h-full">

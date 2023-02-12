@@ -64,22 +64,23 @@ export default function LoginPage() {
   return (
     <div className="h-screen w-screen flex flex-col items-center justify-center">
       <Head>
-        <title>Cool Title</title>
+      <title>Janata Mavi</title>
         <meta
           name="description"
           property="og:title"
-          content="Checkout our cool page"
+          content="Janata Mavi Gauradaha-7 Jhapa"
           key="desc"
         />
         <meta property="og:type" content="website" />
-        <meta property="og:url" content="https://www.example.com/" />
+        <meta property="og:url" content="https://janatamavi.vercel.app" />
+        {/* <meta
+          property="og:image"
+          content="https://ypticbcztdwpynckjwag.supabase.co/storage/v1/object/public/images/305480223_576509657594875_840635747841878545_n%20(2).jpg"
+        /> */}
         <meta
           property="og:image"
           content="https://ypticbcztdwpynckjwag.supabase.co/storage/v1/object/public/images/305480223_576509657594875_840635747841878545_n%20(2).jpg"
         />
-          <meta property="og:image" content="https://ypticbcztdwpynckjwag.supabase.co/storage/v1/object/public/images/305480223_576509657594875_840635747841878545_n%20(2).jpg"
-     />
-
         
       </Head>
 
