@@ -1,4 +1,6 @@
 import { useSupabaseClient } from "@supabase/auth-helpers-react";
+import Head from "next/head";
+import Link from "next/link";
 import { useRouter } from "next/router";
 import { useState } from "react";
 import ReactLinkify from "react-linkify";
@@ -19,6 +21,11 @@ const notify = () =>
   });
 
 export default function LoginPage() {
+
+  <Head>
+    <title>Login Page</title>
+  </Head>;
+
   const supabase = useSupabaseClient();
   const router = useRouter();
 
@@ -124,14 +131,19 @@ export default function LoginPage() {
         pauseOnHover
         theme="light"
       />
-
       <div className="mt-5">
-        <ReactLinkify>
           <h1 className="text-lg font-mono">
-        No credentials, Contact on
-           <span className="text-blue-600 ml-2">riteshregmi@gmail.com</span>{" "}
+            No credentials,
+            <span className="text-blue-600 ml-2">
+              <Link
+                target={"_blank"}
+                href={"https://forms.gle/8tUKrgrWf1UMDoq86"}
+              >
+                Fill The Form
+              </Link>
+            </span>
+
           </h1>
-        </ReactLinkify>
       </div>
     </div>
   );
