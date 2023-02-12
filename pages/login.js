@@ -68,6 +68,7 @@ export default function LoginPage() {
 <title>Janata Mavi Gauradaha-1 Jhapa</title>
 <meta name="title" content="Janata Mavi Gauradaha-1 Jhapa"/>
 <meta name="description" content="Janata Mavi Gauradaha-1 Jhapa"/>
+<meta name="google-site-verification" content="u4uecizf53tsGJ3mbksqLoCi1qEwAstbR_bOxYEQB1k" />
 
 {/* <!-- Open Graph / Facebook --> */}
 <meta property="og:type" content="website"/>
