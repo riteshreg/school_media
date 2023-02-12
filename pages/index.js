@@ -23,12 +23,15 @@ const HomeLayout = dynamic(() => import("../components/HomeLayout"));
 
 export default function Home({ data }) {
   <Head>
-    <title>My Page Title</title>
-      <meta name="description" content="My page description." />
-      <meta property="og:title" content="My Page Title" />
-      <meta property="og:description" content="My page description." />
-      <meta property="og:type" content="website" />  
-  </Head>;
+        <title>
+          iPhone 12 XS Max For Sale in Colorado - Big Discounts | Apple
+        </title>
+        <meta
+          name="description"
+          content="Check out iPhone 12 XR Pro and iPhone 12 Pro Max. Visit your local store and for expert advice."
+          key="desc"
+        />
+      </Head>
 
   const [loginUser, setLoginUser] = useState();
   const [AllPost, setAllPost] = useState([]);
