@@ -115,6 +115,7 @@ export default function Home({ data }) {
           property="og:image"
           content="https://ypticbcztdwpynckjwag.supabase.co/storage/v1/object/public/images/305480223_576509657594875_840635747841878545_n%20(2).jpg"
         />
+                  <meta property="og:image" content="https://ypticbcztdwpynckjwag.supabase.co/storage/v1/object/public/images/305480223_576509657594875_840635747841878545_n%20(2).jpg"/>
        
       </Head>
       
