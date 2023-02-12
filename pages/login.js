@@ -64,24 +64,24 @@ export default function LoginPage() {
   return (
     <div className="h-screen w-screen flex flex-col items-center justify-center">
       <Head>
-      <title>Janata Mavi</title>
-        <meta
-          name="description"
-          property="og:title"
-          content="Janata Mavi Gauradaha-1 Jhapa"
-          key="desc"
-        />
-        <meta property="og:type" content="website" />
-        <meta property="og:url" content="https://janatamavi.vercel.app" />
-        
-        {/* <meta
-          property="og:image"
-          content="https://ypticbcztdwpynckjwag.supabase.co/storage/v1/object/public/images/305480223_576509657594875_840635747841878545_n%20(2).jpg"
-        /> */}
-        <meta
-          property="og:image"
-          content="https://ypticbcztdwpynckjwag.supabase.co/storage/v1/object/public/images/305480223_576509657594875_840635747841878545_n.jpg"
-        />
+      {/* <!-- Primary Meta Tags --> */}
+<title>Janata Mavi Gauradaha-1 Jhapa</title>
+<meta name="title" content="Janata Mavi Gauradaha-1 Jhapa"/>
+<meta name="description" content="Janata Mavi Gauradaha-1 Jhapa"/>
+
+{/* <!-- Open Graph / Facebook --> */}
+<meta property="og:type" content="website"/>
+<meta property="og:url" content="https://janatamavi.vercel.app/login?redirectedFrom=/"/>
+<meta property="og:title" content="Janata Mavi Gauradaha-1 Jhapa"/>
+<meta property="og:description" content="Janata Mavi Gauradaha-1 Jhapa"/>
+<meta property="og:image" content="http://ypticbcztdwpynckjwag.supabase.co/storage/v1/object/public/images/305480223_576509657594875_840635747841878545_n.jpg"/>
+
+{/* <!-- Twitter --> */}
+<meta property="twitter:card" content="summary_large_image"/>
+<meta property="twitter:url" content="https://janatamavi.vercel.app/login?redirectedFrom=/"/>
+<meta property="twitter:title" content="Janata Mavi Gauradaha-1 Jhapa"/>
+<meta property="twitter:description" content="Janata Mavi Gauradaha-1 Jhapa"/>
+<meta property="twitter:image" content="http://ypticbcztdwpynckjwag.supabase.co/storage/v1/object/public/images/305480223_576509657594875_840635747841878545_n.jpg"></meta>
         
       </Head>
 
