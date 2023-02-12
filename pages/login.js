@@ -21,9 +21,18 @@ const notify = () =>
   });
 
 export default function LoginPage() {
-
   <Head>
-    <title>Login Page</title>
+    <title>Home Page</title>
+    <meta property="og:url" content="https://janatamavi.vercel.app" />
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="School Media of Janata Mavi" />
+    <meta property="og:description" content="Janata Mavi Gauradaha-1, Jhapa" />
+    <meta
+      property="og:image"
+      content={
+        "https://ypticbcztdwpynckjwag.supabase.co/storage/v1/object/public/images/305480223_576509657594875_840635747841878545_n%20(2).jpg"
+      }
+    />
   </Head>;
 
   const supabase = useSupabaseClient();
@@ -132,18 +141,17 @@ export default function LoginPage() {
         theme="light"
       />
       <div className="mt-5">
-          <h1 className="text-lg font-mono">
-            No credentials,
-            <span className="text-blue-600 ml-2">
-              <Link
-                target={"_blank"}
-                href={"https://forms.gle/8tUKrgrWf1UMDoq86"}
-              >
-                Fill The Form
-              </Link>
-            </span>
-
-          </h1>
+        <h1 className="text-lg font-mono">
+          No credentials,
+          <span className="text-blue-600 ml-2">
+            <Link
+              target={"_blank"}
+              href={"https://forms.gle/8tUKrgrWf1UMDoq86"}
+            >
+              Fill The Form
+            </Link>
+          </span>
+        </h1>
       </div>
     </div>
   );
