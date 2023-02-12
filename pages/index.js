@@ -16,11 +16,16 @@ import { Oval } from "react-loader-spinner";
 import NewsNavbar from "@/components/NewsNavbar";
 import CreatePost from "../components/post/CreatePost";
 import { useRouter } from "next/router";
+import Head from "next/head";
 
 const PostDispaly = dynamic(() => import("../components/post/PostDisplay"));
 const HomeLayout = dynamic(() => import("../components/HomeLayout"));
 
 export default function Home({ data }) {
+  <Head>
+  <title>Home Page</title>
+</Head>;
+
   const [loginUser, setLoginUser] = useState();
   const [AllPost, setAllPost] = useState([]);
 
