@@ -15,6 +15,7 @@ import { Oval } from "react-loader-spinner";
 
 import NewsNavbar from "@/components/NewsNavbar";
 import CreatePost from "../components/post/CreatePost";
+import { useRouter } from "next/router";
 
 const PostDispaly = dynamic(() => import("../components/post/PostDisplay"));
 const HomeLayout = dynamic(() => import("../components/HomeLayout"));
@@ -29,6 +30,8 @@ export default function Home({ data }) {
   const { setLoginUserId } = useContext(UserContext);
 
   const supabase = useSupabaseClient();
+  const router = useRouter();
+
 
   useEffect(() => {
     setAllPost(data);
@@ -91,9 +94,9 @@ export default function Home({ data }) {
       });
   };
 
-  if (!loginUser) {
-    return <LoginPage />;
-  }
+  // if (!loginUser) {
+  //   return <LoginPage />;
+  // }
   console.log(loginUser)
 
   return (
@@ -101,7 +104,7 @@ export default function Home({ data }) {
     <HomeLayout>
       <NewsNavbar/> 
       <div className="space-y-4 mb-14 md:mb-8 h-full">  
-     {loginUser.id == '470505ee-5319-441e-9185-34a0eaa2027e' && 
+     {loginUser?.id == '470505ee-5319-441e-9185-34a0eaa2027e' && 
         <CreatePost FetchAllPost={FetchAllPost} />
        }
         <div>

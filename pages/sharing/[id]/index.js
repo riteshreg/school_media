@@ -14,6 +14,7 @@ export default function Sharing({data}) {
 
   const router = useRouter()
   const {id} = router.query
+  console.log(router)
 
 
   useEffect(()=>{
@@ -67,11 +68,10 @@ export default function Sharing({data}) {
 export async function getServerSideProps(context){
 
   const {data} = await supabase.from('profiles').select().eq("id",context.query?.id)
-  console.log(data)
 
   return{
     props:{
-      data:data[0]
+      data:data?.[0]
     }
   }
 }
