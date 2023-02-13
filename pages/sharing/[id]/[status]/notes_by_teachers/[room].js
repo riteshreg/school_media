@@ -15,7 +15,7 @@ import { useRouter } from "next/router";
 import GetTableFromStatus from "@/helper/GetTableFromStatus";
 import GetProfile from "@/helper/GetProfile";
 import Select from "react-select";
-import { subject, SubjectTeacher } from "@/Subject";
+import { subjectName, SubjectTeacher } from "@/Subject";
 import Loader from "@/helper/Loader";
 
 const ShowSharingList = dynamic(() =>
@@ -226,7 +226,7 @@ export default function NotesByTeachers({ AllFiles }) {
               onChange={handleOptionsChange}
               className="w-40"
               instanceId="selectbox"
-              options={subject[room]}
+              options={subjectName[room]}
             />
           </div>
           {loader && (

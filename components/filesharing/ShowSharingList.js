@@ -4,12 +4,6 @@ import React, { useContext, useState } from "react";
 import ClickOutHandler from "react-clickout-handler";
 import Card from "../Card";
 import useDownloader from "react-use-downloader";
-import {
-  getMaterialFileIcon,
-  getMaterialFolderIcon,
-  getVSIFileIcon,
-  getVSIFolderIcon,
-} from "file-extension-icon-js";
 import { supabase } from "@/supabase";
 import { UserContext } from "@/UserContext";
 
@@ -20,7 +14,6 @@ function ShowSharingList({ file_name, id,file_url,profiles,subject }) {
   const {loginUserId} = useContext(UserContext)
 
   const { size, elapsed, percentage, download, cancel, error, isInProgress } =  useDownloader();
-
 
   function handleFileDownload() {
     if (file_url.length > 1) {
@@ -57,9 +50,9 @@ function ShowSharingList({ file_name, id,file_url,profiles,subject }) {
             <div className={`mt-1 flex items-center `}>
               <Image
                 src={`https://upload.wikimedia.org/wikipedia/commons/0/01/Google_Docs_logo_%282014-2020%29.svg`}
-                alt="js"
-                height={66}
-                width="60"
+                alt="img"
+                height={40}
+                width="40"
               />
 
               {file_url.length > 1 && (
@@ -95,10 +88,14 @@ function ShowSharingList({ file_name, id,file_url,profiles,subject }) {
                 )}
               </div>
             </div>
-                <p className="text-xs text-gray-400">@{profiles.name}</p>
-                <p className="text-lg">{file_name}</p>
+                <p className="text-xs mt-1 text-gray-400">@{profiles.name}</p>
+               
           </div>
-              <div className="text-gray-500 top-0 left-0">{subject}</div>
+              <div>
+              <p className="text-xs text-gray-400">{subject}</p>
+              <p className="text-lg text-gray-700">{file_name}</p>
+              </div>
+              
         </div>
       </div>
     </Card>
