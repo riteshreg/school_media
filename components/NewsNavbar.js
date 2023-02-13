@@ -1,3 +1,4 @@
+import Link from "next/link";
 import Linkify from "react-linkify";
 
 export default function NewsNavbar(){
@@ -5,9 +6,7 @@ export default function NewsNavbar(){
     return(
         <div className="h-8 flex justify-center content-center rounded-md w-full bg-black">
             <div className="text-white">
-             <Linkify>
-             <h2 className="text-lg">Please Report your bug on <span className="text-blue-300">https://t.ly/aaXo</span></h2>
-             </Linkify>  
+            <Link href={'https://forms.gle/ozb2waHAm3zmUsaU6'} target="_blank"><span className="text-blue-300 underline">Please report your bug</span></Link>
             </div>
         </div>
     )

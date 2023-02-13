@@ -13,7 +13,6 @@ export async function middleware(req: NextRequest) {
     data: { session },
   } = await supabase.auth.getSession()
 
-  console.log("sessionsasd",session)
 
   // Check auth condition
   if (session?.user.email?.endsWith('.com')) {

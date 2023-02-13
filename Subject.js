@@ -1,4 +1,4 @@
-export const subject = {
+export const subjectName = {
   9: [
     { value: "all", label: "All" },
     { value: "English", label: "English" },
@@ -110,6 +110,11 @@ export const SubjectTeacher = {
       name: "Gopal Bhandari",
       subject: "Physic",
     },
+    {
+      id:"470505ee-5319-441e-9185-34a0eaa2027e",
+      name:"Admin",
+      subject:"Chemistry"
+    }
     
   ],
   12: [

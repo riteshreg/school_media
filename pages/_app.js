@@ -5,6 +5,13 @@ import { SessionContextProvider } from "@supabase/auth-helpers-react";
 import { useState } from "react";
 import TimeAgo from "javascript-time-ago";
 import en from 'javascript-time-ago/locale/en.json'
+import Router from 'next/router';
+import NProgress from 'nprogress'; //nprogress module
+import 'nprogress/nprogress.css'; //styles of nprogress
+//Route Events. 
+Router.events.on('routeChangeStart', () => NProgress.start()); 
+Router.events.on('routeChangeComplete', () => NProgress.done()); 
+Router.events.on('routeChangeError', () => NProgress.done())
 
 TimeAgo.addDefaultLocale(en);
 
