@@ -25,8 +25,9 @@ function FileSharing({ AllFiles }) {
 
   const [AllFetchFiles, setAllFetchFiles] = useState([]);
 
-  const [fileName, setFileName] = useState("");
+  const [fileName, setFileName] = useState(null);
   const [subject, setSubject] = useState('')
+  const [showError, setShowError] = useState(false)
 
   const supabase = useSupabaseClient();
 
@@ -46,7 +47,8 @@ function FileSharing({ AllFiles }) {
       .from(GetTableNameForFileSubmission(room))
       .select(
         "id,created_at,subject, file_name, file_url, profiles(id,name,status)"
-      )
+      ).limit(8)
+      .order("created_at",{ascending:false})
       .then((respone) => {
         setAllFetchFiles(respone.data);
       });
@@ -70,8 +72,12 @@ function FileSharing({ AllFiles }) {
         });
     }
   };
+  
 
   const handleFileUpload = () => {
+    if(!fileName || !subject){
+      return setShowError(true)
+    }
     supabase
       .from("file_submission_class11")
       .insert({
@@ -88,6 +94,8 @@ function FileSharing({ AllFiles }) {
         }
       });
   };
+
+  console.log(fileName)
 
 
   return (
@@ -163,16 +171,16 @@ function FileSharing({ AllFiles }) {
           </div>
           <div className="w-2/12 space-x-2 flex  justify-end items-center">
             <input
-              className="p-1 w-32 h-10 rounded-md border border-blue-400 outline-blue-600"
+              className={`p-1 w-32 h-10 rounded-md border ${showError? 'border-red-600' : 'border-blue-600'} outline-blue-400  `}
               type="text"
               onChange={(e) => setFileName(e.target.value)}
               placeholder="file title"
             />
-            <div className="mt-1 bg-red-200">
+            <div className="mt-1">
               <Select
                 id="selectbox"
                 onChange={(e)=>setSubject(e.value)}
-                className="w-24"
+                className={`w-24  ${showError ? 'border-2 rounded-md border-red-400':''} `}
                 instanceId="selectbox"
                 options={subjectName[room]}
               />

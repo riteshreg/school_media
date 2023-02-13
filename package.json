@@ -23,6 +23,7 @@
     "generate-password-browser": "^1.1.0",
     "javascript-time-ago": "^2.5.9",
     "next": "13.1.3",
+    "nprogress": "^0.2.0",
     "react": "18.2.0",
     "react-autosize-textarea": "^7.1.0",
     "react-clickout-handler": "^1.2.1",
