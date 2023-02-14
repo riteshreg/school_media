@@ -174,7 +174,7 @@ export default function LoginPage() {
       </div> */}
       <div class="w-full   md:w-96 mx-auto">
         <div class="bg-white shadow-md border border-gray-200 rounded-lg max-w-sm p-4 sm:p-6 lg:p-8 dark:bg-gray-800 dark:border-gray-700">
-          <div class="space-y-6" >
+          <div class="space-y-6">
             <h3 class="text-xl font-medium text-gray-900 dark:text-white">
               Janta Mavi School Media
             </h3>
@@ -202,25 +202,25 @@ export default function LoginPage() {
               >
                 Your password
               </label>
-              <label class="flex relative bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500  w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white">
+              <label className="relative flex justify-center items-center ">
                 <input
-                  type={`${showpassword ? 'text' : 'password'}`}
+                  type={`${showpassword ? "text" : "password"}`}
                   name="password"
                   onChange={handleChange}
                   id="password"
                   placeholder="••••••••"
-                  className=" dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white text-gray-900 w-[86%] outline-none border-none"
+                  class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white"
                   required=""
                 />
                 {showpassword ? (
                   <EyeSlashIcon
                     onClick={() => setShowPassword(!showpassword)}
-                    className="absolute cursor-pointer text-gray-300  right-1 h-6"
+                    className="absolute cursor-pointer text-gray-700  right-1 h-6"
                   />
                 ) : (
                   <EyeIcon
                     onClick={() => setShowPassword(!showpassword)}
-                    className="absolute cursor-pointer text-gray-300  right-1 h-6"
+                    className="absolute cursor-pointer text-gray-700  right-1 h-6"
                   />
                 )}
               </label>
