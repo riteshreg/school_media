@@ -202,7 +202,7 @@ export default function LoginPage() {
               >
                 Your password
               </label>
-              <div class="flex relative bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500  w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white">
+              <label class="flex relative bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500  w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white">
                 <input
                   type={`${showpassword ? 'text' : 'password'}`}
                   name="password"
@@ -223,7 +223,7 @@ export default function LoginPage() {
                     className="absolute cursor-pointer text-gray-300  right-1 h-6"
                   />
                 )}
-              </div>
+              </label>
             </div>
             <div class="flex items-start">
               <div class="flex items-start">
