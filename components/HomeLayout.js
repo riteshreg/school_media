@@ -52,14 +52,13 @@ export default function HomeLayout({ children, hidden=false }) {
   };
 
 
-
   return (
     <div
-      className={`mt-1 flex  gap-5 max-w-full`} 
+      className={`mt-1  flex  gap-5 max-w-full`} 
     >
       <div className={` fixed ${hidden && 'hidden md:block'} opacity-100 bottom-0 w-screen md:w-2/12 md:fixed md:top-1 md:left-0 `}>
         <Card>
-          <div className="md:px-4 py-2 md:py-8 min-w-[18vw] md:min-h-[60vh]">
+          <div className="bg-[#ffffff] md:px-4 py-2 md:py-8 min-w-[18vw] md:min-h-[60vh]">
             <h1 className="font-bold text-xl p-2 text-gray-700 hidden md:block">
               Janata Mavi
             </h1>
@@ -116,7 +115,7 @@ export default function HomeLayout({ children, hidden=false }) {
         </Card>
       </div>
       <div className={` md:ml-32 grow flex justify-center md:w-12/12 `}  >
-      <div className={`${pathname == '/sharing/[id]/[status]/notes_by_teachers/[room]' || pathname == '/sharing/[id]/[status]/project_submission/[room]' ? 'md:w-8/12' : 'md:w-6/12'} `}>{children}</div>
+      <div className={`  ${pathname == '/sharing/[id]/[status]/notes_by_teachers/[room]' || pathname == '/sharing/[id]/[status]/project_submission/[room]' || pathname == '/messages/[id]/[status]' ? 'md:w-8/12' : 'md:w-6/12'}  `}>{children}</div>
       </div>
     </div>
   );

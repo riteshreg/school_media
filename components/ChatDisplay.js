@@ -36,9 +36,9 @@ export default function ChatDisplay({ messages, loginUserData, onScroll, scrollR
                               <Image
                                 key={imag}
                                 alt="image"
-                                height={120}
+                                height={220}
                                 className={`mb-2 rounded-md overflow-hidden`}
-                                width={100}
+                                width={210}
                                 src={imag}
                               />
                             </PhotoView>
@@ -82,9 +82,9 @@ export default function ChatDisplay({ messages, loginUserData, onScroll, scrollR
                             <PhotoView key={imag} src={imag}>
                               <Image
                                 alt="image"
-                                height={120}
-                                className={`mb-2 rounded-md overflow-hidden`}
-                                width={100}
+                                height={220}
+                                className={` mb-2 rounded-2xl overflow-hidden`}
+                                width={210}
                                 src={imag}
                               />
                             </PhotoView>

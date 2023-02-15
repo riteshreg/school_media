@@ -17,7 +17,7 @@ function MessagingPage({ fetch_messages }) {
   const [newIncomingMessageTrigger, setNewIncomingMessageTrigger] =   useState(null);
   const [firstScrollBottom, setFirstScrollBottom] = useState(false)
 
-
+  const [disabledSendButton, setDisabledSendButton] = useState(false)
 
   const {
     setStatus,
@@ -94,6 +94,11 @@ function MessagingPage({ fetch_messages }) {
   });
 
   const handleSendMessage = () => {
+    setDisabledSendButton(true)
+    
+    if(!content && messagesUploadedFiles.length<1 || disabledSendButton ){
+      return
+    }
     supabase
       .from(
         `${
@@ -113,6 +118,7 @@ function MessagingPage({ fetch_messages }) {
         setContent("");
         setPrevMessagesUploadedFiles([]);
         setMessagesUploadedFiles([]);
+        setDisabledSendButton(false)
       });
   };
 
@@ -252,10 +258,10 @@ function MessagingPage({ fetch_messages }) {
                   }}
                        value={content}
                        onChange={(event) => setContent(event.target.value)}
-                       className="block w-full py-2 pl-4 mx-3 bg-gray-100 rounded-sm outline-none focus:text-gray-700"
+                       className=" block w-full py-2 pl-4 mx-3 bg-gray-100 rounded-sm outline-none focus:text-gray-700"
                   />
             
-                  <button onClick={handleSendMessage}>
+                  <button disabled={disabledSendButton} onClick={handleSendMessage}>
                     <svg
                       className="w-5 h-5 text-gray-500 origin-center transform rotate-90"
                       xmlns="http://www.w3.org/2000/svg"

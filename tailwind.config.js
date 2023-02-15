@@ -6,7 +6,14 @@ module.exports = {
     "./src/**/*.{js,ts,jsx,tsx}",
   ],
   theme: {
-    extend: {},
+    extend: {
+      colors: {
+        superLiteCoffee: "#F9F5E7",
+        darkCoffee: "#A7727D",
+        messagingCoffee: "#EDDBC7",
+        liteCoffee: "#F8EAD8",
+      },
+    },
   },
   plugins: [],
-}
+};
