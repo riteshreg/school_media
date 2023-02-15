@@ -1,6 +1,4 @@
-// import HomeLayout from "@/components/HomeLayout";
-// import CreatePost from "@/components/post/CreatePost";
-// import PostDispaly from "@/components/post/PostDisplay";
+
 import { useContext, useEffect, useState } from "react";
 import { UserContext } from "@/UserContext";
 import {
@@ -85,27 +83,6 @@ export default function Home({ data }) {
     <div>
       <Head>
         <title>Janata Mavi</title>
-        <meta
-          name="description"
-          property="og:title"
-          content="Janata Mavi Gauradaha-1 Jhapa"
-          key="desc"
-        />
-        <meta
-          property="og:description"
-          content="Join Us Now"
-        />
-        <meta property="og:type" content="website" />
-        <meta property="og:url" content="https://janatamavi.vercel.app" />
-        {/* <meta
-          property="og:image"
-          content="https://ypticbcztdwpynckjwag.supabase.co/storage/v1/object/public/images/305480223_576509657594875_840635747841878545_n%20(2).jpg"
-        /> */}
-        {/*  */}
-        <meta
-          property="og:image"
-          content="https://ypticbcztdwpynckjwag.supabase.co/storage/v1/object/public/images/305480223_576509657594875_840635747841878545_n.jpg"
-        />
       </Head>
 
       <HomeLayout>
