@@ -5,14 +5,14 @@ import { MutatingDots } from "react-loader-spinner";
 import { PhotoProvider, PhotoView } from "react-photo-view";
 import "react-photo-view/dist/react-photo-view.css";
 
-export default function ChatDisplay({ messages, loginUserData, onScroll, scrollRef }) {
+export default function ChatDisplay({ messages, loginUserData, onScroll, scrollRef,decHeight }) {
  
 
   return (
     <div
       onScroll={onScroll}
       ref={scrollRef}
-      className="relative w-full p-6 overflow-y-auto h-[72vh] md:h-[80vh] "
+      className={`relative w-full p-6 overflow-y-auto h-[72vh] ${decHeight.length>0? 'md:h-[76vh]': ' md:h-[80vh] '}`}
     >
       <div>
         {messages?.length > 0 &&
@@ -37,7 +37,7 @@ export default function ChatDisplay({ messages, loginUserData, onScroll, scrollR
                                 key={imag}
                                 alt="image"
                                 height={220}
-                                className={`mb-2 rounded-md overflow-hidden`}
+                                className={`mb-2  md: rounded-md overflow-hidden`}
                                 width={210}
                                 src={imag}
                               />
