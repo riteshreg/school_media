@@ -9,15 +9,19 @@ import Image from "next/image";
 import { useRouter } from "next/router";
 import React, { useContext, useEffect, useRef, useState } from "react";
 import TextareaAutosize from "react-autosize-textarea";
+import { v4 as uuidv4 } from "uuid";
 
 function MessagingPage({ fetch_messages }) {
   const [content, setContent] = useState("");
   const [loginUserData, setLoginUserData] = useState();
-  const [messages, setMessages] = useState([])
-  const [newIncomingMessageTrigger, setNewIncomingMessageTrigger] =   useState(null);
-  const [firstScrollBottom, setFirstScrollBottom] = useState(false)
+  const [messages, setMessages] = useState([]);
+  const [newIncomingMessageTrigger, setNewIncomingMessageTrigger] =
+    useState(null);
+  const [firstScrollBottom, setFirstScrollBottom] = useState(false);
 
-  const [disabledSendButton, setDisabledSendButton] = useState(false)
+  const [disabledSendButton, setDisabledSendButton] = useState(false);
+
+  let reversed  =   messages && [...messages].reverse();
 
   const {
     setStatus,
@@ -29,7 +33,7 @@ function MessagingPage({ fetch_messages }) {
     messagesUploadedFiles,
   } = useContext(UserContext);
 
-  const reversed = messages && [...messages].reverse();
+  
 
 
   const router = useRouter();
@@ -38,13 +42,13 @@ function MessagingPage({ fetch_messages }) {
   const supabase = useSupabaseClient();
   const session = useSession();
 
+
   const scrollRef = useRef();
 
   function scrollToBottom() {
     if (!scrollRef.current) return;
     scrollRef.current.scrollTop = scrollRef.current.scrollHeight;
-  };
-
+  }
 
   useEffect(() => {
     if (status) {
@@ -52,19 +56,17 @@ function MessagingPage({ fetch_messages }) {
     }
   });
 
-  useEffect(()=>{
-    scrollToBottom()
-  },[newIncomingMessageTrigger])
+  useEffect(() => {
+    scrollToBottom();
+  }, [newIncomingMessageTrigger]);
 
-   useEffect(()=>{
-    scrollToBottom()
-  },[firstScrollBottom])
-
-
+  useEffect(() => {
+    scrollToBottom();
+  }, [firstScrollBottom]);
 
   useEffect(() => {
     if (!loginUserProfile && id) {
-      GetProfile(id, setLoginUserProfile);
+      console.log("hey", GetProfile(id, setLoginUserProfile));
     }
   }, [id]);
 
@@ -80,13 +82,16 @@ function MessagingPage({ fetch_messages }) {
 
   useEffect(() => {
     setMessages(fetch_messages);
-    if(fetch_messages){
+    if (fetch_messages) {
       setFirstScrollBottom(true);
     }
-    
+
     if (pathname == "/messages/[id]/[status]") {
       scrollToBottom();
     }
+    
+
+    // reversing the messaging
   }, []);
 
   useEffect(() => {
@@ -94,10 +99,23 @@ function MessagingPage({ fetch_messages }) {
   });
 
   const handleSendMessage = () => {
-    setDisabledSendButton(true)
-    
-    if(!content && messagesUploadedFiles.length<1 || disabledSendButton ){
-      return
+    setDisabledSendButton(true);
+
+    if ((!content && messagesUploadedFiles.length < 1) || disabledSendButton) {
+      return;
+    }
+    if (content) {
+      setMessages((prev) => [
+        ...prev,
+        {
+          author: loginUserData?.id,
+          author_name: loginUserProfile?.name,
+          content: content,
+          created_at: null,
+          id: uuidv4(),
+          images: messagesUploadedFiles,
+        },
+      ]);
     }
     supabase
       .from(
@@ -118,7 +136,7 @@ function MessagingPage({ fetch_messages }) {
         setContent("");
         setPrevMessagesUploadedFiles([]);
         setMessagesUploadedFiles([]);
-        setDisabledSendButton(false)
+        setDisabledSendButton(false);
       });
   };
 
@@ -144,37 +162,53 @@ function MessagingPage({ fetch_messages }) {
         });
     }
   };
-  
+
   // realtime messaging
   useEffect(() => {
-    if(status){
-      supabase.channel("schema-db-changes")
-      .on(
-        'postgres_changes',
-        {
-          event:"*",
-          schema:"public",
-          table: `${status == "12" && "messages" || status == "11" && "class_11_messages" || status == "10" && "class_10_messages" || status == "9" && "class_9_messages"}`
-        },
-        (payload) => { 
-          console.log(payload)
-            setMessages(prev=>[payload.new, ...prev])
-            setNewIncomingMessageTrigger(payload.new)
-          
-        }
-      ).subscribe()
+    if (status) {
+      supabase
+        .channel("schema-db-changes")
+        .on(
+          "postgres_changes",
+          {
+            event: "*",
+            schema: "public",
+            table: `${
+              (status == "12" && "messages") ||
+              (status == "11" && "class_11_messages") ||
+              (status == "10" && "class_10_messages") ||
+              (status == "9" && "class_9_messages")
+            }`,
+          },
+          (payload) => {
+            console.log(payload);
+            if (payload.new?.author == loginUserData?.id) {
+              return;
+            }
+            setMessages((prev) => [payload.new, ...prev]);
+            setNewIncomingMessageTrigger(payload.new);
+          }
+        )
+        .subscribe();
     }
-   },[]);
+  }, []);
 
   // end realtime messaing
 
   const onScroll = async ({ target }) => {
-       //* Load more messages when reaching top
+    //* Load more messages when reaching top
     if (target.scrollTop === 0) {
       // console.log("messages.length :>> ", messages.length);
       const { data, error } = await supabase
-      .from(`${status==12 && "messages" || status==11 && "class_11_messages" || status==10 && "class_10_messages" || status == 9 && "class_9_messages"}`)
-      .select()
+        .from(
+          `${
+            (status == 12 && "messages") ||
+            (status == 11 && "class_11_messages") ||
+            (status == 10 && "class_10_messages") ||
+            (status == 9 && "class_9_messages")
+          }`
+        )
+        .select()
         .range(messages?.length, messages?.length + 20)
         .order("id", { ascending: false });
       if (error) {
@@ -188,9 +222,12 @@ function MessagingPage({ fetch_messages }) {
 
   return (
     <HomeLayout hidden={true}>
-      <div className="bg-gray-50 ">
+      <div className=" w-full bg-gray-50 ">
         <div className="flex justify-center items-center">
-          <ArrowSmallLeftIcon onClick={()=>router.push('/')} className="h-12 md:hidden"/>
+          <ArrowSmallLeftIcon
+            onClick={() => router.push("/")}
+            className="h-12 md:hidden"
+          />
           <h1 className="text-xl text-center font-semibold text-gray-600">
             {`Janata Mavi Class ${status} Messaging Group`}
           </h1>
@@ -200,13 +237,15 @@ function MessagingPage({ fetch_messages }) {
           <div className="lg:col-span-2 lg:block">
             <div className="w-full">
               <div className="relative flex items-center p-1 border-b border-gray-300" />
-              <ChatDisplay 
-              scrollRef={scrollRef}
-              loginUserData={loginUserData}
-               messages={reversed}
-               onScroll={onScroll} />
+              <ChatDisplay
+                decHeight={prevMessagesUploadedFiles}
+                scrollRef={scrollRef}
+                loginUserData={loginUserData}
+                messages={reversed?.length>0 && reversed}
+                onScroll={onScroll}
+              />
 
-              <div className="p-3 border-t border-gray-300">
+              <div className="p-3  border-t border-gray-300">
                 {prevMessagesUploadedFiles.length > 0 && (
                   <div className="md:ml-5 flex space-x-1">
                     {prevMessagesUploadedFiles.map((image) => (
@@ -226,7 +265,7 @@ function MessagingPage({ fetch_messages }) {
                     ))}
                   </div>
                 )}
-                <div className="flex items-center justify-between w-full ">
+                <div className="flex bg-red-200 mt-2 items-center justify-between w-full ">
                   <label className="py-1">
                     <input
                       multiple
@@ -250,18 +289,26 @@ function MessagingPage({ fetch_messages }) {
                     </svg>
                   </label>
 
-                  <TextareaAutosize placeholder="send messages..." 
+                  <TextareaAutosize
+                    maxRows={4}
+                    placeholder="send messages..."
                     onKeyDown={(e) => {
-                    if (e.key === "Enter" && content) {
-                      handleSendMessage();
-                    }
-                  }}
-                       value={content}
-                       onChange={(event) => setContent(event.target.value)}
-                       className=" block w-full py-2 pl-4 mx-3 bg-gray-100 rounded-sm outline-none focus:text-gray-700"
+                      if (e.key === "Enter") {
+                        e.preventDefault();
+                        if (content || messagesUploadedFiles) {
+                          handleSendMessage();
+                        }
+                      }
+                    }}
+                    value={content}
+                    onChange={(event) => setContent(event.target.value)}
+                    className="  block w-full py-2 pl-4 mx-3 text-black bg-gray-200 rounded-sm outline-none focus:text-gray-700"
                   />
-            
-                  <button disabled={disabledSendButton} onClick={handleSendMessage}>
+
+                  <button
+                    disabled={disabledSendButton}
+                    onClick={handleSendMessage}
+                  >
                     <svg
                       className="w-5 h-5 text-gray-500 origin-center transform rotate-90"
                       xmlns="http://www.w3.org/2000/svg"
