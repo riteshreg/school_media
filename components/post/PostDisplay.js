@@ -24,9 +24,12 @@ export default function PostDispaly({
 
   const router = useRouter();
 
+  
   const handleLike = () => {
     setDisabledLike(true);
+    
     if (!IAlreadyLiked) {
+      setLikes((prev) => [...prev, "+1"]);
       supabase
         .from("likes")
         .insert({
@@ -34,11 +37,10 @@ export default function PostDispaly({
           post_id: id,
         })
         .then((resposne) => {
-          if (resposne.status == 201) {
-            GetAllLikes();
-          }
         });
     }
+
+
   };
 
   useEffect(() => {
@@ -52,6 +54,7 @@ export default function PostDispaly({
       .eq("post_id", id)
       .then((res) => setLikes(res.data));
   }
+
 
   const IAlreadyLiked = !!likes?.find((like) => like.user_id == loginUser.id);
 
@@ -82,7 +85,7 @@ export default function PostDispaly({
         </div>
         {images?.length > 0 && (
           <div
-            className={`${images.length === 2 && " md:flex"} ${
+            className={`relative ${images.length === 2 && " md:flex"} ${
               images.length > 2 && "block md:grid md:grid-cols-2"
             }`}
           >
@@ -101,6 +104,17 @@ export default function PostDispaly({
                 ))}
               </PhotoProvider>
             }
+           {/* { disabledLike
+            && <div className="absolute top-1/2 left-1/2 text-white  transform -translate-x-1/2 -translate-y-1/2 ">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                viewBox="0 0 24 24"
+                fill="currentColor"
+                className="w-36 h-36"
+              >
+                <path d="M11.645 20.91l-.007-.003-.022-.012a15.247 15.247 0 01-.383-.218 25.18 25.18 0 01-4.244-3.17C4.688 15.36 2.25 12.174 2.25 8.25 2.25 5.322 4.714 3 7.688 3A5.5 5.5 0 0112 5.052 5.5 5.5 0 0116.313 3c2.973 0 5.437 2.322 5.437 5.25 0 3.925-2.438 7.111-4.739 9.256a25.175 25.175 0 01-4.244 3.17 15.247 15.247 0 01-.383.219l-.022.012-.007.004-.003.001a.752.752 0 01-.704 0l-.003-.001z" />
+              </svg>
+            </div>} */}
           </div>
         )}
         <div className=" py-1">
@@ -108,8 +122,8 @@ export default function PostDispaly({
             <HeartIcon
               onClick={handleLike}
               className={`${disabledLike && "pointer-events-none"} h-8  ${
-                IAlreadyLiked && "fill-red-600"
-              }`}
+                disabledLike && !IAlreadyLiked && "fill-red-600"
+              }  ${IAlreadyLiked && "fill-red-600"}`}
             />
             {likes?.length}
           </div>

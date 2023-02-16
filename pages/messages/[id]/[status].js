@@ -23,6 +23,7 @@ function MessagingPage({ fetch_messages }) {
 
   let reversed  =   messages && [...messages].reverse();
 
+
   const {
     setStatus,
     loginUserProfile,
@@ -34,7 +35,6 @@ function MessagingPage({ fetch_messages }) {
   } = useContext(UserContext);
 
   
-
 
   const router = useRouter();
   const { pathname } = router;
@@ -104,6 +104,7 @@ function MessagingPage({ fetch_messages }) {
     if ((!content && messagesUploadedFiles.length < 1) || disabledSendButton) {
       return;
     }
+    
     if (content) {
       setMessages((prev) => [
         ...prev,
@@ -116,6 +117,7 @@ function MessagingPage({ fetch_messages }) {
           images: messagesUploadedFiles,
         },
       ]);
+
     }
     supabase
       .from(
@@ -181,10 +183,10 @@ function MessagingPage({ fetch_messages }) {
             }`,
           },
           (payload) => {
-            console.log(payload);
             if (payload.new?.author == loginUserData?.id) {
               return;
             }
+
             setMessages((prev) => [payload.new, ...prev]);
             setNewIncomingMessageTrigger(payload.new);
           }
@@ -241,7 +243,9 @@ function MessagingPage({ fetch_messages }) {
                 decHeight={prevMessagesUploadedFiles}
                 scrollRef={scrollRef}
                 loginUserData={loginUserData}
+
                 messages={reversed?.length>0 && reversed}
+
                 onScroll={onScroll}
               />
 
@@ -265,7 +269,9 @@ function MessagingPage({ fetch_messages }) {
                     ))}
                   </div>
                 )}
+
                 <div className="flex mt-2 items-center justify-between w-full ">
+
                   <label className="py-1">
                     <input
                       multiple
@@ -290,21 +296,21 @@ function MessagingPage({ fetch_messages }) {
                   </label>
 
                   <TextareaAutosize
-                    maxRows={4}
-                    placeholder="send messages..."
-                    onKeyDown={(e) => {
-                      if (e.key === "Enter") {
-                        e.preventDefault();
-                        if (content || messagesUploadedFiles) {
-                          handleSendMessage();
-                        }
-                      }
-                    }}
-                    value={content}
-                    onChange={(event) => setContent(event.target.value)}
-                    className="  block w-full py-2 pl-4 mx-3 text-black bg-gray-200 rounded-sm outline-none focus:text-gray-700"
-                  />
 
+                  maxRows={4} placeholder="send messages..." 
+                      onKeyDown={(e) => {
+                    if (e.key === "Enter") {
+                      e.preventDefault()
+                      if(content || messagesUploadedFiles){
+                        handleSendMessage();
+                     }
+                    }
+                  }}
+                       value={content}
+                       onChange={(event) => setContent(event.target.value)}
+                       className="  block w-full py-2 pl-4 mx-3 text-black bg-gray-200 rounded-sm outline-none focus:text-gray-700"
+                  />
+            
                   <button
                     disabled={disabledSendButton}
                     onClick={handleSendMessage}

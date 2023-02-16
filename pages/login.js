@@ -3,15 +3,12 @@ import Head from "next/head";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import { useState } from "react";
-import ReactLinkify from "react-linkify";
-import { MutatingDots } from "react-loader-spinner";
 import { ToastContainer, toast } from "react-toastify";
 import { EyeIcon, EyeSlashIcon } from "@heroicons/react/24/outline";
 import "react-toastify/dist/ReactToastify.css";
-import Card from "@/components/Card";
 
 const notify = () =>
-  toast.error("something went wrong", {
+  toast.error("email or password not found", {
     position: "bottom-center",
     autoClose: 5000,
     hideProgressBar: false,
@@ -45,6 +42,7 @@ export default function LoginPage() {
   };
 
   const handleLogin = async () => {
+    toast.dismiss();
     if (loginUser.email && loginUser.password) {
       setProgress(true);
       const { data, error } = await supabase.auth.signInWithPassword(loginUser);
@@ -89,129 +87,54 @@ export default function LoginPage() {
         
       </Head>
 
-      {/* <div className="flex md:w-96 mt-2 items-center flex-col space-y-4">
-        <input
-          onKeyDown={(e) => {
-            if (e.key === "Enter") {
-              handleLogin();
-            }
-          }}
-          type="email"
-          placeholder="email"
-          className={style}
-          name="email"
-          onChange={handleChange}
-        />
-        <div className={`flex ${style}  relative items-center`}>
-          <input
-            onKeyDown={(e) => {
-              if (e.key === "Enter") {
-                handleLogin();
-              }
-            }}
-            type={`${showpassword ? 'text' : 'password' }`}
-            placeholder="password"
-            className={"w-[86%] h-full border-none outline-none"}
-            name="password"
-            onChange={handleChange}
-          />
-         {showpassword?
-         <EyeSlashIcon  onClick={()=>setShowPassword(!showpassword)} className="absolute cursor-pointer text-gray-500  right-1 h-6" />
-          :
-          
-          <EyeIcon  onClick={()=>setShowPassword(!showpassword)} className="absolute cursor-pointer text-gray-500  right-1 h-6" />
-         }  
-        
-        </div>
-        <button
-          className="bg-blue-300 px-2 py-2 rounded-md"
-          onClick={handleLogin}
-        >
-          Login
-        </button>
-      </div>
-      <button
-        onClick={() => router.push("/change_password")}
-        className="text-blue-900 mt-3"
-      >
-        Change Password
-      </button>
-      {progress && (
-        <MutatingDots
-          height="100"
-          width="100"
-          color="#635f75"
-          secondaryColor="#4fa94d"
-          radius="12.5"
-          ariaLabel="mutating-dots-loading"
-          wrapperStyle={{}}
-          wrapperClass=""
-          visible={true}
-        />
-      )}
-      <ToastContainer
-        position="bottom-center"
-        autoClose={5000}
-        hideProgressBar={false}
-        newestOnTop={false}
-        closeOnClick
-        rtl={false}
-        pauseOnFocusLoss
-        draggable
-        pauseOnHover
-        theme="light"
-      />
-      <div className="mt-5">
-        <h1 className="text-lg font-mono">
-          No credentials,
-          <span className="text-blue-600 ml-2">
-            <Link
-              target={"_blank"}
-              href={"https://forms.gle/8tUKrgrWf1UMDoq86"}
-            >
-              Fill The Form
-            </Link>
-          </span>
-        </h1>
-      </div> */}
-      <div class="w-full   md:w-96 mx-auto">
-        <div class="bg-white shadow-md border border-gray-200 rounded-lg max-w-sm p-4 sm:p-6 lg:p-8 dark:bg-gray-800 dark:border-gray-700">
-          <div class="space-y-6">
-            <h3 class="text-xl font-medium text-gray-900 dark:text-white">
+      <div className="w-screen   md:w-96 mx-auto">
+        <div className="bg-white shadow-md border border-gray-200 rounded-lg max-w-sm p-4 sm:p-6 lg:p-8 dark:bg-gray-800 dark:border-gray-700">
+          <div className="space-y-6">
+            <h3 className="text-xl font-medium text-gray-900 dark:text-white">
               Janta Mavi School Media
             </h3>
             <div>
               <label
-                for="email"
-                class="text-sm font-medium text-gray-900 block mb-2 dark:text-gray-300"
+                htmlFor="email"
+                className="text-sm font-medium text-gray-900 block mb-2 dark:text-gray-300"
               >
                 Your email
               </label>
               <input
+              onKeyDown={(e) => {
+                if (e.key === "Enter") {
+                  handleLogin();
+                }
+              }}
                 type="email"
                 name="email"
                 onChange={handleChange}
                 id="email"
-                class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white"
+                className={`bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white `}
                 placeholder="name@company.com"
                 required=""
               />
             </div>
             <div>
               <label
-                for="password"
-                class="text-sm font-medium text-gray-900 block mb-2 dark:text-gray-300"
+                htmlFor="password"
+                className="text-sm font-medium text-gray-900 block mb-2 dark:text-gray-300"
               >
                 Your password
               </label>
               <label className="relative flex justify-center items-center ">
                 <input
+                onKeyDown={(e) => {
+                  if (e.key === "Enter") {
+                    handleLogin();
+                  }
+                }}
                   type={`${showpassword ? "text" : "password"}`}
                   name="password"
                   onChange={handleChange}
                   id="password"
                   placeholder="••••••••"
-                  class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white"
+                  className=" bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white"
                   required=""
                 />
                 {showpassword ? (
@@ -227,21 +150,21 @@ export default function LoginPage() {
                 )}
               </label>
             </div>
-            <div class="flex items-start">
-              <div class="flex items-start">
-                <div class="flex items-center h-5">
+            <div className="flex items-start">
+              <div className="flex items-start">
+                <div className="flex items-center h-5">
                   <input
                     id="remember"
                     aria-describedby="remember"
                     type="checkbox"
-                    class="bg-gray-50 border border-gray-300 focus:ring-3 focus:ring-blue-300 h-4 w-4 rounded dark:bg-gray-700 dark:border-gray-600 dark:focus:ring-blue-600 dark:ring-offset-gray-800"
+                    className="bg-gray-50 border border-gray-300 focus:ring-3 focus:ring-blue-300 h-4 w-4 rounded dark:bg-gray-700 dark:border-gray-600 dark:focus:ring-blue-600 dark:ring-offset-gray-800"
                     required=""
                   />
                 </div>
-                <div class="text-sm ml-3">
+                <div className="text-sm ml-3">
                   <label
-                    for="remember"
-                    class="font-medium text-gray-900 dark:text-gray-300"
+                    htmlFor="remember"
+                    className="font-medium text-gray-900 dark:text-gray-300"
                   >
                     Remember me
                   </label>
@@ -249,7 +172,7 @@ export default function LoginPage() {
               </div>
               <Link
                 href="/change_password"
-                class="text-sm text-blue-700 hover:underline ml-auto dark:text-blue-500"
+                className="text-sm text-blue-700 hover:underline ml-auto dark:text-blue-500"
               >
                 Change Password
               </Link>
@@ -257,22 +180,38 @@ export default function LoginPage() {
             <button
               type="submit"
               onClick={handleLogin}
-              class="w-full text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+              className="w-full text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
             >
               Login to your account
             </button>
-            <div class="text-sm font-medium text-gray-500 dark:text-gray-300">
+            <div className="text-sm font-medium text-gray-500 dark:text-gray-300">
               Not registered?{" "}
               <Link
                 target={"_blank"}
                 href={"https://forms.gle/8tUKrgrWf1UMDoq86"}
-                class="text-blue-700 hover:underline dark:text-blue-500"
+                className="text-blue-700 hover:underline dark:text-blue-500"
               >
                 Submit Form
               </Link>
             </div>
           </div>
         </div>
+      </div>
+      {/*  */}
+      <div className="mt-4">
+      <ToastContainer
+        position="bottom-center"
+        autoClose={1}
+        limit={1}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+        theme="light"
+      />
       </div>
     </div>
   );
