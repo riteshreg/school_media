@@ -9,6 +9,7 @@ import Image from "next/image";
 import { useRouter } from "next/router";
 import React, { useContext, useEffect, useRef, useState } from "react";
 import TextareaAutosize from "react-autosize-textarea";
+import { v4 as uuidv4 } from "uuid";
 
 function MessagingPage({ fetch_messages }) {
   const [content, setContent] = useState("");
@@ -20,6 +21,9 @@ function MessagingPage({ fetch_messages }) {
 
   const [disabledSendButton, setDisabledSendButton] = useState(false);
 
+  let reversed  =   messages && [...messages].reverse();
+
+
   const {
     setStatus,
     loginUserProfile,
@@ -30,13 +34,14 @@ function MessagingPage({ fetch_messages }) {
     messagesUploadedFiles,
   } = useContext(UserContext);
 
-  const reversed = messages && [...messages].reverse();
+  
 
   const router = useRouter();
   const { pathname } = router;
   const { status, id } = router.query;
   const supabase = useSupabaseClient();
   const session = useSession();
+
 
   const scrollRef = useRef();
 
@@ -61,7 +66,7 @@ function MessagingPage({ fetch_messages }) {
 
   useEffect(() => {
     if (!loginUserProfile && id) {
-      GetProfile(id, setLoginUserProfile);
+      console.log("hey", GetProfile(id, setLoginUserProfile));
     }
   }, [id]);
 
@@ -84,6 +89,9 @@ function MessagingPage({ fetch_messages }) {
     if (pathname == "/messages/[id]/[status]") {
       scrollToBottom();
     }
+    
+
+    // reversing the messaging
   }, []);
 
   useEffect(() => {
@@ -95,6 +103,21 @@ function MessagingPage({ fetch_messages }) {
 
     if ((!content && messagesUploadedFiles.length < 1) || disabledSendButton) {
       return;
+    }
+    
+    if (content) {
+      setMessages((prev) => [
+        ...prev,
+        {
+          author: loginUserData?.id,
+          author_name: loginUserProfile?.name,
+          content: content,
+          created_at: null,
+          id: uuidv4(),
+          images: messagesUploadedFiles,
+        },
+      ]);
+
     }
     supabase
       .from(
@@ -160,7 +183,10 @@ function MessagingPage({ fetch_messages }) {
             }`,
           },
           (payload) => {
-            console.log(payload);
+            if (payload.new?.author == loginUserData?.id) {
+              return;
+            }
+
             setMessages((prev) => [payload.new, ...prev]);
             setNewIncomingMessageTrigger(payload.new);
           }
@@ -217,7 +243,9 @@ function MessagingPage({ fetch_messages }) {
                 decHeight={prevMessagesUploadedFiles}
                 scrollRef={scrollRef}
                 loginUserData={loginUserData}
-                messages={reversed}
+
+                messages={reversed?.length>0 && reversed}
+
                 onScroll={onScroll}
               />
 
@@ -241,7 +269,9 @@ function MessagingPage({ fetch_messages }) {
                     ))}
                   </div>
                 )}
-                <div className="flex bg-red-200 mt-2 items-center justify-between w-full ">
+
+                <div className="flex mt-2 items-center justify-between w-full ">
+
                   <label className="py-1">
                     <input
                       multiple
@@ -266,7 +296,7 @@ function MessagingPage({ fetch_messages }) {
                   </label>
 
                   <TextareaAutosize
-                  onHei
+
                   maxRows={4} placeholder="send messages..." 
                       onKeyDown={(e) => {
                     if (e.key === "Enter") {
@@ -281,8 +311,6 @@ function MessagingPage({ fetch_messages }) {
                        className="  block w-full py-2 pl-4 mx-3 text-black bg-gray-200 rounded-sm outline-none focus:text-gray-700"
                   />
             
-
-                
                   <button
                     disabled={disabledSendButton}
                     onClick={handleSendMessage}
