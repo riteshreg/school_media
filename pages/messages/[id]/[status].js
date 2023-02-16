@@ -265,7 +265,7 @@ function MessagingPage({ fetch_messages }) {
                     ))}
                   </div>
                 )}
-                <div className="flex bg-red-200 mt-2 items-center justify-between w-full ">
+                <div className="flex mt-2 items-center justify-between w-full ">
                   <label className="py-1">
                     <input
                       multiple
