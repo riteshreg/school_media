@@ -12,11 +12,12 @@ function Messages({userProfile}) {
   const router = useRouter();
   // const { loginUserProfile, setLoginUserProfile } = useContext(UserContext);
 
-  const {id} = router.query
 
   // useEffect(() => {
   //  setLoginUserProfile(userProfile)
   // }, [hold]);
+  const {id} = router.query
+
 
 
 
