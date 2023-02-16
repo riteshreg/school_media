@@ -14,7 +14,6 @@ export default function Sharing({data}) {
 
   const router = useRouter()
   const {id} = router.query
-  console.log(router)
 
 
   useEffect(()=>{

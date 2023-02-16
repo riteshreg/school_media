@@ -16,7 +16,7 @@ export const subjectName = {
     { value: "Nepali", label: "Nepali" },
     { value: "Maths", label: "Maths" },
     { value: "Science", label: "Science" },
-    { value: "DBMS", label: "DBMS" },
+    { value: "Rust", label: "Rust" },
     { value: "C++", label: "C++" },
     { value: "C-Drawing", label: "C-Drawing" },
     { value: "Optional-Math", label: "Optional-Math" },
@@ -26,6 +26,7 @@ export const subjectName = {
     { value: "English", label: "English" },
     { value: "Maths", label: "Maths" },
     { value: "Physic", label: "Physic" },
+    { value: "Nextjs", label: "Nextjs" },
     { value: "Chemistry", label: "Chemistry" },
     { value: "Hardware", label: "Hardware" },
     { value: "Java", label: "Java" },
@@ -33,6 +34,7 @@ export const subjectName = {
   12: [
     { value: "all", label: "All" },
     { value: "English", label: "English" },
+    { value: "Nodejs", label: "Nodejs" },
     { value: "Nepali", label: "Nepali" },
     { value: "Maths", label: "Maths" },
     { value: "Science", label: "Science" },
@@ -48,12 +50,12 @@ export const SubjectTeacher = {
     {
       id: "9f59a2f6-8bc5-4dd7-aed2-0986bf1aa8ca",
       name: "Chandan Bhagat",
-      subject: "Java",
+      subject: "DBMS",
     },
     {
       id: "97a91df6-01f4-41b8-a3ee-9292421aecd8",
       name: "Ritesh Khadka",
-      subject: "Hardware",
+      subject: "C-Programming",
     },
     {
       id: "1e14767b-27ca-4c61-b078-e7f04114f019",
@@ -70,12 +72,12 @@ export const SubjectTeacher = {
     {
       id: "9f59a2f6-8bc5-4dd7-aed2-0986bf1aa8ca",
       name: "Chandan Bhagat",
-      subject: "Java",
+      subject: "C++",
     },
     {
       id: "97a91df6-01f4-41b8-a3ee-9292421aecd8",
       name: "Ritesh Khadka",
-      subject: "Hardware",
+      subject: "Rust",
     },
     {
       id: "1e14767b-27ca-4c61-b078-e7f04114f019",
@@ -97,7 +99,7 @@ export const SubjectTeacher = {
     {
       id: "97a91df6-01f4-41b8-a3ee-9292421aecd8",
       name: "Ritesh Khadka",
-      subject: "Hardware",
+      subject: "Nextjs",
     },
     {
       id: "1e14767b-27ca-4c61-b078-e7f04114f019",
@@ -126,7 +128,7 @@ export const SubjectTeacher = {
     {
       id: "97a91df6-01f4-41b8-a3ee-9292421aecd8",
       name: "Ritesh Khadka",
-      subject: "Hardware",
+      subject: "Nodejs",
     },
     {
       id: "1e14767b-27ca-4c61-b078-e7f04114f019",

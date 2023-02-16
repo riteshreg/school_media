@@ -1,16 +1,17 @@
 import HomeLayout from "@/components/HomeLayout";
-import { CloudArrowUpIcon, FolderPlusIcon } from "@heroicons/react/24/outline";
+import { ArrowDownIcon, CloudArrowUpIcon, FolderPlusIcon } from "@heroicons/react/24/outline";
 import { useSupabaseClient } from "@supabase/auth-helpers-react";
 import Image from "next/image";
 import React, { useContext, useEffect, useState } from "react";
 import { UserContext } from "@/UserContext";
 import dynamic from "next/dynamic";
-import { Rings } from "react-loader-spinner";
+import { Oval, Rings } from "react-loader-spinner";
 import { supabase } from "@/supabase";
 import { useRouter } from "next/router";
-import { GetTableNameForFileSubmission } from "@/helper/GetTableFromStatus";
+import  { GetTableNameForFileSubmission } from "@/helper/GetTableFromStatus";
 import { subjectName } from "@/Subject";
 import Select from "react-select";
+import Loader from "@/helper/Loader";
 
 const ShowSharingList = dynamic(() =>
   import("../../../../../components/filesharing/ShowSharingList")
@@ -23,18 +24,23 @@ function FileSharing({ AllFiles }) {
     []
   );
 
+  const [loadMoreDisabled, setLoadMoreDisabled] = useState(false)
+
   const [AllFetchFiles, setAllFetchFiles] = useState([]);
 
   const [fileName, setFileName] = useState(null);
   const [subject, setSubject] = useState('')
   const [showError, setShowError] = useState(false)
+  const [loader, setLoader] = useState(false)
 
   const supabase = useSupabaseClient();
-
+  
+  
   const { loginUserId } = useContext(UserContext);
-
+  
   const router = useRouter();
   const { status, room } = router.query;
+  
 
   useEffect(() => {
     if (AllFiles?.length > 0) {
@@ -79,7 +85,7 @@ function FileSharing({ AllFiles }) {
       return setShowError(true)
     }
     supabase
-      .from("file_submission_class11")
+      .from(GetTableNameForFileSubmission(room))
       .insert({
         file_url: allUploadedFilesFromSupabase,
         author_id: loginUserId.id,
@@ -95,9 +101,43 @@ function FileSharing({ AllFiles }) {
       });
   };
 
-  console.log(fileName)
+  async function handleLoadMore(){
+  setLoadMoreDisabled(true)
+    supabase
+    .from(GetTableNameForFileSubmission(room))
+    .select(
+      "id,created_at,subject, file_name, file_url, profiles(id,name,status)"
+    )
+    .range(AllFetchFiles.length, AllFetchFiles.length+10)
+    .order("created_at",{ascending:false})
+    .then((respone)=>{
+        setAllFetchFiles(prev=>[...prev, ...respone.data])
+        setLoadMoreDisabled(false)
+    })
+  }
 
-
+  function handleOptionsChange(e) {
+    setLoader(true);
+    setAllFetchFiles([]);
+    if (e.value == "all") {
+      setLoader(false);
+      setAllFetchFiles(AllFiles);
+    } else {
+      supabase
+        .from(GetTableNameForFileSubmission(room))
+        .select(
+          "id,created_at,subject, file_name, file_url, profiles(name,status)"
+        )
+        .eq("subject", e.value)
+        .then((response) => {
+          if (!response.error) {
+            setAllFetchFiles(response.data);
+            setLoader(false);
+          }
+          setLoader(false);
+        });
+    }
+  }
   return (
     <HomeLayout>
       <div>
@@ -189,11 +229,53 @@ function FileSharing({ AllFiles }) {
         </div>
 
         <hr />
+            {loader && (
+            <div className="flex justify-center">
+              <Loader />
+            </div>
+          )}
+           {AllFetchFiles.length == 0 && !loader && (
+            <div>
+              <p className="text-red-600">Sorry, No Notes Found..</p>
+            </div>
+          )}
+        <div className="mt-2  flex justify-end">
+            <Select
+              id="selectbox"
+              onChange={handleOptionsChange}
+              className="w-40"
+              instanceId="selectbox"
+              options={subjectName[room]}
+            />
+          </div>
         <div className=" grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 xl:grid-cols-5 gap-2 justify-between mt-5">
           {AllFetchFiles?.length > 0 &&
             AllFetchFiles.map((file) => (
               <ShowSharingList {...file} key={file.id} />
             ))}
+        </div>
+        <div className="flex mb-10 justify-center mt-6">
+          {!loadMoreDisabled && (
+            <button
+              // disabled={loadMoreDisabled}
+              className="flex py-2 px-8 border-[#d6d6d6]  border-2 text-gray-700"
+              onClick={handleLoadMore}
+            >
+              <ArrowDownIcon className="h-6 text-[#5553ff]" />
+              Load More...
+            </button>
+          )}
+           {loadMoreDisabled && (
+              <Oval
+                ariaLabel="loading-indicator"
+                height={50}
+                width={50}
+                strokeWidth={5}
+                strokeWidthSecondary={1}
+                color="blue"
+                secondaryColor="white"
+              />
+            )}
         </div>
       </div>
     </HomeLayout>
@@ -210,7 +292,7 @@ export async function getServerSideProps(context) {
     .select(
       "id,created_at,subject, file_name, file_url, profiles(id,name,status)"
     )
-    .limit(8)
+    .range(0,9)
     .order("created_at",{ascending:false})
     
 

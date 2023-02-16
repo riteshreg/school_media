@@ -9,7 +9,7 @@ import Image from "next/image";
 import React, { useContext, useEffect, useState } from "react";
 import { UserContext } from "@/UserContext";
 import dynamic from "next/dynamic";
-import {  Rings } from "react-loader-spinner";
+import {  Oval, Rings } from "react-loader-spinner";
 import { supabase } from "@/supabase";
 import { useRouter } from "next/router";
 import GetTableFromStatus from "@/helper/GetTableFromStatus";
@@ -33,6 +33,7 @@ export default function NotesByTeachers({ AllFiles }) {
   const [AllFetchFiles, setAllFetchFiles] = useState([]);
   const [loader, setLoader] = useState(false);
   const [fileName, setFileName] = useState("");
+  const [loadMoreDisabled, setLoadMoreDisabled] = useState(false)
 
   const supabase = useSupabaseClient();
 
@@ -41,6 +42,7 @@ export default function NotesByTeachers({ AllFiles }) {
 
   const router = useRouter();
   const { status, id, room } = router.query;
+  const table_name = GetTableFromStatus(room);
 
   const [subjectTeacher, setSubjectTeacher] = useState('') //only usefull when teacher login
   useEffect(() => {
@@ -134,6 +136,19 @@ export default function NotesByTeachers({ AllFiles }) {
           setLoader(false);
         });
     }
+  }
+
+
+  function handleLoadMore(){
+    setLoadMoreDisabled(true)
+    supabase.from(table_name)
+    .select("id,created_at,subject, file_name, file_url, profiles(id,name,status)")
+    .range(AllFetchFiles.length,AllFetchFiles.length+10)
+    .order("created_at",{ascending:false})
+    .then((respone)=>{
+      setLoadMoreDisabled(false)
+      setAllFetchFiles(prev=>[...prev, ...respone.data])
+    })
   }
 
   return (
@@ -246,17 +261,28 @@ export default function NotesByTeachers({ AllFiles }) {
               ))}
           </div>
         </div>
-        <div className="flex justify-center mt-6">
-          {!false && (
+        <div className="flex justify-center mb-10 mt-6">
+          {!loadMoreDisabled && (
             <button
               // disabled={loadMoreDisabled}
               className="flex py-2 px-8 border-[#d6d6d6]  border-2 text-gray-700"
-              // onClick={handleLoadMore}
+              onClick={handleLoadMore}
             >
               <ArrowDownIcon className="h-6 text-[#5553ff]" />
-              Currently not working
+              Load More...
             </button>
           )}
+           {loadMoreDisabled && (
+              <Oval
+                ariaLabel="loading-indicator"
+                height={50}
+                width={50}
+                strokeWidth={5}
+                strokeWidthSecondary={1}
+                color="blue"
+                secondaryColor="white"
+              />
+            )}
         </div>
       </HomeLayout>
     </div>
@@ -269,7 +295,7 @@ export async function getServerSideProps(context) {
   const data = await supabase
     .from(table_name)
     .select("id,created_at,subject, file_name, file_url, profiles(id,name,status)")
-    .limit(10)
+    .range(0,9)
     .order("created_at",{ascending:false});
 
     console.log(data)
