@@ -210,8 +210,8 @@ export default function NotesByTeachers({ AllFiles }) {
                         key={file}
                         src={`https://upload.wikimedia.org/wikipedia/commons/0/01/Google_Docs_logo_%282014-2020%29.svg`}
                         alt="thumbnail"
-                        height={66}
-                        width="60"
+                        height={40}
+                        width="40"
                       />
                     ))}
                   </div>
