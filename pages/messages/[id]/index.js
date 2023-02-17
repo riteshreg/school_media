@@ -98,9 +98,9 @@ function Messages({userProfile}) {
                   >
                    <StudentNavigator
                       status={12}
-                      title="Class Twevel"
+                      title="Class Twelve"
                       description={
-                        "Class Twevel consist of 48 student with lorem ipsum as Class Teacher"
+                        "Class Twelve consist of 48 student with lorem ipsum as Class Teacher"
                       }
                     />
                   </div>
