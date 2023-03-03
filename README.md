@@ -7,8 +7,8 @@ At  present Mr Hari Adhakari is known as Principal of the school and Vanu Dhunga
 <b><u>About Project</u></b>
 
 <b>Features of the Project.</b> <br>
-|contain the News feed|This helps users i.e student, teacher to interact with school updates. ||
-| ok           | good swedish fish | nice  |
-| out of stock | good and plenty   | nice  |
-| ok           | good oreos      | hmm   |
-| ok           | good zoute drop | yumm  |
+|contain the News feed|This helps users i.e student, teacher to interact with school updates. 
+| ok| good swedish fish 
+| ck | good and plenty|
+| ok           | good oreos | 
+| ok           | good zoute drop |
