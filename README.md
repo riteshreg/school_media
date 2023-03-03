@@ -1,3 +1,7 @@
 Janata Mavi Social Media App
-<h1>This is Anup dahal </h1>
-This is janata mavi the home of IT expert
+This is Anup dahal 
+my name is anup dahal 
+i read in class bca
+in damak ko model campus 
+jo dherai na ramro xa
+
