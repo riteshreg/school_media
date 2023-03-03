@@ -1,8 +1,2 @@
-Janata Mavi Social Media App
-This is Anup dahal 
-theme:minima
-my name is anup dahal 
-i read in class bca
-in damak ko model campus 
-jo dherai na ramro xa
-
+Janata Secondary School social media app. <br>
+Janata Secondary School is located in Gauradaha Municipality ward no-1. 
