@@ -12,3 +12,10 @@ At  present Mr Hari Adhakari is known as Principal of the school and Vanu Dhunga
 | ck | good and plenty|
 | ok           | good oreos | 
 | ok           | good zoute drop |
+
+### Here is an unordered list:
+
+*   Item foo
+*   Item bar
+*   Item baz
+*   Item zip
