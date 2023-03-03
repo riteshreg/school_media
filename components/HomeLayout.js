@@ -18,19 +18,25 @@ const onSelectedStyle = "bg-blue-400 rounded-md text-white -mx-4 px-4 py-1";
 const onHover =
   " hover:-mx-6 hover:px-6 hover:bg-blue-200 hover:rounded-md hover:overflow-hidden   md:py-2";
 
-export default function HomeLayout({ children, hidden=false }) {
+export default function HomeLayout({ children, hidden = false }) {
   const router = useRouter();
 
   const { asPath } = router;
 
   const { status, pathname } = router;
 
+  const ProjectSelected =
+    pathname == "/sharing/[id]/[status]/project_submission/[room]";
+  const Project = pathname == "/sharing/[id]";
+  const Notes = pathname == "/sharing/[id]/[status]/notes_by_teachers/[room]";
+
+  const Group = pathname === '/messages/[id]'
+  const GroupMessage = pathname === '/messages/[id]/[status]'
+  console.log("pathname", pathname);
 
   const HomeSelected = asPath == "/";
-  const GroupSelected = asPath == "/messaging";
 
-
-  const { loginUserId, setLoginUserId,postScroll } = useContext(UserContext);
+  const { loginUserId, setLoginUserId, postScroll } = useContext(UserContext);
 
   const supabase = useSupabaseClient();
   const session = useSession();
@@ -51,12 +57,13 @@ export default function HomeLayout({ children, hidden=false }) {
     router.push("/login");
   };
 
-
   return (
-    <div
-      className={`mt-1  flex  gap-5 max-w-full`} 
-    >
-      <div className={` fixed ${hidden && 'hidden md:block'} opacity-100 bottom-0 w-screen md:w-2/12 md:fixed md:top-1 md:left-0 `}>
+    <div className={`mt-1  flex  gap-5 max-w-full`}>
+      <div
+        className={` fixed ${
+          hidden && "hidden md:block"
+        } opacity-100 bottom-0 w-screen md:w-2/12 md:fixed md:top-1 md:left-0 `}
+      >
         <Card>
           <div className="bg-[#ffffff] md:px-4 py-2 md:py-8 min-w-[18vw] md:min-h-[60vh]">
             <h1 className="font-bold text-xl p-2 text-gray-700 hidden md:block">
@@ -74,7 +81,9 @@ export default function HomeLayout({ children, hidden=false }) {
               </Link>
               <Link
                 href={`/sharing/${loginUserId?.id}`}
-                className={`flex cursor-pointer items-center gap-2 ${onHover}`}
+                className={` ${
+                 (ProjectSelected || Project || Notes) ? onSelectedStyle : ''
+                } flex cursor-pointer items-center gap-2 ${onHover}`}
               >
                 {" "}
                 <FolderMinusIcon className="h-8" />{" "}
@@ -83,14 +92,14 @@ export default function HomeLayout({ children, hidden=false }) {
               <Link
                 href={`/messages/${loginUserId?.id}`}
                 className={` ${
-                  GroupSelected && onSelectedStyle
+                  (Group || GroupMessage) && onSelectedStyle
                 } ${onHover} flex items-center gap-2`}
               >
                 {" "}
                 <UserGroupIcon className="h-8" />{" "}
                 <span className="hidden md:block">Group</span>
               </Link>
-              
+
               {loginUserId?.id == "470505ee-5319-441e-9185-34a0eaa2027e" && (
                 <Link
                   href={"https://school-media-lwy4.vercel.app/"}
@@ -114,8 +123,18 @@ export default function HomeLayout({ children, hidden=false }) {
           </div>
         </Card>
       </div>
-      <div className={` md:ml-32 grow flex justify-center md:w-12/12 `}  >
-      <div className={`  ${pathname == '/sharing/[id]/[status]/notes_by_teachers/[room]' || pathname == '/sharing/[id]/[status]/project_submission/[room]' || pathname == '/messages/[id]/[status]' ? 'md:w-8/12' : 'md:w-6/12'}  `}>{children}</div>
+      <div className={` md:ml-32 grow flex justify-center md:w-12/12 `}>
+        <div
+          className={`  ${
+            pathname == "/sharing/[id]/[status]/notes_by_teachers/[room]" ||
+            pathname == "/sharing/[id]/[status]/project_submission/[room]" ||
+            pathname == "/messages/[id]/[status]"
+              ? "md:w-8/12"
+              : "md:w-6/12"
+          }  `}
+        >
+          {children}
+        </div>
       </div>
     </div>
   );
