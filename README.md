@@ -6,8 +6,9 @@ At  present Mr Hari Adhakari is known as Principal of the school and Vanu Dhunga
 
 
 
-<b><u>About Project</b></u>
+<b><u>About Project</u></b>
 
+<b>Features of the Project.</b>
 | head1        | head two          | three |
 |:-------------|:------------------|:------|
 | ok           | good swedish fish | nice  |
